@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="ClusteringClustering is a unsupervised learning technique to find subgroups or clusters in a data set.  Comparing with PCA:  PCA looks to find a low-dimensional representation of the observations that">
+<meta name="description" content="Clustering Clustering is a unsupervised learning technique to find subgroups or clusters in a data set. Comparing with PCA:  PCA looks to find a low-dimensional representation of the observations that">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Clustering">
 <meta property="og:url" content="http://yoursite.com/2017/06/18/Clustering/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="ClusteringClustering is a unsupervised learning technique to find subgroups or clusters in a data set.  Comparing with PCA:  PCA looks to find a low-dimensional representation of the observations that">
+<meta property="og:description" content="Clustering Clustering is a unsupervised learning technique to find subgroups or clusters in a data set. Comparing with PCA:  PCA looks to find a low-dimensional representation of the observations that">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-06-19T04:49:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clustering">
-<meta name="twitter:description" content="ClusteringClustering is a unsupervised learning technique to find subgroups or clusters in a data set.  Comparing with PCA:  PCA looks to find a low-dimensional representation of the observations that">
+<meta name="twitter:description" content="Clustering Clustering is a unsupervised learning technique to find subgroups or clusters in a data set. Comparing with PCA:  PCA looks to find a low-dimensional representation of the observations that">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -333,29 +353,40 @@
       
 
       
-        <h1 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h1><p>Clustering is a unsupervised learning technique to find subgroups or <em>clusters</em> in a data set. </p>
+        <h1>Clustering</h1>
+<p>Clustering is a unsupervised learning technique to find subgroups or <em>clusters</em> in a data set.</p>
 <p>Comparing with PCA:</p>
 <ul>
 <li>PCA looks to find a low-dimensional representation of the observations that explain a good fraction of the variance.</li>
 <li>Clustering looks to find homogeneous subgroups among the observations.</li>
 </ul>
 <p>The two most famous clustering techniques are <em>K-means clustering</em> and <em>hierarchical clustering</em>. In K-means, we seek to partition the observations into predefined number of clusters. In hierarchical clustering, we do not know in advance how many clusters will there be; we end up with a tree-like visual representation of the observations, called <em>dendrogram</em>.</p>
-<h2 id="K-Means-Clustering"><a href="#K-Means-Clustering" class="headerlink" title="K-Means Clustering"></a>K-Means Clustering</h2><p>It partitions the observations into k non-overlapping clusters. Need to specify $K$ first. Let $C_1,C_2,…,C_k$ be sets containing the indices of data in each cluster. Then they are exhaustive and mutually exclusive. We want the <em>within-cluster variance</em> to be as small as possible, which is denoted by $W(C_i)$.</p>
-<p>Finding K-means clustering is the same as solving problem:<br>$$<br>minimize{\sum_{k=1}^K W(C_k) }<br>$$<br>By far the most common way to define $W(C_i)$ is using squared Euclidean distance, by</p>
-<p>$$<br>W(C_k) = \frac{1}{|C<em>k|}\sum</em>{i,i’\in C<em>k}\sum</em>{j=1}^p(x<em>{ij}-x</em>{i’j’} )^2<br>$$<br>where $p$ is the dimension of the feature space.</p>
+<h2>K-Means Clustering</h2>
+<p>It partitions the observations into k non-overlapping clusters. Need to specify $K$ first. Let $C_1,C_2,…,C_k$ be sets containing the indices of data in each cluster. Then they are exhaustive and mutually exclusive. We want the <em>within-cluster variance</em> to be as small as possible, which is denoted by $W(C_i)$.</p>
+<p>Finding K-means clustering is the same as solving problem:
+$$
+minimize{\sum_{k=1}^K W(C_k) }
+$$
+By far the most common way to define $W(C_i)$ is using squared Euclidean distance, by</p>
+<p>$$
+W(C_k) = \frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'} )^2
+$$
+where $p$ is the dimension of the feature space.</p>
 <p>Solving the above minimization problem is pretty hard. Fortunately, there is a simple algorithm that gives a pretty good solution:</p>
 <p>— Algorithm:</p>
 <ol>
 <li>Randomly assign a number from 1 to $K$ to each of the observations. These are the initial cluster assignments</li>
-<li>Iterate until the cluster assignments stop changing:<ol>
+<li>Iterate until the cluster assignments stop changing:
+<ol>
 <li>For each of the $K$ clusters, compute the cluster <em>centroid</em>. The kth cluster centroid is the vector of the $p$ feature means for the observations in that cluster.</li>
 <li>Assign each observations to the cluster whose centroid is closest in the context of Euclidean distance.</li>
 </ol>
 </li>
 </ol>
-<p>This algorithm guarantees to decrease the target sum at each step and it will finally reach a local optimum. Since the algorithm doesn’t ensure a global optimum, it’s important to run the algorithm with multiple times with different random initial configuration.</p>
+<p>This algorithm guarantees to decrease the target sum at each step and it will finally reach a local optimum. Since the algorithm doesn't ensure a global optimum, it's important to run the algorithm with multiple times with different random initial configuration.</p>
 <p>In addition, selecting the number $K$ is also a difficult problem.</p>
-<h2 id="Hierarchical-Clustering"><a href="#Hierarchical-Clustering" class="headerlink" title="Hierarchical Clustering"></a>Hierarchical Clustering</h2><p>The most common type of hierarchical clustering is <em>bottom-up</em> or <em>agglomerative</em> clustering. It means to build the dendrogram from the leaves and combining clusters up to the trunk. </p>
+<h2>Hierarchical Clustering</h2>
+<p>The most common type of hierarchical clustering is <em>bottom-up</em> or <em>agglomerative</em> clustering. It means to build the dendrogram from the leaves and combining clusters up to the trunk.</p>
 <p>To interpret the dendrogram, just remember observations that are similar muse at the bottom and those that are quite different muse much later. Location of leaves means nothing.</p>
 <p>To identify clusters in dendrogram, horizontally cut the tree and find the branches. Cut at different height may give different number of clusters. A dendrogram can be used to obtain any number of clusters.</p>
 <p>— Algorithm</p>
@@ -363,7 +394,7 @@
 <li>Begin with n observations and a measure (e.g. Euclidean distance) of all the n(n-1)/2 pairwise dissimilarities. Each of the n observations is treated as its own cluster.</li>
 <li>Fuse the two most similar till there is only one cluster left. The dissimilarity between the most similar two indicates the height at which the fusion should be taken.</li>
 </ol>
-<p>For this algorithm to work, need to extend dissimilarity to between groups of observations. Use the notion of <em>linkage</em>. </p>
+<p>For this algorithm to work, need to extend dissimilarity to between groups of observations. Use the notion of <em>linkage</em>.</p>
 <p>4 types of linkage:</p>
 <ol>
 <li>Complete: maximal intercluster dissimilarity</li>
@@ -371,19 +402,24 @@
 <li>Average: mean intercluster dissimilarity</li>
 <li>Centroid; dissimilarity between the centroids</li>
 </ol>
-<h2 id="Issues-for-Clustering"><a href="#Issues-for-Clustering" class="headerlink" title="Issues for Clustering"></a>Issues for Clustering</h2><h4 id="Small-Decisions-with-Big-Impacts"><a href="#Small-Decisions-with-Big-Impacts" class="headerlink" title="Small Decisions with Big Impacts"></a>Small Decisions with Big Impacts</h4><ul>
-<li>For hierarchical clustering, <ul>
+<h2>Issues for Clustering</h2>
+<h4>Small Decisions with Big Impacts</h4>
+<ul>
+<li>For hierarchical clustering,
+<ul>
 <li>What dissimilarity measure to use?</li>
 <li>What type of linkage?</li>
 <li>Where should we cut the dendrogram to obtain the clusters?</li>
 </ul>
 </li>
-<li>For K-means clustering<ul>
+<li>For K-means clustering
+<ul>
 <li>What value of $K$?</li>
 </ul>
 </li>
 </ul>
-<h4 id="Validating-the-Clusters"><a href="#Validating-the-Clusters" class="headerlink" title="Validating the Clusters"></a>Validating the Clusters</h4><p>Need to validate such that our clustering is not a clustering of the noise.</p>
+<h4>Validating the Clusters</h4>
+<p>Need to validate such that our clustering is not a clustering of the noise.</p>
 
       
     </div>
@@ -558,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Clustering"><span class="nav-number">1.</span> <span class="nav-text">Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#K-Means-Clustering"><span class="nav-number">1.1.</span> <span class="nav-text">K-Means Clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hierarchical-Clustering"><span class="nav-number">1.2.</span> <span class="nav-text">Hierarchical Clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Issues-for-Clustering"><span class="nav-number">1.3.</span> <span class="nav-text">Issues for Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Small-Decisions-with-Big-Impacts"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Small Decisions with Big Impacts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Validating-the-Clusters"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">Validating the Clusters</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">K-Means Clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Hierarchical Clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Issues for Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Small Decisions with Big Impacts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">Validating the Clusters</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -647,6 +683,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -681,6 +720,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -765,6 +814,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

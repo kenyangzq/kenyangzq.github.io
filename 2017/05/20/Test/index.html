@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="This is a post I used to test the functionality of Hexo. BasicsI added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which">
+<meta name="description" content="This is a post I used to test the functionality of Hexo. Basics I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which">
 <meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hacking Hexo">
 <meta property="og:url" content="http://yoursite.com/2017/05/20/Test/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="This is a post I used to test the functionality of Hexo. BasicsI added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which">
+<meta property="og:description" content="This is a post I used to test the functionality of Hexo. Basics I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-06-03T08:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hacking Hexo">
-<meta name="twitter:description" content="This is a post I used to test the functionality of Hexo. BasicsI added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which">
+<meta name="twitter:description" content="This is a post I used to test the functionality of Hexo. Basics I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -334,30 +354,35 @@
 
       
         <p>This is a post I used to test the functionality of Hexo.</p>
-<h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><p>I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which is much simpler than I expected. The code for the music player is as followed:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">330</span> <span class="attr">height</span>=<span class="string">86</span> <span class="attr">src</span>=<span class="string">"//music.163.com/outchain/player?type=2&amp;id=28481646&amp;auto=1&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3>Basics</h3>
+<p>I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which is much simpler than I expected. The code for the music player is as followed:</p>
+<p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">330</span> <span class="attr">height</span>=<span class="string">86</span> <span class="attr">src</span>=<span class="string">"//music.163.com/outchain/player?type=2&amp;id=28481646&amp;auto=1&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>Here I play music from <em>music.163.com</em>, where one can generate external link easily. To auto play the music, simply change the <code>auto=1</code> to <code>auto=0</code> in the code above.</p>
-<h3 id="Math-Formulas"><a href="#Math-Formulas" class="headerlink" title="Math Formulas"></a>Math Formulas</h3><p>I also tried Mathematic formula here with my editor. For example, <strong>Eulers Formula</strong> is:</p>
-<p>$$<br>    e^{\pi i} + 1 = 0<br>$$</p>
+<h3>Math Formulas</h3>
+<p>I also tried Mathematic formula here with my editor. For example, <strong>Eulers Formula</strong> is:</p>
+<p>$$
+	e^{\pi i} + 1 = 0
+$$</p>
 <p>To support $\LaTeX{}$ in Hexo, we need to install additional plugin. Thanks to [1], the process is quite simple. All we need to do is to install <em>MathJax</em> by:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br><span class="line">hexo math install</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br><span class="line">hexo math install</span><br></pre></td></tr></table></figure></p>
 <p>However, since Hexo already uses <em>Marked.js</em> to render our page, we need to ensure no conflicts between these two plugins.</p>
-<p>The only conflicts are escape characters and underscore for italic. We can ignore the latter since for markdown, <code>*</code> can also be used to show italic. </p>
-<p>For escape characters, we need to change marked.js file in <code>./node_modules/marked/lib/</code>. </p>
+<p>The only conflicts are escape characters and underscore for italic. We can ignore the latter since for markdown, <code>*</code> can also be used to show italic.</p>
+<p>For escape characters, we need to change marked.js file in <code>./node_modules/marked/lib/</code>.</p>
 <p>First change</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([\\`*&#123;&#125;\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
-<p>to </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([`*\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
-<p>Then change </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
-<p>to </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
-<p>Done! </p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([\\`*&#123;&#125;\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure></p>
+<p>to</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([`*\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure></p>
+<p>Then change</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure></p>
+<p>to</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure></p>
+<p>Done!</p>
 <hr>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" auto="0" src="//music.163.com/outchain/player?type=2&id=28481646&auto=0&height=66"></iframe>
-
+<p>&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 auto=0
+src=&quot;//music.163.com/outchain/player?type=2&amp;id=28481646&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;</p>
 <hr>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>[1] <a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="noopener">http://blog.csdn.net/emptyset110/article/details/50123231</a></p>
+<h3>Reference</h3>
+<p>[1] http://blog.csdn.net/emptyset110/article/details/50123231</p>
 
       
     </div>
@@ -528,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basics"><span class="nav-number">1.</span> <span class="nav-text">Basics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Math-Formulas"><span class="nav-number">2.</span> <span class="nav-text">Math Formulas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Basics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Math Formulas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -617,6 +642,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -651,6 +679,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -735,6 +773,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 9This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project. First is another new refine function. W">
+<meta name="description" content="Research Note 9 This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project. First is another new refine function.">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-9">
 <meta property="og:url" content="http://yoursite.com/2017/08/13/Research-Note-9/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 9This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project. First is another new refine function. W">
+<meta property="og:description" content="Research Note 9 This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project. First is another new refine function.">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tetra/refine3.jpg">
 <meta property="og:updated_time" content="2017-08-13T17:44:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-9">
-<meta name="twitter:description" content="Research Note 9This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project. First is another new refine function. W">
-<meta name="twitter:image" content="http://yoursite.com/images/Research/Tetra/refine3.jpg">
+<meta name="twitter:description" content="Research Note 9 This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project. First is another new refine function.">
 
 
 
@@ -189,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -335,19 +353,21 @@
       
 
       
-        <h1 id="Research-Note-9"><a href="#Research-Note-9" class="headerlink" title="Research Note 9"></a>Research Note 9</h1><p>This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project.</p>
-<p>First is another new refine function. We have decided to renamed the previous refine function of tetrahedrons. The new one split a tetrahedron into 3 new tetrahedrons by finding the largest facet and its center point, and connect the opposite vertex to that center point to insert 3 new internal faces. In that way an old tetrahedron is splited into 3. </p>
-<p>The implementation is quite similar to the previous function and only took me one day to finish this function. </p>
-<p><img src="/images/Research/Tetra/refine3.jpg" width="500"></p>
-<p>Here is a demonstration of the refinement. </p>
-<h2 id="Stochastic-Walk"><a href="#Stochastic-Walk" class="headerlink" title="Stochastic Walk"></a>Stochastic Walk</h2><p>Another function is called stochastic walk. In the final stage of our project, we will have many points in our large tetrahedron partition, and we need to locate each point, aka, find the tetrahedron contain a given point. </p>
-<p>Matlab has a built in function called pointLocation, which should accomplish that. However, I tested it with some simple cases and find that it fail in some. I have posted a question on the MathWork forem but receive no response so far. </p>
-<p>So we decide to implement our own pointLocation function. The very first and foremost idea is to use the barycentric coordinate’s property. If a point is located inside a tetrahedron then the barycentric coordinate of that point relative to that tetrahedron will have all positive components. However, this means we need to calculate the barycentric coordinate of a point for all the tetrahedron. This is too inefficient. </p>
-<p>Another way is to build a K-D tree and search on the branch. However, K-D tree fails in some cases, e.g. triangulation with holes in it. </p>
-<p>I did some research on Google and found a paper introducing some nice way to find point location. The paper is called <em>Walk in a Triangulation</em> by Olivier, etc. It can be found <a href="https://hal.inria.fr/inria-00072509/document" target="_blank" rel="noopener">here</a>.</p>
-<p>In the paper, there are 4 different ways to find point location. The idea is quite similar. Start from a tetrahedron, according to some condition, move to next tetrahedron and so on, and finally stop in the target tetrahedron. </p>
-<p>I choose to implement the Stochastic Walk as it’s easier to implement and we have the available helper functions. It starts from a random tetrahedron. Choose a random facet of it, and check whether the point is on the other side of the facet. If so, move to the next tetrahedron sharing that facet; if not, move to another facet of the current tetrahedron. In the mean time, it also ‘remember’ the last tetrahedron visited so that we won’t ends up in an infinite loop in a pair of tetrahedron. </p>
-<p>There are also some other little details, but I don’t want to discuss it here. </p>
+        <h1>Research Note 9</h1>
+<p>This week we mainly work on the tetrahedron project. Besides those little helper functions, I implemented two new main components of our project.</p>
+<p>First is another new refine function. We have decided to renamed the previous refine function of tetrahedrons. The new one split a tetrahedron into 3 new tetrahedrons by finding the largest facet and its center point, and connect the opposite vertex to that center point to insert 3 new internal faces. In that way an old tetrahedron is splited into 3.</p>
+<p>The implementation is quite similar to the previous function and only took me one day to finish this function.</p>
+<p>&lt;img src=&quot;/images/Research/Tetra/refine3.jpg&quot; width = &quot;500&quot;&gt;</p>
+<p>Here is a demonstration of the refinement.</p>
+<h2>Stochastic Walk</h2>
+<p>Another function is called stochastic walk. In the final stage of our project, we will have many points in our large tetrahedron partition, and we need to locate each point, aka, find the tetrahedron contain a given point.</p>
+<p>Matlab has a built in function called pointLocation, which should accomplish that. However, I tested it with some simple cases and find that it fail in some. I have posted a question on the MathWork forem but receive no response so far.</p>
+<p>So we decide to implement our own pointLocation function. The very first and foremost idea is to use the barycentric coordinate's property. If a point is located inside a tetrahedron then the barycentric coordinate of that point relative to that tetrahedron will have all positive components. However, this means we need to calculate the barycentric coordinate of a point for all the tetrahedron. This is too inefficient.</p>
+<p>Another way is to build a K-D tree and search on the branch. However, K-D tree fails in some cases, e.g. triangulation with holes in it.</p>
+<p>I did some research on Google and found a paper introducing some nice way to find point location. The paper is called <em>Walk in a Triangulation</em> by Olivier, etc. It can be found &lt;a href=&quot;https://hal.inria.fr/inria-00072509/document&quot;&gt;here&lt;/a&gt;.</p>
+<p>In the paper, there are 4 different ways to find point location. The idea is quite similar. Start from a tetrahedron, according to some condition, move to next tetrahedron and so on, and finally stop in the target tetrahedron.</p>
+<p>I choose to implement the Stochastic Walk as it's easier to implement and we have the available helper functions. It starts from a random tetrahedron. Choose a random facet of it, and check whether the point is on the other side of the facet. If so, move to the next tetrahedron sharing that facet; if not, move to another facet of the current tetrahedron. In the mean time, it also 'remember' the last tetrahedron visited so that we won't ends up in an infinite loop in a pair of tetrahedron.</p>
+<p>There are also some other little details, but I don't want to discuss it here.</p>
 
       
     </div>
@@ -524,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-9"><span class="nav-number">1.</span> <span class="nav-text">Research Note 9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stochastic-Walk"><span class="nav-number">1.1.</span> <span class="nav-text">Stochastic Walk</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Stochastic Walk</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -613,6 +633,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -647,6 +670,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -731,6 +764,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

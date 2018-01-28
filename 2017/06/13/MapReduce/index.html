@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="MapReduceMapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.   Uses map function to gener">
+<meta name="description" content="MapReduce MapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.  Uses map function to gener">
 <meta name="keywords" content="Bigdata">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce">
 <meta property="og:url" content="http://yoursite.com/2017/06/13/MapReduce/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="MapReduceMapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.   Uses map function to gener">
+<meta property="og:description" content="MapReduce MapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.  Uses map function to gener">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/MapReduce/mapreduce2.gif">
 <meta property="og:updated_time" content="2017-06-19T04:55:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce">
-<meta name="twitter:description" content="MapReduceMapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.   Uses map function to gener">
-<meta name="twitter:image" content="http://yoursite.com/images/MapReduce/mapreduce2.gif">
+<meta name="twitter:description" content="MapReduce MapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.  Uses map function to gener">
 
 
 
@@ -189,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -346,27 +364,32 @@
       
 
       
-        <h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1><p>MapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce. </p>
+        <h1>MapReduce</h1>
+<p>MapReduce is a programming model and associated implementation for processing and generating large data sets. Apparently it consists of two parts: map and reduce.</p>
 <ul>
 <li>Uses map function to generate a set of intermediate key/value pairs</li>
 <li>Uses reduce function to merge all intermediate values associated with the same intermediate key</li>
 </ul>
 <p>There are three key ideas behind MapReduce.</p>
-<h3 id="Parallelism"><a href="#Parallelism" class="headerlink" title="Parallelism"></a>Parallelism</h3><p>Map and reduce are parallel in nature. Each map function can handle its own data and so as reduce. However, reduce must wait till all maps finish, so need a barrier between these two phases.</p>
+<h3>Parallelism</h3>
+<p>Map and reduce are parallel in nature. Each map function can handle its own data and so as reduce. However, reduce must wait till all maps finish, so need a barrier between these two phases.</p>
 <p>In addition, in the intermediate phase between map and reduce, usually shuffle the intermediate result to reduce them more efficiently.</p>
-<h3 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h3><p>The MapReduce paradign turns everything into two simple function, map and reduce. So developer won’t have to worry about the other details. </p>
-<p><img src="/images/MapReduce/mapreduce2.gif"></p>
+<h3>Abstraction</h3>
+<p>The MapReduce paradign turns everything into two simple function, map and reduce. So developer won't have to worry about the other details.</p>
+<p>&lt;img src=&quot;/images/MapReduce/mapreduce2.gif&quot;&gt;</p>
 <p>MapReduce provides map and reduce abstract programming interface. Map interface takes key/value pair that stores data as input, process it and spit out key/value pairs as output.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map: (k1,v1) -&gt; [(k2, v2)]</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map: (k1,v1) -&gt; [(k2, v2)]</span><br></pre></td></tr></table></figure></p>
 <p>Reduce takes all those pairs and combines the values for the same keys. Then it finally gives the output of same form.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce: (k2, [v2]) -&gt; [(k3, v3)]</span><br></pre></td></tr></table></figure>
-<h3 id="Uniform-Architecture"><a href="#Uniform-Architecture" class="headerlink" title="Uniform Architecture"></a>Uniform Architecture</h3><p>In previous parallel computing framework, developers need to consider storage, partition, distribution, collection and fault tolerance. But with MapReduce, they are freed from those troubles because it gives a uniform architecture to do all the dirty works.</p>
-<h2 id="How-MapReduce-Works"><a href="#How-MapReduce-Works" class="headerlink" title="How MapReduce Works"></a>How MapReduce Works</h2><p>MapReduce consists of 4 main components. </p>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce: (k2, [v2]) -&gt; [(k3, v3)]</span><br></pre></td></tr></table></figure></p>
+<h3>Uniform Architecture</h3>
+<p>In previous parallel computing framework, developers need to consider storage, partition, distribution, collection and fault tolerance. But with MapReduce, they are freed from those troubles because it gives a uniform architecture to do all the dirty works.</p>
+<h2>How MapReduce Works</h2>
+<p>MapReduce consists of 4 main components.</p>
 <ul>
 <li>Client: the one that submits the MapReduce program. Every job on client will be packed with configuration files into jar form and stored on HDFS by JobClient.</li>
-<li>JobTracker: it coordinates the tasks. It’s actually a java program. It communcates with clients, accept command from clients, monitor the heartbeat of TaskTracker and schedule the jobs based on schedule algorithm.</li>
-<li>TaskTracker: it runs the tasks. It’s also a java program which sends heartbeat to TaskTracker periodically.</li>
-<li>File System: generally will prefer HDFS. </li>
+<li>JobTracker: it coordinates the tasks. It's actually a java program. It communcates with clients, accept command from clients, monitor the heartbeat of TaskTracker and schedule the jobs based on schedule algorithm.</li>
+<li>TaskTracker: it runs the tasks. It's also a java program which sends heartbeat to TaskTracker periodically.</li>
+<li>File System: generally will prefer HDFS.</li>
 </ul>
 <p>One can view JobTracker as the Master and TaskTracker as the Slave in traditional MS control paradigm.</p>
 
@@ -543,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce"><span class="nav-number">1.</span> <span class="nav-text">MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Parallelism"><span class="nav-number">1.0.1.</span> <span class="nav-text">Parallelism</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstraction"><span class="nav-number">1.0.2.</span> <span class="nav-text">Abstraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Uniform-Architecture"><span class="nav-number">1.0.3.</span> <span class="nav-text">Uniform Architecture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-MapReduce-Works"><span class="nav-number">1.1.</span> <span class="nav-text">How MapReduce Works</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.1.</span> <span class="nav-text">Parallelism</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.2.</span> <span class="nav-text">Abstraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.</span> <span class="nav-text">Uniform Architecture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">How MapReduce Works</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -632,6 +655,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -666,6 +692,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -750,6 +786,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

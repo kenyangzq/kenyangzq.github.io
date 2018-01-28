@@ -190,6 +190,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -336,23 +356,41 @@
       
         
           
-            <h1 id="数学之美-笔记1"><a href="#数学之美-笔记1" class="headerlink" title="数学之美 笔记1"></a>数学之美 笔记1</h1><p><br></p>
-<p>　　<em>Beauty of Math</em> is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt much more convenient to write my note in Chinese and please forgive that. </p>
-<p>　　前一周有幸拜读了吴军老师当下的畅销书 –《智能时代》，感悟良多。根据书中指引，遂购买了吴军老师前几年颇具影响力的另一著作 – 《数学之美》。作为数学专业的学生，阅读此书只觉得爱不释手，颇受启发，于是萌生记录阅读心得的想法。此篇写于去往南京的飞机上，于南京完成。</p>
-<h2 id="隐含马尔可夫模型"><a href="#隐含马尔可夫模型" class="headerlink" title="隐含马尔可夫模型"></a>隐含马尔可夫模型</h2><p>　　隐含马尔可夫模型（Hidden Markov Model）是书中的第五章，在前几张介绍了自然语言处理的基本思路后，自然而然的过渡到了这个简单高效的，解决自然语言处理难题的模型。</p>
-<h3 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h3><p>　　书中首先介绍了基本的通信模型。雅各布森（Roman Jakobson）提出的通信六要素：发送者（信息源），信道，接受者，信息，上下文和编码。这一模型同样可被应用到自然语言的处理中，几乎所有的自然语言处理问题都可以等价成通信的解码问题。</p>
-<p>　　给定观测信号$o_1, o_2, o_3…$，推测源信息$s_1, s_2, s_3…$可通过从所有信息中找到最可能产生观测信号的那一信息来完成。从概率角度说，就是求条件概率的最大值，即<br>$$<br>s_1,s_2,s_3… = Arg\,Max\;P(s_1,s_2,s_3…|o_1,o_2,o_3…)<br>$$<br>条件概率可通过贝叶斯公式变换为<br>$$<br>\frac<br>{P(o_1,o_2,o_3…|s_1,s_2,s_3…) \cdot P(s_1,s_2,s_3…)}{P(o_1,o_2,o_3…)}<br>$$</p>
-<p>其中，因为 $o_1, o_2, o_3…$ 已经产生了，其概率是一个可以忽略的常数，所以剩下的只是</p>
-<p>$$<br>P(o_1,o_2,o_3…|s_1,s_2,s_3…) \cdot P(s_1,s_2,s_3…)<br>$$</p>
+            <h1>数学之美 笔记1</h1>
+<p>&lt;br&gt;</p>
+<p><em>Beauty of Math</em> is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt much more convenient to write my note in Chinese and please forgive that.</p>
+<p>前一周有幸拜读了吴军老师当下的畅销书 --《智能时代》，感悟良多。根据书中指引，遂购买了吴军老师前几年颇具影响力的另一著作 -- 《数学之美》。作为数学专业的学生，阅读此书只觉得爱不释手，颇受启发，于是萌生记录阅读心得的想法。此篇写于去往南京的飞机上，于南京完成。</p>
+<h2>隐含马尔可夫模型</h2>
+<p>隐含马尔可夫模型（Hidden Markov Model）是书中的第五章，在前几张介绍了自然语言处理的基本思路后，自然而然的过渡到了这个简单高效的，解决自然语言处理难题的模型。</p>
+<h3>通信模型</h3>
+<p>书中首先介绍了基本的通信模型。雅各布森（Roman Jakobson）提出的通信六要素：发送者（信息源），信道，接受者，信息，上下文和编码。这一模型同样可被应用到自然语言的处理中，几乎所有的自然语言处理问题都可以等价成通信的解码问题。</p>
+<p>给定观测信号$o_1, o_2, o_3...$，推测源信息$s_1, s_2, s_3...$可通过从所有信息中找到最可能产生观测信号的那一信息来完成。从概率角度说，就是求条件概率的最大值，即
+$$
+s_1,s_2,s_3... = Arg,Max;P(s_1,s_2,s_3...|o_1,o_2,o_3...)
+$$
+条件概率可通过贝叶斯公式变换为
+$$
+\frac
+{P(o_1,o_2,o_3...|s_1,s_2,s_3...) \cdot P(s_1,s_2,s_3...)}{P(o_1,o_2,o_3...)}
+$$</p>
+<p>其中，因为 $o_1, o_2, o_3...$ 已经产生了，其概率是一个可以忽略的常数，所以剩下的只是</p>
+<p>$$
+P(o_1,o_2,o_3...|s_1,s_2,s_3...) \cdot P(s_1,s_2,s_3...)
+$$</p>
 <p>而这个公式完全可以用隐含马尔可夫模型来估计。</p>
-<h3 id="隐含马尔可夫模型-1"><a href="#隐含马尔可夫模型-1" class="headerlink" title="隐含马尔可夫模型"></a>隐含马尔可夫模型</h3><p>　　随机过程一般有两个维度的不确定性，一是对任意时间 $t$ ，其状态 $s$ 都是不确定的；二是一个状态 $s$ 受其他状态影响。而马尔可夫模型假设对任意状态 $s<em>t$ ，它只受前一个状态，即 $s</em>{t-1}$ 影响。这一假设被称为马尔可夫假设，而符合这一假设的随机过程被称为马尔可夫链。</p>
-<p>　　计算某一状态 $m_i$ 到另一状态 $m_j$ 的转移概率可以通过数出 $m_i$ 出现的次数以及 $m_i$ 出现后 $m_j$ 出现的次数，后者除以前者便是其转移概率的估值。</p>
-<p>　　隐含马尔可夫模型是上述的一个拓展：任一时刻 $t$ 的状态 $s_t$ 是不可见的，因此无法观测得到状态序列 $s_1,s_2,s_3…$ 来推测转移概率。但是，隐含马尔可夫模型在每一时刻 $t$ 都会输出一个符号 $o_t$ ，且 $o_t$ 只跟 $s_t$ 有关，所以我们可以就算出某个特定的状态序列 $s_1, s_2, s_3…$ 产生输出符号 $o_1, o_2, o_3…$ 的概率。</p>
-<p>$$<br>P(o_1,o_2,o_3…|s_1,s_2,s_3…) = \prod P(s<em>t|s</em>{t-1}) \cdot P(o_t|s_t)<br>$$</p>
+<h3>隐含马尔可夫模型</h3>
+<p>随机过程一般有两个维度的不确定性，一是对任意时间 $t$ ，其状态 $s$ 都是不确定的；二是一个状态 $s$ 受其他状态影响。而马尔可夫模型假设对任意状态 $s_t$ ，它只受前一个状态，即 $s_{t-1}$ 影响。这一假设被称为马尔可夫假设，而符合这一假设的随机过程被称为马尔可夫链。</p>
+<p>计算某一状态 $m_i$ 到另一状态 $m_j$ 的转移概率可以通过数出 $m_i$ 出现的次数以及 $m_i$ 出现后 $m_j$ 出现的次数，后者除以前者便是其转移概率的估值。</p>
+<p>隐含马尔可夫模型是上述的一个拓展：任一时刻 $t$ 的状态 $s_t$ 是不可见的，因此无法观测得到状态序列 $s_1,s_2,s_3...$ 来推测转移概率。但是，隐含马尔可夫模型在每一时刻 $t$ 都会输出一个符号 $o_t$ ，且 $o_t$ 只跟 $s_t$ 有关，所以我们可以就算出某个特定的状态序列 $s_1, s_2, s_3...$ 产生输出符号 $o_1, o_2, o_3...$ 的概率。</p>
+<p>$$
+P(o_1,o_2,o_3...|s_1,s_2,s_3...) = \prod P(s_t|s_{t-1}) \cdot P(o_t|s_t)
+$$</p>
 <p>至于如何找出上式的极值，可以利用维特比算法（Viterbi Algorithm)。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>　　隐含马尔可夫模型最初用于通信领域，是连接自然语言处理和通信的桥梁，同时也是机器学习的一大工具。</p>
+<h3>小结</h3>
+<p>隐含马尔可夫模型最初用于通信领域，是连接自然语言处理和通信的桥梁，同时也是机器学习的一大工具。</p>
 <hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>-《数学之美》第二版第五章 – 吴军</p>
+<h3>参考</h3>
+<p>-《数学之美》第二版第五章 -- 吴军</p>
 
           
         
@@ -516,37 +554,47 @@
       
         
           
-            <h1 id="Hadoop-Study-Note-1"><a href="#Hadoop-Study-Note-1" class="headerlink" title="Hadoop Study Note 1"></a>Hadoop Study Note 1</h1><p><br></p>
+            <h1>Hadoop Study Note 1</h1>
+<p>&lt;br&gt;</p>
 <blockquote>
-<p>The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. </p>
+<p>The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models.</p>
 </blockquote>
-<p>Hadoop is built by Doug Cutting, the pioneer in the area of Bigdata. One fun fact, the name Hadoop is borrowed from Cutting’s three-year-old son, and it is originally for his toy, a yellow elephant, which also becomes the well-known logo of Hadoop.</p>
-<p><img src="http://tse4.mm.bing.net/th?id=OIP.te5YCTFCrqh4N2S65P8cVgEpEs&pid=15.1" alt="Hadoop logo" width="100px," align="center"></p>
-<p>Nowadays, Hadoop mainly refers to the enormous products in its ecosystem. </p>
-<h2 id="Main-Components"><a href="#Main-Components" class="headerlink" title="Main Components"></a>Main Components</h2><h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><p>MapReduce is the core component of Hadoop.</p>
+<p>Hadoop is built by Doug Cutting, the pioneer in the area of Bigdata. One fun fact, the name Hadoop is borrowed from Cutting's three-year-old son, and it is originally for his toy, a yellow elephant, which also becomes the well-known logo of Hadoop.</p>
+<p>&lt;img src=&quot;http://tse4.mm.bing.net/th?id=OIP.te5YCTFCrqh4N2S65P8cVgEpEs&amp;pid=15.1&quot; alt=&quot;Hadoop logo&quot; width=100px, align=center&gt;&lt;/img&gt;</p>
+<p>Nowadays, Hadoop mainly refers to the enormous products in its ecosystem.</p>
+<h2>Main Components</h2>
+<h3>MapReduce</h3>
+<p>MapReduce is the core component of Hadoop.</p>
 <blockquote>
 <p>MapReduce is a programming model and an associ- ated implementation for processing and generating large data sets.</p>
 </blockquote>
-<p>MapReduce consists of two main parts: Map function and Reduce function. It’s first brought up by engineers from Google and inspired from functional programming languages. </p>
-<h3 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h3><p>Hadoop Distributed File System (HDFS) is a open-source implementation of Google File System (GFS). It’s specifically made for big data with high-throughput access to application data and is highly fault tolerant. In addition, HDFS can be deployed on relatively cheap machine. </p>
-<h3 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h3><blockquote>
+<p>MapReduce consists of two main parts: Map function and Reduce function. It's first brought up by engineers from Google and inspired from functional programming languages.</p>
+<h3>HDFS</h3>
+<p>Hadoop Distributed File System (HDFS) is a open-source implementation of Google File System (GFS). It's specifically made for big data with high-throughput access to application data and is highly fault tolerant. In addition, HDFS can be deployed on relatively cheap machine.</p>
+<h3>Hive</h3>
+<blockquote>
 <p>A data warehouse infrastructure that provides data summarization and ad hoc querying.</p>
 </blockquote>
-<p>Hive provides complete functionality for SQL query. It transforms SQL into MapReduce task. Hive is specifically designed for statistical analysis. </p>
-<h3 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h3><p>HBase is a distributed, column-store database. It can be seen as a open-source implementation of Google’s Bigtable. Unlike relational database, it supports storage for non-structured data. </p>
-<h3 id="Pig"><a href="#Pig" class="headerlink" title="Pig"></a>Pig</h3><p>Pig is a high-level programming language that, as its inventor puts, fits in the sweet spot between the declarative style of SQL, and the low-level, procedural style of MapReduce. </p>
-<p>As my Bigdata course lecturer says, when something doesn’t work out very well, programmers just put an extra layer of abstraction on top of it. Pig is the one on top of MapReduce. It highly simplifies the code and free engineers from heavy work for simple analysis.</p>
-<h3 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h3><p>ZooKeeper is the open-source implementation of Google’s Chubby. It provides a high-performance coordination service for distributed applications. </p>
-<h2 id="Application-of-Hadoop"><a href="#Application-of-Hadoop" class="headerlink" title="Application of Hadoop"></a>Application of Hadoop</h2><p>Hadoop is suitable for all of the following situations:</p>
+<p>Hive provides complete functionality for SQL query. It transforms SQL into MapReduce task. Hive is specifically designed for statistical analysis.</p>
+<h3>HBase</h3>
+<p>HBase is a distributed, column-store database. It can be seen as a open-source implementation of Google's Bigtable. Unlike relational database, it supports storage for non-structured data.</p>
+<h3>Pig</h3>
+<p>Pig is a high-level programming language that, as its inventor puts, fits in the sweet spot between the declarative style of SQL, and the low-level, procedural style of MapReduce.</p>
+<p>As my Bigdata course lecturer says, when something doesn't work out very well, programmers just put an extra layer of abstraction on top of it. Pig is the one on top of MapReduce. It highly simplifies the code and free engineers from heavy work for simple analysis.</p>
+<h3>ZooKeeper</h3>
+<p>ZooKeeper is the open-source implementation of Google's Chubby. It provides a high-performance coordination service for distributed applications.</p>
+<h2>Application of Hadoop</h2>
+<p>Hadoop is suitable for all of the following situations:</p>
 <ol>
-<li>Huge volume of data. </li>
-<li>Offline data processing. It’s well-known that Hadoop perform poorly in streaming data processing or real time analysis. </li>
+<li>Huge volume of data.</li>
+<li>Offline data processing. It's well-known that Hadoop perform poorly in streaming data processing or real time analysis.</li>
 <li>Parallel computing. MapReduce works pretty well for parallel task, for example, web search for information.</li>
-<li>Large files. Base on the design choice of HDFS, Hadoop is suitable for processing bigger files. </li>
+<li>Large files. Base on the design choice of HDFS, Hadoop is suitable for processing bigger files.</li>
 </ol>
 <hr>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1]. <em>MapReduce: Simplified Data Processing on Large Clusters</em>, Jeffrey Dean and Sanjay Ghemawat</p>
-<p>[2]. <a href="http://hadoop.apache.org/" target="_blank" rel="noopener">http://hadoop.apache.org/</a>  </p>
+<h2>Reference</h2>
+<p>[1]. <em>MapReduce: Simplified Data Processing on Large Clusters</em>, Jeffrey Dean and Sanjay Ghemawat</p>
+<p>[2]. http://hadoop.apache.org/</p>
 <p>[3]. <em>Pig Latin: A Not-So-Foreign Language for Data Processing</em>, Christopher Olston, Benjamin Reed and Utkarsh Srivastava</p>
 
           
@@ -701,30 +749,35 @@
         
           
             <p>This is a post I used to test the functionality of Hexo.</p>
-<h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><p>I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which is much simpler than I expected. The code for the music player is as followed:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">330</span> <span class="attr">height</span>=<span class="string">86</span> <span class="attr">src</span>=<span class="string">"//music.163.com/outchain/player?type=2&amp;id=28481646&amp;auto=1&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3>Basics</h3>
+<p>I added a tag and a category to this post to learn how Hexo works. In addition, I added a music player at the bottom of this page, which is much simpler than I expected. The code for the music player is as followed:</p>
+<p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">330</span> <span class="attr">height</span>=<span class="string">86</span> <span class="attr">src</span>=<span class="string">"//music.163.com/outchain/player?type=2&amp;id=28481646&amp;auto=1&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>Here I play music from <em>music.163.com</em>, where one can generate external link easily. To auto play the music, simply change the <code>auto=1</code> to <code>auto=0</code> in the code above.</p>
-<h3 id="Math-Formulas"><a href="#Math-Formulas" class="headerlink" title="Math Formulas"></a>Math Formulas</h3><p>I also tried Mathematic formula here with my editor. For example, <strong>Eulers Formula</strong> is:</p>
-<p>$$<br>    e^{\pi i} + 1 = 0<br>$$</p>
+<h3>Math Formulas</h3>
+<p>I also tried Mathematic formula here with my editor. For example, <strong>Eulers Formula</strong> is:</p>
+<p>$$
+	e^{\pi i} + 1 = 0
+$$</p>
 <p>To support $\LaTeX{}$ in Hexo, we need to install additional plugin. Thanks to [1], the process is quite simple. All we need to do is to install <em>MathJax</em> by:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br><span class="line">hexo math install</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br><span class="line">hexo math install</span><br></pre></td></tr></table></figure></p>
 <p>However, since Hexo already uses <em>Marked.js</em> to render our page, we need to ensure no conflicts between these two plugins.</p>
-<p>The only conflicts are escape characters and underscore for italic. We can ignore the latter since for markdown, <code>*</code> can also be used to show italic. </p>
-<p>For escape characters, we need to change marked.js file in <code>./node_modules/marked/lib/</code>. </p>
+<p>The only conflicts are escape characters and underscore for italic. We can ignore the latter since for markdown, <code>*</code> can also be used to show italic.</p>
+<p>For escape characters, we need to change marked.js file in <code>./node_modules/marked/lib/</code>.</p>
 <p>First change</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([\\`*&#123;&#125;\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
-<p>to </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([`*\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
-<p>Then change </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
-<p>to </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
-<p>Done! </p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([\\`*&#123;&#125;\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure></p>
+<p>to</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([`*\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure></p>
+<p>Then change</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure></p>
+<p>to</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure></p>
+<p>Done!</p>
 <hr>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" auto="0" src="//music.163.com/outchain/player?type=2&id=28481646&auto=0&height=66"></iframe>
-
+<p>&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 auto=0
+src=&quot;//music.163.com/outchain/player?type=2&amp;id=28481646&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;</p>
 <hr>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>[1] <a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="noopener">http://blog.csdn.net/emptyset110/article/details/50123231</a></p>
+<h3>Reference</h3>
+<p>[1] http://blog.csdn.net/emptyset110/article/details/50123231</p>
 
           
         
@@ -938,6 +991,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -972,6 +1028,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 

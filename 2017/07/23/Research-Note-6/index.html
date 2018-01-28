@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 6This week we debug the 2d code and keep working on 3d functions.  In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
+<meta name="description" content="Research Note 6 This week we debug the 2d code and keep working on 3d functions. In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-6">
 <meta property="og:url" content="http://yoursite.com/2017/07/23/Research-Note-6/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 6This week we debug the 2d code and keep working on 3d functions.  In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
+<meta property="og:description" content="Research Note 6 This week we debug the 2d code and keep working on 3d functions. In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-07-23T21:31:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-6">
-<meta name="twitter:description" content="Research Note 6This week we debug the 2d code and keep working on 3d functions.  In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
+<meta name="twitter:description" content="Research Note 6 This week we debug the 2d code and keep working on 3d functions. In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -333,21 +353,26 @@
       
 
       
-        <h1 id="Research-Note-6"><a href="#Research-Note-6" class="headerlink" title="Research Note 6"></a>Research Note 6</h1><p>This week we debug the 2d code and keep working on 3d functions. </p>
-<p>In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This function makes use of recl and rec, vectors denoting the rectangles on the left and right of each edge. Unfortunately, due to the way we develop refinerec, there is quite a few bugs in the function. So I spent rought two days on debugging the refinerec function and finally get a version that pass enormous test cases. </p>
-<h2 id="Interdp3d-and-Valtspgrid3d"><a href="#Interdp3d-and-Valtspgrid3d" class="headerlink" title="Interdp3d and Valtspgrid3d"></a>Interdp3d and Valtspgrid3d</h2><p>On the 3d side, I develop some functions as the extensions of their 2d correspondences. Two of them are interdp3d and valtspgrid3d. </p>
-<p>Interdp3d interpolate a given function on the whole rectangulation and return the coefficient as a 3d Matrix. Since Matlab does not support nested list structure, we look to <em>tensor toolbox</em> for help. A tensor is just a n dimension matrix. The toolbox include basic functionality such as addition, subtraction, scalar multiplication and scalar division. It also supports multiplication between tensor and matrix on a given direction. That’s what we mainly use. </p>
-<p>Back to my functions. Interdp3d returns a 3d tensor storing the coefficient of the 3d spline on the rectangulation. Then I use valtspgrid0 to obtain approximation of values of the given function at 3d grid points using the coefficient we get. To varify the result, I compute the norm of error terms. </p>
-<p>We haven’t found a good way to visualize the function. So far we have try to plot the isosurface. There is a nice package on MathWork forem named sliceomatic. It gives a live isosurface plot, but it still does not meet our expectation.</p>
-<h2 id="Other-functions"><a href="#Other-functions" class="headerlink" title="Other functions"></a>Other functions</h2><p>Since my refinecube function only returns lists of relation among cubes, faces, edges and vertices, I need to find a way to get the other indispensible information such as the hanging vertices, subedges, etc. </p>
-<p>So I wrote a bunch of small helper functions, like gethv for get hanging vertex, getse for get subedges, getsf for get subfaces and gethe for get hanging edges. Some of the cases are pretty tricky, for example in 3d a vertex can be hanging on multiplt edges. </p>
-<p>Now that I prefer not to update these other important list in the refinement function, that function will definitely be less error-prone. However, in the view of efficiency, separating them out will without doubt be slower. So far it has not been a problem. </p>
-<h2 id="tsp0smooth3d"><a href="#tsp0smooth3d" class="headerlink" title="tsp0smooth3d"></a>tsp0smooth3d</h2><p>Now I am currently working on the tsp0smooth3d function. It enforces the C0 smoothness condition on the 3d partition. Compared to the 2d tsp0smooth I implemented half month ago, this one is much more complicated. In 2d, only two cases are in consideration, hanging vertices and subedges. On the other side, in 3d, there are at least 4 cases, hanging vertices, hanging edges, subedges and subfaces. And each cases is much harder to implement, since we have higher degree of Bernstein basis polynomial. </p>
-<p>It’s not that easy to describe the problem I ran into while implementing this code. The vital issue is that I cannot just easily visualize the work. Most of the cases need pure imagination. When 3d is involved, things always get more complicated. </p>
-<p>I hope I can finish it in few days next week. </p>
-<h2 id="P-S"><a href="#P-S" class="headerlink" title="P.S."></a>P.S.</h2><p>One interesting and weird thing I noticed about Matlab is its meshgrid function. In 3d cases, one needs to do </p>
-<p>​                <code>[X,Y,Z] = meshgrid(ty,tx,tz)</code></p>
-<p>to get the correct mesh in 3d, where ty, tx, tz are generated using linspace on their corresponding direction. Notice the weird order of argument. I am still wondering why these people prefers to pass the argument in this way. Just because of this ordering, I spent 2 more hours debugging my code. </p>
+        <h1>Research Note 6</h1>
+<p>This week we debug the 2d code and keep working on 3d functions.</p>
+<p>In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This function makes use of recl and rec, vectors denoting the rectangles on the left and right of each edge. Unfortunately, due to the way we develop refinerec, there is quite a few bugs in the function. So I spent rought two days on debugging the refinerec function and finally get a version that pass enormous test cases.</p>
+<h2>Interdp3d and Valtspgrid3d</h2>
+<p>On the 3d side, I develop some functions as the extensions of their 2d correspondences. Two of them are interdp3d and valtspgrid3d.</p>
+<p>Interdp3d interpolate a given function on the whole rectangulation and return the coefficient as a 3d Matrix. Since Matlab does not support nested list structure, we look to <em>tensor toolbox</em> for help. A tensor is just a n dimension matrix. The toolbox include basic functionality such as addition, subtraction, scalar multiplication and scalar division. It also supports multiplication between tensor and matrix on a given direction. That's what we mainly use.</p>
+<p>Back to my functions. Interdp3d returns a 3d tensor storing the coefficient of the 3d spline on the rectangulation. Then I use valtspgrid0 to obtain approximation of values of the given function at 3d grid points using the coefficient we get. To varify the result, I compute the norm of error terms.</p>
+<p>We haven't found a good way to visualize the function. So far we have try to plot the isosurface. There is a nice package on MathWork forem named sliceomatic. It gives a live isosurface plot, but it still does not meet our expectation.</p>
+<h2>Other functions</h2>
+<p>Since my refinecube function only returns lists of relation among cubes, faces, edges and vertices, I need to find a way to get the other indispensible information such as the hanging vertices, subedges, etc.</p>
+<p>So I wrote a bunch of small helper functions, like gethv for get hanging vertex, getse for get subedges, getsf for get subfaces and gethe for get hanging edges. Some of the cases are pretty tricky, for example in 3d a vertex can be hanging on multiplt edges.</p>
+<p>Now that I prefer not to update these other important list in the refinement function, that function will definitely be less error-prone. However, in the view of efficiency, separating them out will without doubt be slower. So far it has not been a problem.</p>
+<h2>tsp0smooth3d</h2>
+<p>Now I am currently working on the tsp0smooth3d function. It enforces the C0 smoothness condition on the 3d partition. Compared to the 2d tsp0smooth I implemented half month ago, this one is much more complicated. In 2d, only two cases are in consideration, hanging vertices and subedges. On the other side, in 3d, there are at least 4 cases, hanging vertices, hanging edges, subedges and subfaces. And each cases is much harder to implement, since we have higher degree of Bernstein basis polynomial.</p>
+<p>It's not that easy to describe the problem I ran into while implementing this code. The vital issue is that I cannot just easily visualize the work. Most of the cases need pure imagination. When 3d is involved, things always get more complicated.</p>
+<p>I hope I can finish it in few days next week.</p>
+<h2>P.S.</h2>
+<p>One interesting and weird thing I noticed about Matlab is its meshgrid function. In 3d cases, one needs to do</p>
+<p>​				<code>[X,Y,Z] = meshgrid(ty,tx,tz)</code></p>
+<p>to get the correct mesh in 3d, where ty, tx, tz are generated using linspace on their corresponding direction. Notice the weird order of argument. I am still wondering why these people prefers to pass the argument in this way. Just because of this ordering, I spent 2 more hours debugging my code.</p>
 
       
     </div>
@@ -524,7 +549,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-6"><span class="nav-number">1.</span> <span class="nav-text">Research Note 6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interdp3d-and-Valtspgrid3d"><span class="nav-number">1.1.</span> <span class="nav-text">Interdp3d and Valtspgrid3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-functions"><span class="nav-number">1.2.</span> <span class="nav-text">Other functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tsp0smooth3d"><span class="nav-number">1.3.</span> <span class="nav-text">tsp0smooth3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P-S"><span class="nav-number">1.4.</span> <span class="nav-text">P.S.</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Interdp3d and Valtspgrid3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Other functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">tsp0smooth3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.4.</span> <span class="nav-text">P.S.</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -613,6 +638,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -647,6 +675,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -731,6 +769,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

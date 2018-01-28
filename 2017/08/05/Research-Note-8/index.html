@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 8This week, I continued to work on the tetrahedron project and implement several functions.  Refine1The refine1 function that I started last week is pretty tricky. There are many edge ca">
+<meta name="description" content="Research Note 8 This week, I continued to work on the tetrahedron project and implement several functions. Refine1 The refine1 function that I started last week is pretty tricky. There are many edge c">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-8">
 <meta property="og:url" content="http://yoursite.com/2017/08/05/Research-Note-8/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 8This week, I continued to work on the tetrahedron project and implement several functions.  Refine1The refine1 function that I started last week is pretty tricky. There are many edge ca">
+<meta property="og:description" content="Research Note 8 This week, I continued to work on the tetrahedron project and implement several functions. Refine1 The refine1 function that I started last week is pretty tricky. There are many edge c">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tetra/tetra0.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tetra/tetra1.jpg">
 <meta property="og:updated_time" content="2017-08-06T02:59:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-8">
-<meta name="twitter:description" content="Research Note 8This week, I continued to work on the tetrahedron project and implement several functions.  Refine1The refine1 function that I started last week is pretty tricky. There are many edge ca">
-<meta name="twitter:image" content="http://yoursite.com/images/Research/Tetra/tetra0.jpg">
+<meta name="twitter:description" content="Research Note 8 This week, I continued to work on the tetrahedron project and implement several functions. Refine1 The refine1 function that I started last week is pretty tricky. There are many edge c">
 
 
 
@@ -190,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -336,18 +353,21 @@
       
 
       
-        <h1 id="Research-Note-8"><a href="#Research-Note-8" class="headerlink" title="Research Note 8"></a>Research Note 8</h1><p>This week, I continued to work on the tetrahedron project and implement several functions. </p>
-<h2 id="Refine1"><a href="#Refine1" class="headerlink" title="Refine1"></a>Refine1</h2><p>The refine1 function that I started last week is pretty tricky. There are many edge cases but fortunately I have finished it. </p>
-<p>As mentioned in last note, the way this function works is to find the longest edge of the target tetrahedron and use an internal face to split that edge and also the whole tetrahedron into two smaller ones. These two smaller tetrahedron will always have same volume and share a face. </p>
-<p>The hard part about this function is to keep track of all other list information. For example, after we insert an interior face, we create some two subedges of the longer edge which we split, and we also add two edges on the other two faces. If a neighbor tetrahedron has been refined before, then some of these new edges may already exist, so we have to first check their existence and then update or insert new information. Same process has to be applied to all the list information we keep. </p>
-<p>Another tricky part is the orientation of all the list. For instance, we keep track of a #tetra by 6 matrix for all the edges of each tetrahedron. In order to obtain the right coefficient of spline when we later implement other functions, we need to keep an order among edges of a tetrahedron. So when new edges come, we have to maintain the order. </p>
-<p>I don’t want to explain all the details here. The final result is promising. </p>
-<h2 id="Refine3"><a href="#Refine3" class="headerlink" title="Refine3"></a>Refine3</h2><p>On Wednesday, I met with the Professor. After our discussion, we thought a more common way to refine a tetrahedron is to split it into four smaller tetrahedron by connecting each vertex to the center of the original tetrahedron. So I start to work on a new function to accomplish that. </p>
-<p>To be honest, this one is easier than refine1. Since all the new vertex, new edges, and new faces are inside the refined tetrahedron, I no longer need to check their existence and separate the cases. Though orientation is still a problem, with experience in refine1, I successfully implemented this function in this week. </p>
-<p>The way we initialize a partition is always reading from files. It’s a simple fact that a cube can be partitioned into 5 tetrahedron, 4 of which are identical and one in the middle, as the following diagram shows.</p>
-<p><img src="/images/Research/Tetra/tetra0.jpg" width="500"></p>
+        <h1>Research Note 8</h1>
+<p>This week, I continued to work on the tetrahedron project and implement several functions.</p>
+<h2>Refine1</h2>
+<p>The refine1 function that I started last week is pretty tricky. There are many edge cases but fortunately I have finished it.</p>
+<p>As mentioned in last note, the way this function works is to find the longest edge of the target tetrahedron and use an internal face to split that edge and also the whole tetrahedron into two smaller ones. These two smaller tetrahedron will always have same volume and share a face.</p>
+<p>The hard part about this function is to keep track of all other list information. For example, after we insert an interior face, we create some two subedges of the longer edge which we split, and we also add two edges on the other two faces. If a neighbor tetrahedron has been refined before, then some of these new edges may already exist, so we have to first check their existence and then update or insert new information. Same process has to be applied to all the list information we keep.</p>
+<p>Another tricky part is the orientation of all the list. For instance, we keep track of a #tetra by 6 matrix for all the edges of each tetrahedron. In order to obtain the right coefficient of spline when we later implement other functions, we need to keep an order among edges of a tetrahedron. So when new edges come, we have to maintain the order.</p>
+<p>I don't want to explain all the details here. The final result is promising.</p>
+<h2>Refine3</h2>
+<p>On Wednesday, I met with the Professor. After our discussion, we thought a more common way to refine a tetrahedron is to split it into four smaller tetrahedron by connecting each vertex to the center of the original tetrahedron. So I start to work on a new function to accomplish that.</p>
+<p>To be honest, this one is easier than refine1. Since all the new vertex, new edges, and new faces are inside the refined tetrahedron, I no longer need to check their existence and separate the cases. Though orientation is still a problem, with experience in refine1, I successfully implemented this function in this week.</p>
+<p>The way we initialize a partition is always reading from files. It's a simple fact that a cube can be partitioned into 5 tetrahedron, 4 of which are identical and one in the middle, as the following diagram shows.</p>
+<p>&lt;img src=&quot;/images/Research/Tetra/tetra0.jpg&quot; width=&quot;500&quot;&gt;</p>
 <p>After we refine the first tetrahedron using refine3 the output will be like:</p>
-<p><img src="/images/Research/Tetra/tetra1.jpg" width="500"></p>
+<p>&lt;img src=&quot;/images/Research/Tetra/tetra1.jpg&quot; width=&quot;500&quot;&gt;</p>
 
       
     </div>
@@ -524,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-8"><span class="nav-number">1.</span> <span class="nav-text">Research Note 8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Refine1"><span class="nav-number">1.1.</span> <span class="nav-text">Refine1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refine3"><span class="nav-number">1.2.</span> <span class="nav-text">Refine3</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Refine1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Refine3</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -613,6 +633,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -647,6 +670,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -731,6 +764,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

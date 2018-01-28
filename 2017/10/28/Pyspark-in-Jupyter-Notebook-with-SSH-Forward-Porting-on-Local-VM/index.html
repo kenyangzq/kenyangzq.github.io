@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VMThis is a note I used to setup Pyspark environment on local VM with vagrant.  Step One — Spawn Local VMVagrant up a local virtual machin">
+<meta name="description" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM This is a note I used to setup Pyspark environment on local VM with vagrant. Step One — Spawn Local VM Vagrant up a local virtual machi">
 <meta name="keywords" content="BigData,Pyspark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM">
 <meta property="og:url" content="http://yoursite.com/2017/10/28/Pyspark-in-Jupyter-Notebook-with-SSH-Forward-Porting-on-Local-VM/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VMThis is a note I used to setup Pyspark environment on local VM with vagrant.  Step One — Spawn Local VMVagrant up a local virtual machin">
+<meta property="og:description" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM This is a note I used to setup Pyspark environment on local VM with vagrant. Step One — Spawn Local VM Vagrant up a local virtual machi">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-10-28T21:56:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM">
-<meta name="twitter:description" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VMThis is a note I used to setup Pyspark environment on local VM with vagrant.  Step One — Spawn Local VMVagrant up a local virtual machin">
+<meta name="twitter:description" content="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM This is a note I used to setup Pyspark environment on local VM with vagrant. Step One — Spawn Local VM Vagrant up a local virtual machi">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -300,32 +320,38 @@
       
 
       
-        <h1 id="Pyspark-in-Jupyter-Notebook-with-SSH-Forward-Porting-on-Local-VM"><a href="#Pyspark-in-Jupyter-Notebook-with-SSH-Forward-Porting-on-Local-VM" class="headerlink" title="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM"></a>Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM</h1><p>This is a note I used to setup Pyspark environment on local VM with vagrant. </p>
-<h3 id="Step-One-—-Spawn-Local-VM"><a href="#Step-One-—-Spawn-Local-VM" class="headerlink" title="Step One — Spawn Local VM"></a>Step One — Spawn Local VM</h3><p>Vagrant up a local virtual machine. There is only one line in VagrantFile that needs to change. Comment back the following line. Note, the guest port should be 8888 as the defualt port for Jupyter notebook is 8888. The host port can be whatever you like. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network &quot;forwarded_port&quot;, guest: 8888, host: 8888</span><br></pre></td></tr></table></figure>
-<p>It’s recommended that you set up a shared folder as always. We need to use it to pass the Spark.tgz file into VM. The corresponding line in VagrantFile is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder &quot;./ShareFile&quot;, &quot;/vagrant_data&quot;</span><br></pre></td></tr></table></figure>
+        <h1>Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM</h1>
+<p>This is a note I used to setup Pyspark environment on local VM with vagrant.</p>
+<h3>Step One — Spawn Local VM</h3>
+<p>Vagrant up a local virtual machine. There is only one line in VagrantFile that needs to change. Comment back the following line. Note, the guest port should be 8888 as the defualt port for Jupyter notebook is 8888. The host port can be whatever you like.</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network &quot;forwarded_port&quot;, guest: 8888, host: 8888</span><br></pre></td></tr></table></figure></p>
+<p>It's recommended that you set up a shared folder as always. We need to use it to pass the Spark.tgz file into VM. The corresponding line in VagrantFile is:</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder &quot;./ShareFile&quot;, &quot;/vagrant_data&quot;</span><br></pre></td></tr></table></figure></p>
 <p>where <code>ShareFile</code> is a folder I created on the same directory as VagrantFile. You can name and put your sharefolder in whatever manner you like.</p>
-<h3 id="Step-Two-—-Install-Needed-Packages"><a href="#Step-Two-—-Install-Needed-Packages" class="headerlink" title="Step Two — Install Needed Packages"></a>Step Two — Install Needed Packages</h3><p>Use <code>vagrant ssh</code> to shell into your local VM. Install packages using the following command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y python3</span><br><span class="line">sudo apt-get install -y python3-pip</span><br><span class="line">pip3 install py4j</span><br><span class="line">pip3 install jupyter</span><br><span class="line">sudo apt-get install -y default-jre</span><br><span class="line">sudo apt-get install -y scala</span><br></pre></td></tr></table></figure>
+<h3>Step Two — Install Needed Packages</h3>
+<p>Use <code>vagrant ssh</code> to shell into your local VM. Install packages using the following command:</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y python3</span><br><span class="line">sudo apt-get install -y python3-pip</span><br><span class="line">pip3 install py4j</span><br><span class="line">pip3 install jupyter</span><br><span class="line">sudo apt-get install -y default-jre</span><br><span class="line">sudo apt-get install -y scala</span><br></pre></td></tr></table></figure></p>
 <p>These commands install python3, pip3, py4j,  Jupyter notebook, Java and Scala respectively. Java and Scala are needed because Spark is written in Scala and Scala is written in Java.</p>
-<h3 id="Step-Three-—-Download-Spark-Latest-Version"><a href="#Step-Three-—-Download-Spark-Latest-Version" class="headerlink" title="Step Three — Download Spark Latest Version"></a>Step Three — Download Spark Latest Version</h3><p>Download Spark lateset version for ubuntu <a href="https://spark.apache.org/downloads.html" target="_blank" rel="noopener">here</a>. I downloaded <a href="https://www.apache.org/dyn/closer.lua/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz" target="_blank" rel="noopener">spark-2.2.0-bin-hadoop2.7.tgz</a>. It should be roughly 200 MB. After downloading, put it in the shared folder.</p>
-<p>In the local vm, use <code>mv</code> to move the tgz file to the <code>/home/ubuntu</code> directory, i.e. the root directory. Type the following command to unpack the file. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar -zxvf spark-2.2.0-bin-hadoop2.7.tgz</span><br></pre></td></tr></table></figure>
-<h3 id="Step-Four-—-Configure-the-Pyspark-Environment"><a href="#Step-Four-—-Configure-the-Pyspark-Environment" class="headerlink" title="Step Four — Configure the Pyspark Environment"></a>Step Four — Configure the Pyspark Environment</h3><p>At the root directory of the local VM, use whatever text editor you prefer to open the <code>.bashrc</code> file. Copy and paste the following line at the end of the file.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export SPARK_HOME=&apos;/home/ubuntu/spark-2.2.0-bin-hadoop2.7&apos;</span><br><span class="line">export PATH=$SPARK_HOME:$PATH</span><br><span class="line">export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH</span><br><span class="line"></span><br><span class="line">export PYSPARK_DRIVER_PYTHON=jupyter</span><br><span class="line">export PYSPARK_DRIVER_PYTHON_OPTS=&apos;notebook&apos;</span><br></pre></td></tr></table></figure>
+<h3>Step Three — Download Spark Latest Version</h3>
+<p>Download Spark lateset version for ubuntu &lt;a href=&quot;https://spark.apache.org/downloads.html&quot;&gt;here&lt;/a&gt;. I downloaded <a href="https://www.apache.org/dyn/closer.lua/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz" target="_blank" rel="noopener">spark-2.2.0-bin-hadoop2.7.tgz</a>. It should be roughly 200 MB. After downloading, put it in the shared folder.</p>
+<p>In the local vm, use <code>mv</code> to move the tgz file to the <code>/home/ubuntu</code> directory, i.e. the root directory. Type the following command to unpack the file.</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar -zxvf spark-2.2.0-bin-hadoop2.7.tgz</span><br></pre></td></tr></table></figure></p>
+<h3>Step Four — Configure the Pyspark Environment</h3>
+<p>At the root directory of the local VM, use whatever text editor you prefer to open the <code>.bashrc</code> file. Copy and paste the following line at the end of the file.</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export SPARK_HOME=&apos;/home/ubuntu/spark-2.2.0-bin-hadoop2.7&apos;</span><br><span class="line">export PATH=$SPARK_HOME:$PATH</span><br><span class="line">export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH</span><br><span class="line"></span><br><span class="line">export PYSPARK_DRIVER_PYTHON=jupyter</span><br><span class="line">export PYSPARK_DRIVER_PYTHON_OPTS=&apos;notebook&apos;</span><br></pre></td></tr></table></figure></p>
 <p>These lines specify the needed path to find the pyspark module in Jupyter notebook. After editting, type this command in the same directory:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ./bashrc</span><br></pre></td></tr></table></figure>
-<p>Finally, change the permission of the Spark files. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">suco chmod 777 spark-2.2.0-bin-hadoop2.7.tgz</span><br><span class="line">cd spark-2.2.0-bin-hadoop2.7.tgz/</span><br><span class="line">sudo chmod 777 python </span><br><span class="line">cd python/</span><br><span class="line">sudo chmod 777 pyspark</span><br></pre></td></tr></table></figure>
-<p>These commands will give the user privileges to access the pyspark module. </p>
-<h3 id="Step-Five-—-Restart-the-VM-and-Check"><a href="#Step-Five-—-Restart-the-VM-and-Check" class="headerlink" title="Step Five — Restart the VM and Check"></a>Step Five — Restart the VM and Check</h3><p>Now restart the virtual machine. You can exit it and use <code>vagrant reload</code> to do so. </p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ./bashrc</span><br></pre></td></tr></table></figure></p>
+<p>Finally, change the permission of the Spark files.</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">suco chmod 777 spark-2.2.0-bin-hadoop2.7.tgz</span><br><span class="line">cd spark-2.2.0-bin-hadoop2.7.tgz/</span><br><span class="line">sudo chmod 777 python </span><br><span class="line">cd python/</span><br><span class="line">sudo chmod 777 pyspark</span><br></pre></td></tr></table></figure></p>
+<p>These commands will give the user privileges to access the pyspark module.</p>
+<h3>Step Five — Restart the VM and Check</h3>
+<p>Now restart the virtual machine. You can exit it and use <code>vagrant reload</code> to do so.</p>
 <p>After restart, shell into the local vm and under whatever folder, type the following command to start the jupyter notebook:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --ip=0.0.0.0</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --ip=0.0.0.0</span><br></pre></td></tr></table></figure></p>
 <p><strong>Note: the —ip argument is needed to enable forward porting!!</strong></p>
-<p>Now you can open a browser on the host machine. Type in <code>https://localhost:8888</code> or whatever host port you have chosen. You should be able to access the Jupyter Notebook in the local vm. </p>
+<p>Now you can open a browser on the host machine. Type in <code>https://localhost:8888</code> or whatever host port you have chosen. You should be able to access the Jupyter Notebook in the local vm.</p>
 <p>Then in the notebook, try the following command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import pyspark</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import pyspark</span><br></pre></td></tr></table></figure></p>
 <p>This should not give any output.</p>
 <p>If no error is generated, then congratulation, you have successfully setup !</p>
 
@@ -504,7 +530,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pyspark-in-Jupyter-Notebook-with-SSH-Forward-Porting-on-Local-VM"><span class="nav-number">1.</span> <span class="nav-text">Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-One-—-Spawn-Local-VM"><span class="nav-number">1.0.1.</span> <span class="nav-text">Step One — Spawn Local VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-Two-—-Install-Needed-Packages"><span class="nav-number">1.0.2.</span> <span class="nav-text">Step Two — Install Needed Packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-Three-—-Download-Spark-Latest-Version"><span class="nav-number">1.0.3.</span> <span class="nav-text">Step Three — Download Spark Latest Version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-Four-—-Configure-the-Pyspark-Environment"><span class="nav-number">1.0.4.</span> <span class="nav-text">Step Four — Configure the Pyspark Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-Five-—-Restart-the-VM-and-Check"><span class="nav-number">1.0.5.</span> <span class="nav-text">Step Five — Restart the VM and Check</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.1.</span> <span class="nav-text">Step One — Spawn Local VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.2.</span> <span class="nav-text">Step Two — Install Needed Packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.</span> <span class="nav-text">Step Three — Download Spark Latest Version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.4.</span> <span class="nav-text">Step Four — Configure the Pyspark Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.5.</span> <span class="nav-text">Step Five — Restart the VM and Check</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -593,6 +619,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -627,6 +656,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -711,6 +750,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 4This week my Professor Schumaker left for a conference, and won’t be back until next Friday. Before leaving, he has assigned me several tasks.  Tmesh FunctionsThe very imminent one is t">
+<meta name="description" content="Research Note 4 This week my Professor Schumaker left for a conference, and won&apos;t be back until next Friday. Before leaving, he has assigned me several tasks. Tmesh Functions The very imminent one is">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-4">
 <meta property="og:url" content="http://yoursite.com/2017/07/02/Research-Note-4/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 4This week my Professor Schumaker left for a conference, and won’t be back until next Friday. Before leaving, he has assigned me several tasks.  Tmesh FunctionsThe very imminent one is t">
+<meta property="og:description" content="Research Note 4 This week my Professor Schumaker left for a conference, and won&apos;t be back until next Friday. Before leaving, he has assigned me several tasks. Tmesh Functions The very imminent one is">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh3D/reference.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh3D/cube1.jpg">
 <meta property="og:updated_time" content="2017-09-23T18:33:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-4">
-<meta name="twitter:description" content="Research Note 4This week my Professor Schumaker left for a conference, and won’t be back until next Friday. Before leaving, he has assigned me several tasks.  Tmesh FunctionsThe very imminent one is t">
-<meta name="twitter:image" content="http://yoursite.com/images/Research/Tmesh3D/reference.jpg">
+<meta name="twitter:description" content="Research Note 4 This week my Professor Schumaker left for a conference, and won&apos;t be back until next Friday. Before leaving, he has assigned me several tasks. Tmesh Functions The very imminent one is">
 
 
 
@@ -190,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -336,34 +353,41 @@
       
 
       
-        <h1 id="Research-Note-4"><a href="#Research-Note-4" class="headerlink" title="Research Note 4"></a>Research Note 4</h1><p>This week my Professor Schumaker left for a conference, and won’t be back until next Friday. Before leaving, he has assigned me several tasks. </p>
-<h2 id="Tmesh-Functions"><a href="#Tmesh-Functions" class="headerlink" title="Tmesh Functions"></a>Tmesh Functions</h2><p>The very imminent one is to continue work on the Tmesh functions. We need a function to perform penalize least square approximation on refined rectangulations. It consists of two major steps: </p>
+        <h1>Research Note 4</h1>
+<p>This week my Professor Schumaker left for a conference, and won't be back until next Friday. Before leaving, he has assigned me several tasks.</p>
+<h2>Tmesh Functions</h2>
+<p>The very imminent one is to continue work on the Tmesh functions. We need a function to perform penalize least square approximation on refined rectangulations. It consists of two major steps:</p>
 <ol>
 <li>Getting the smoothness condition between unit rectangles.</li>
 <li>Perform penalize least square approximation.</li>
 </ol>
-<h3 id="Smoothness-Condition-Matrix"><a href="#Smoothness-Condition-Matrix" class="headerlink" title="Smoothness Condition Matrix"></a>Smoothness Condition Matrix</h3><p>Since we have refining our rectangles, we may have very weird partition of the original domain region. In order to obtain a smooth surface after we approximate a function, we need to calculate the smoothness condition on sharing edges and sharing vertices. </p>
-<p>The idea is not very complicate. First, we obtain the number of smoothness condition $ns$ we need by counting sharing edges and sharing vertices. The formula also involves the dimensions on x, y directions. </p>
-<p>Then we construct a $ns$ by $nc$ zero matrix, where $nc$ here is the number of coefficient for a spline on the rectangulation. We can use the <em>sparse</em> function in Matlab to save storage space, since the smoothness condition only involves the coefficients on the same edge. </p>
+<h3>Smoothness Condition Matrix</h3>
+<p>Since we have refining our rectangles, we may have very weird partition of the original domain region. In order to obtain a smooth surface after we approximate a function, we need to calculate the smoothness condition on sharing edges and sharing vertices.</p>
+<p>The idea is not very complicate. First, we obtain the number of smoothness condition $ns$ we need by counting sharing edges and sharing vertices. The formula also involves the dimensions on x, y directions.</p>
+<p>Then we construct a $ns$ by $nc$ zero matrix, where $nc$ here is the number of coefficient for a spline on the rectangulation. We can use the <em>sparse</em> function in Matlab to save storage space, since the smoothness condition only involves the coefficients on the same edge.</p>
 <p>To get the value at specific entry, we need to traverse all the shared edges and hanging vertices. Note the order we put the smoothness condition in each row does not matter, because when we enforce the condition, we will simply do it by minimize the product of $cM$ where $c$ is the spline coefficient and $M$ is our matrix.</p>
-<p>As we have different degree of polynomial on different direction, I chose to first traverse all the horizontal edge and then vertical. In each iteration, I get all the coefficients of domain points on the current edge, and then solve for a linear system. This system represent the fact that the Bernstein polynomial on different side of the edge reach the same value on the domain points. In other words, this is also a interpolation problem, where I represent the coefficient of the Bernstein polynomial using the coefficient on the other side. We basically do the same on all the hanging vertices. </p>
+<p>As we have different degree of polynomial on different direction, I chose to first traverse all the horizontal edge and then vertical. In each iteration, I get all the coefficients of domain points on the current edge, and then solve for a linear system. This system represent the fact that the Bernstein polynomial on different side of the edge reach the same value on the domain points. In other words, this is also a interpolation problem, where I represent the coefficient of the Bernstein polynomial using the coefficient on the other side. We basically do the same on all the hanging vertices.</p>
 <p>Finally, the function return the well-constructed matrix $M$ as output.</p>
-<h3 id="Penalize-Least-Square-Approximation"><a href="#Penalize-Least-Square-Approximation" class="headerlink" title="Penalize Least Square Approximation"></a>Penalize Least Square Approximation</h3><p>This function is a little similar to the one that interpolate any given function, except for the fact that we are solving least square fitting problem accompany with smoothness condition. </p>
+<h3>Penalize Least Square Approximation</h3>
+<p>This function is a little similar to the one that interpolate any given function, except for the fact that we are solving least square fitting problem accompany with smoothness condition.</p>
 <p>I have finished the outline of the function and there is a problem that I have to wait till Professor get back. Basically I have to use the Kronecker product of Bernstein polynomial to get the linear system. I will add details about this function in next Research Note.</p>
-<h3 id="Refinerec"><a href="#Refinerec" class="headerlink" title="Refinerec"></a>Refinerec</h3><p>In addition to the two functions above, I also spent two whole days on debugging and fixing <em>refinerec</em> function. </p>
-<p>Professor notice a significant bug on the previous version. It’s pretty complicated to articulate the bug. I added 250 lines and finally fixed it. Now the whole refine function is 750 line, but I believe I could have combine some of the cases or extract out some helper functions to make the whole code more readable.</p>
-<h2 id="Other-Directions"><a href="#Other-Directions" class="headerlink" title="Other Directions"></a>Other Directions</h2><p>Other than the Tmesh functions that I need to work on, Professor pointed two direction for me in the next two weeks. First is the 3D version of the Tmesh problems. In other words, I need to extend our current work on 2D to 3D. We both know that I will be a huge amount of work, so he only expects me to first get all the geometric functions. </p>
-<p>The other direction is 3D Tetrahedron partition. This one is even harder since we can’t easily visualize what happen in 3D space. So I chose to first work on the 3D Tmesh direction. </p>
-<h3 id="3D-Tmesh"><a href="#3D-Tmesh" class="headerlink" title="3D Tmesh"></a>3D Tmesh</h3><p>Till this Sunday, I have finish several function we need. The path along which I work on these function is pretty straightforward. First I think we need to come up with a way to visualize the boxes in 3D. I found the <em>patch</em> function in Matlab and implement a simple function to display a cube. One example with label is as follow</p>
-<p><img src="/images/Research/Tmesh3D/reference.jpg"></p>
-<p>Then I need a function that can plot any number of cube partition together, which calls on the simple plot function. Since we will definitely need a 3D version of <em>reclist</em>, which I named it <em>cubelist</em>, I choose to use the output from the list function to plot the cubes. </p>
-<p>In 3D there are a lot of possible output containing information about the whole partition that we may need. Thus I need to think carefully before I move on. We have 4 different dimension of objects: vertices, edges, faces and cubes (or boxes). First and foremost, given $\textbf{[nx, ny, nz]}$ as a parameter for the initial partition, we inevitably need to output the coordinate of each vertices, and that is $\textbf{[x,y,z]}$, three outputs. Second, we need to have the relation between cubes and vertices, cubes and edges, and also cubes and faces; they are three matrices, <strong>V</strong> of size $ncube$ by 8, <strong>E</strong> of size $ncube$ by 12 and <strong>F</strong> of size $ncube$ by 6. In these matrices, we use the vertices number, edge number and face number to represent each cube. </p>
-<p>After that, we need the relation between edges and vertices, between faces and edges, and between faces and vertices. These matrices can help us quickly get the information we need. I named them as <strong>evertex</strong>, <strong>fedge</strong> and <strong>fvertex</strong>. </p>
-<p>Finally, I think in the future, we also need some opposite relation, which are matrices that connect vertices and cubes, connect edges and cubes, and connect faces and cubes. They help me to find the cube that are arround a given vertex, edge or face. In addition, they can also be used to find the boundary vertices, edges and faces as we put zero for nothing (or boundary). I call these matrices <strong>vstar</strong>, <strong>estar</strong> and <strong>fstar</strong>. </p>
-<p>All these output I chose is entirely based on my own experience. Therefore, after Professor Schumaker comes back, we decide whether to keep all of them and add some more, or dump some of them. </p>
-<p>With these output, it’s far more than enough to generate a plot of the whole partition. Here is a 3 by 3 by 4 partition, where the numbers are points on each side.</p>
-<p><img src="/images/Research/Tmesh3D/cube1.jpg"></p>
-<p>It’s possible to labe all of the object but that will be too cumbersome and messy especially when we get to more partition.</p>
+<h3>Refinerec</h3>
+<p>In addition to the two functions above, I also spent two whole days on debugging and fixing <em>refinerec</em> function.</p>
+<p>Professor notice a significant bug on the previous version. It's pretty complicated to articulate the bug. I added 250 lines and finally fixed it. Now the whole refine function is 750 line, but I believe I could have combine some of the cases or extract out some helper functions to make the whole code more readable.</p>
+<h2>Other Directions</h2>
+<p>Other than the Tmesh functions that I need to work on, Professor pointed two direction for me in the next two weeks. First is the 3D version of the Tmesh problems. In other words, I need to extend our current work on 2D to 3D. We both know that I will be a huge amount of work, so he only expects me to first get all the geometric functions.</p>
+<p>The other direction is 3D Tetrahedron partition. This one is even harder since we can't easily visualize what happen in 3D space. So I chose to first work on the 3D Tmesh direction.</p>
+<h3>3D Tmesh</h3>
+<p>Till this Sunday, I have finish several function we need. The path along which I work on these function is pretty straightforward. First I think we need to come up with a way to visualize the boxes in 3D. I found the <em>patch</em> function in Matlab and implement a simple function to display a cube. One example with label is as follow</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh3D/reference.jpg&quot;&gt;</p>
+<p>Then I need a function that can plot any number of cube partition together, which calls on the simple plot function. Since we will definitely need a 3D version of <em>reclist</em>, which I named it <em>cubelist</em>, I choose to use the output from the list function to plot the cubes.</p>
+<p>In 3D there are a lot of possible output containing information about the whole partition that we may need. Thus I need to think carefully before I move on. We have 4 different dimension of objects: vertices, edges, faces and cubes (or boxes). First and foremost, given $\textbf{[nx, ny, nz]}$ as a parameter for the initial partition, we inevitably need to output the coordinate of each vertices, and that is $\textbf{[x,y,z]}$, three outputs. Second, we need to have the relation between cubes and vertices, cubes and edges, and also cubes and faces; they are three matrices, <strong>V</strong> of size $ncube$ by 8, <strong>E</strong> of size $ncube$ by 12 and <strong>F</strong> of size $ncube$ by 6. In these matrices, we use the vertices number, edge number and face number to represent each cube.</p>
+<p>After that, we need the relation between edges and vertices, between faces and edges, and between faces and vertices. These matrices can help us quickly get the information we need. I named them as <strong>evertex</strong>, <strong>fedge</strong> and <strong>fvertex</strong>.</p>
+<p>Finally, I think in the future, we also need some opposite relation, which are matrices that connect vertices and cubes, connect edges and cubes, and connect faces and cubes. They help me to find the cube that are arround a given vertex, edge or face. In addition, they can also be used to find the boundary vertices, edges and faces as we put zero for nothing (or boundary). I call these matrices <strong>vstar</strong>, <strong>estar</strong> and <strong>fstar</strong>.</p>
+<p>All these output I chose is entirely based on my own experience. Therefore, after Professor Schumaker comes back, we decide whether to keep all of them and add some more, or dump some of them.</p>
+<p>With these output, it's far more than enough to generate a plot of the whole partition. Here is a 3 by 3 by 4 partition, where the numbers are points on each side.</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh3D/cube1.jpg&quot;&gt;</p>
+<p>It's possible to labe all of the object but that will be too cumbersome and messy especially when we get to more partition.</p>
 <p>I have already finish the <em>cubelist</em> function now, and I decide to move on to the hard part, the <em>refinecube</em> function in next week. Wish me good luck!</p>
 
       
@@ -541,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-4"><span class="nav-number">1.</span> <span class="nav-text">Research Note 4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tmesh-Functions"><span class="nav-number">1.1.</span> <span class="nav-text">Tmesh Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Smoothness-Condition-Matrix"><span class="nav-number">1.1.1.</span> <span class="nav-text">Smoothness Condition Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Penalize-Least-Square-Approximation"><span class="nav-number">1.1.2.</span> <span class="nav-text">Penalize Least Square Approximation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refinerec"><span class="nav-number">1.1.3.</span> <span class="nav-text">Refinerec</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-Directions"><span class="nav-number">1.2.</span> <span class="nav-text">Other Directions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3D-Tmesh"><span class="nav-number">1.2.1.</span> <span class="nav-text">3D Tmesh</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Tmesh Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.1.</span> <span class="nav-text">Smoothness Condition Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.2.</span> <span class="nav-text">Penalize Least Square Approximation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.3.</span> <span class="nav-text">Refinerec</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Other Directions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.1.</span> <span class="nav-text">3D Tmesh</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -630,6 +654,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -664,6 +691,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -748,6 +785,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="Hadoop Distributed File SystemSince HDFS is quite similar to GFS, to me, it’s just an open-source GFS 2.0, I will not go into details on many subjects in this paper.  ArchitectureNameNode and DataNode">
+<meta name="description" content="Hadoop Distributed File System Since HDFS is quite similar to GFS, to me, it&apos;s just an open-source GFS 2.0, I will not go into details on many subjects in this paper. Architecture NameNode and DataNod">
 <meta name="keywords" content="Bigdata">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDFS">
 <meta property="og:url" content="http://yoursite.com/2017/11/05/HDFS/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Hadoop Distributed File SystemSince HDFS is quite similar to GFS, to me, it’s just an open-source GFS 2.0, I will not go into details on many subjects in this paper.  ArchitectureNameNode and DataNode">
+<meta property="og:description" content="Hadoop Distributed File System Since HDFS is quite similar to GFS, to me, it&apos;s just an open-source GFS 2.0, I will not go into details on many subjects in this paper. Architecture NameNode and DataNod">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2017/11/05/images/Papers/HDFS-datapipeline.png">
 <meta property="og:updated_time" content="2017-11-14T04:10:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS">
-<meta name="twitter:description" content="Hadoop Distributed File SystemSince HDFS is quite similar to GFS, to me, it’s just an open-source GFS 2.0, I will not go into details on many subjects in this paper.  ArchitectureNameNode and DataNode">
-<meta name="twitter:image" content="http://yoursite.com/2017/11/05/images/Papers/HDFS-datapipeline.png">
+<meta name="twitter:description" content="Hadoop Distributed File System Since HDFS is quite similar to GFS, to me, it&apos;s just an open-source GFS 2.0, I will not go into details on many subjects in this paper. Architecture NameNode and DataNod">
 
 
 
@@ -189,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -346,34 +364,43 @@
       
 
       
-        <h1 id="Hadoop-Distributed-File-System"><a href="#Hadoop-Distributed-File-System" class="headerlink" title="Hadoop Distributed File System"></a>Hadoop Distributed File System</h1><p>Since HDFS is quite similar to GFS, to me, it’s just an open-source GFS 2.0, I will not go into details on many subjects in this paper. </p>
-<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><h4 id="NameNode-and-DataNode"><a href="#NameNode-and-DataNode" class="headerlink" title="NameNode and DataNode"></a>NameNode and DataNode</h4><p>​    In short, the architecture of HDFS is quite similar to GFS. They both adopt centralized structure, where  in HDFS the NameNode is the master in GFS and DataNodes are chunkservers. Just like in GFS, NameNode handles the metadata. It maintains the namespace tree and mapping of files blocks to DataNodes. Typically, each cluster has a NameNode and lots of DataNode. </p>
-<p>NameNode can run as either <em>CheckpointNode</em> or <em>BackupNode</em>. </p>
-<p>​    HDFS keeps the entire namespace in RAM. It also uses checkpoint and journal to provide fault recovery. Note, the location of DataNode is not stored in the checkpoint. </p>
-<p>​    The DataNode also uses checksum to prevent data lost. It stores two file for each block replica, one for data and one for metadata including checksum and <em>generation stamp</em>. Version number is used to remove stale data. Namespace ID is used to decide whether DataNode belongs to a cluster. </p>
-<p>​    During normal operation, DataNode sends <em>heartbeats</em> to the NameNode. Heartbeats carry information of the DataNode, like storage capacity, number of data transfers in progress. The NameNode replies to heartbeats to send instructions, including:</p>
+        <h1>Hadoop Distributed File System</h1>
+<p>Since HDFS is quite similar to GFS, to me, it's just an open-source GFS 2.0, I will not go into details on many subjects in this paper.</p>
+<h2>Architecture</h2>
+<h4>NameNode and DataNode</h4>
+<p>​	In short, the architecture of HDFS is quite similar to GFS. They both adopt centralized structure, where  in HDFS the NameNode is the master in GFS and DataNodes are chunkservers. Just like in GFS, NameNode handles the metadata. It maintains the namespace tree and mapping of files blocks to DataNodes. Typically, each cluster has a NameNode and lots of DataNode.</p>
+<p>NameNode can run as either <em>CheckpointNode</em> or <em>BackupNode</em>.</p>
+<p>​	HDFS keeps the entire namespace in RAM. It also uses checkpoint and journal to provide fault recovery. Note, the location of DataNode is not stored in the checkpoint.</p>
+<p>​	The DataNode also uses checksum to prevent data lost. It stores two file for each block replica, one for data and one for metadata including checksum and <em>generation stamp</em>. Version number is used to remove stale data. Namespace ID is used to decide whether DataNode belongs to a cluster.</p>
+<p>​	During normal operation, DataNode sends <em>heartbeats</em> to the NameNode. Heartbeats carry information of the DataNode, like storage capacity, number of data transfers in progress. The NameNode replies to heartbeats to send instructions, including:</p>
 <ul>
 <li>replicate blocks to other nodes</li>
 <li>remove local block replicas</li>
 <li>re-register or shut down the node</li>
-<li>send an immediate block report, (which is a summary of a block’s information)</li>
+<li>send an immediate block report, (which is a summary of a block's information)</li>
 </ul>
-<h4 id="Image-and-Journal"><a href="#Image-and-Journal" class="headerlink" title="Image and Journal"></a>Image and Journal</h4><p>The namespace <em>image</em> is the file system metadata that describes the organization of application data as directories and files. A persistent record of the image written to disk is called a <em>checkpoint</em>. </p>
-<p>The journal is in fact a <em>write-ahead log</em>, which is a technique widely applied in modern database. For each transaction, the change is recorded in the journal, and the journal file is flushed and synched before the change is committed. </p>
-<p>This design has a drawback, since NameNode is a multithread system, saving a transaction to the disk may become a bottleneck as all other thread need to wait. The HDFS optimize this by batching transactions to save. </p>
-<h2 id="File-I-O-Operation"><a href="#File-I-O-Operation" class="headerlink" title="File I/O Operation"></a>File I/O Operation</h2><h4 id="File-Read-amp-Write"><a href="#File-Read-amp-Write" class="headerlink" title="File Read &amp; Write"></a>File Read &amp; Write</h4><p>After a file is closed, the bytes written cannot be altered or removed except that new data can be appended to the end. HDFS also implements a single-writer, multiple reader model. It uses <em>lease</em> to grant permission to client, just as GFS, which means write with concurrent read is supported as well.</p>
-<p>When writing files, push sequence of packets on a <em>pipeline</em> to write to blocks that stores the file and its replicas. Need to setup and close the pipeline before and after write. Note, in the figure, a <em>hflush</em> operation is conducted right after packet 2 is sent. It will force the client to wait for the confirm information of packet 2 received before sending packet 3. </p>
-<p><img src="../images/Papers/HDFS-datapipeline.png" width="400"></p>
-<h4 id="Block-Placement-and-Others"><a href="#Block-Placement-and-Others" class="headerlink" title="Block Placement and Others"></a>Block Placement and Others</h4><p>As in GFS, HDFS tends to split replicas on different machines and also different racks. The default HDFS replica placement policy can be summa- rized as follows:</p>
+<h4>Image and Journal</h4>
+<p>The namespace <em>image</em> is the file system metadata that describes the organization of application data as directories and files. A persistent record of the image written to disk is called a <em>checkpoint</em>.</p>
+<p>The journal is in fact a <em>write-ahead log</em>, which is a technique widely applied in modern database. For each transaction, the change is recorded in the journal, and the journal file is flushed and synched before the change is committed.</p>
+<p>This design has a drawback, since NameNode is a multithread system, saving a transaction to the disk may become a bottleneck as all other thread need to wait. The HDFS optimize this by batching transactions to save.</p>
+<h2>File I/O Operation</h2>
+<h4>File Read &amp; Write</h4>
+<p>After a file is closed, the bytes written cannot be altered or removed except that new data can be appended to the end. HDFS also implements a single-writer, multiple reader model. It uses <em>lease</em> to grant permission to client, just as GFS, which means write with concurrent read is supported as well.</p>
+<p>When writing files, push sequence of packets on a <em>pipeline</em> to write to blocks that stores the file and its replicas. Need to setup and close the pipeline before and after write. Note, in the figure, a <em>hflush</em> operation is conducted right after packet 2 is sent. It will force the client to wait for the confirm information of packet 2 received before sending packet 3.</p>
+<p>&lt;img src=&quot;../images/Papers/HDFS-datapipeline.png&quot; width=&quot;400&quot;&gt;</p>
+<h4>Block Placement and Others</h4>
+<p>As in GFS, HDFS tends to split replicas on different machines and also different racks. The default HDFS replica placement policy can be summa- rized as follows:</p>
 <ol>
 <li>No Datanode contains more than one replica of any block.</li>
 <li>No rack contains more than two replicas of the same block, provided there are sufficient racks on the cluster.</li>
 </ol>
-<p>Other functionalities provided by HDFS include balancer, a tool to balance disk usage on cluster, and block scanner, which periodically scans a block’s replicas and verifies the checksum.</p>
+<p>Other functionalities provided by HDFS include balancer, a tool to balance disk usage on cluster, and block scanner, which periodically scans a block's replicas and verifies the checksum.</p>
 <p><em>In my thought, some of the mechanism in HDFS are just grouping functions in GFS into small units and manage them separately.</em></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The rest of the paper is practice experience, future works and acknowledgement. In short, HDFS is a powerful distributed system, which is like an open-source,  upgraded GFS.</p>
-<p>One final thing to note, the major drawback of having many namespaces is the cost of managing them. I guess that’s an important reason for YARN to show up. </p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] K V Shvachko, H Kuang, S Radia, R Chansler, Yahoo!. 2010. <em>The Hadoop Distributed File System</em></p>
+<h2>Conclusion</h2>
+<p>The rest of the paper is practice experience, future works and acknowledgement. In short, HDFS is a powerful distributed system, which is like an open-source,  upgraded GFS.</p>
+<p>One final thing to note, the major drawback of having many namespaces is the cost of managing them. I guess that's an important reason for YARN to show up.</p>
+<h2>Reference</h2>
+<p>[1] K V Shvachko, H Kuang, S Radia, R Chansler, Yahoo!. 2010. <em>The Hadoop Distributed File System</em></p>
 
       
     </div>
@@ -548,7 +575,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Distributed-File-System"><span class="nav-number">1.</span> <span class="nav-text">Hadoop Distributed File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">1.1.</span> <span class="nav-text">Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NameNode-and-DataNode"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">NameNode and DataNode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-and-Journal"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Image and Journal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-I-O-Operation"><span class="nav-number">1.2.</span> <span class="nav-text">File I/O Operation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#File-Read-amp-Write"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">File Read &amp; Write</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Block-Placement-and-Others"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Block Placement and Others</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Hadoop Distributed File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">NameNode and DataNode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Image and Journal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">File I/O Operation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">File Read &amp; Write</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Block Placement and Others</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -637,6 +664,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -671,6 +701,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -755,6 +795,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

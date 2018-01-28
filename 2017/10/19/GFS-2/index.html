@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Google File System Note 2Continue from note 1. This note is also based on the Google File System paper [1]. Master OperationsThe master execute all the namespace operations. It makes placement decisio">
+<meta name="description" content="Google File System Note 2 Continue from note 1. This note is also based on the Google File System paper [1]. Master Operations The master execute all the namespace operations. It makes placement decis">
 <meta name="keywords" content="Bigdata">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GFS-2">
 <meta property="og:url" content="http://yoursite.com/2017/10/19/GFS-2/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Google File System Note 2Continue from note 1. This note is also based on the Google File System paper [1]. Master OperationsThe master execute all the namespace operations. It makes placement decisio">
+<meta property="og:description" content="Google File System Note 2 Continue from note 1. This note is also based on the Google File System paper [1]. Master Operations The master execute all the namespace operations. It makes placement decis">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-11-05T22:38:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GFS-2">
-<meta name="twitter:description" content="Google File System Note 2Continue from note 1. This note is also based on the Google File System paper [1]. Master OperationsThe master execute all the namespace operations. It makes placement decisio">
+<meta name="twitter:description" content="Google File System Note 2 Continue from note 1. This note is also based on the Google File System paper [1]. Master Operations The master execute all the namespace operations. It makes placement decis">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -333,39 +353,57 @@
       
 
       
-        <h1 id="Google-File-System-Note-2"><a href="#Google-File-System-Note-2" class="headerlink" title="Google File System Note 2"></a>Google File System Note 2</h1><p>Continue from note 1. This note is also based on the Google File System paper [1].</p>
-<h2 id="Master-Operations"><a href="#Master-Operations" class="headerlink" title="Master Operations"></a>Master Operations</h2><p>The master execute all the namespace operations. It makes placement decisions, creates new chunks and hence replicas, and coordinates various system-wide activities to keep chunks fully replicated, to balance load across all the chunkservers, and to reclaim unused storage. </p>
-<h4 id="Namespace-Management-and-Locking"><a href="#Namespace-Management-and-Locking" class="headerlink" title="Namespace Management and Locking"></a>Namespace Management and Locking</h4><p>To allow multiple master operation running concurrently, the master uses locks over regions of the namespace to ensure proper serialization.</p>
+        <h1>Google File System Note 2</h1>
+<p>Continue from note 1. This note is also based on the Google File System paper [1].</p>
+<h2>Master Operations</h2>
+<p>The master execute all the namespace operations. It makes placement decisions, creates new chunks and hence replicas, and coordinates various system-wide activities to keep chunks fully replicated, to balance load across all the chunkservers, and to reclaim unused storage.</p>
+<h4>Namespace Management and Locking</h4>
+<p>To allow multiple master operation running concurrently, the master uses locks over regions of the namespace to ensure proper serialization.</p>
 <p>GFS logically represents its namespace as a lookup table mapping full pathnames to metadata. Each node in the namespace tree, no matter a file name or a directory name, has an associated read-write lock.</p>
-<p>Each master operation acquires a set of locks before it runs. It will acquire read-locks on all the related directory names, as /d1, /d1/d2, …, /d1/d2/…/dn, and either a read or write lock on the full path name /d1/d2/…/dn/leaf. Note that the leaf can be a directory or a file. </p>
+<p>Each master operation acquires a set of locks before it runs. It will acquire read-locks on all the related directory names, as /d1, /d1/d2, ..., /d1/d2/…/dn, and either a read or write lock on the full path name /d1/d2/.../dn/leaf. Note that the leaf can be a directory or a file.</p>
 <p>The read / write locks in GFS are the same as locks in other file system. Two things to note:</p>
 <ol>
 <li>File creation does not require a write lock on the parent directory because there is no “directory” to be protected. A read lock is enough.</li>
 <li>Locks are acquired in a consistent total order to prevent deadlock</li>
 </ol>
 <p>One nice property of this locking scheme is that it allows concurrent mutations in the same directory.</p>
-<h4 id="Replica-Placement"><a href="#Replica-Placement" class="headerlink" title="Replica Placement"></a>Replica Placement</h4><p>The chunk replica placement policy serves two purposes: maximize data reliability and availability, and maximize net- work bandwidth utilization.</p>
+<h4>Replica Placement</h4>
+<p>The chunk replica placement policy serves two purposes: maximize data reliability and availability, and maximize net- work bandwidth utilization.</p>
 <p>GFS spreads chunk replicas across not only  machines but also racks to prevent from rack damage or offline. This also enables read for a chunk to exploit the aggregate bandwidth of multiple racks</p>
-<h4 id="Garbage-Collection"><a href="#Garbage-Collection" class="headerlink" title="Garbage Collection"></a>Garbage Collection</h4><p>When a file is deleted, GFS reclaim the physical storage azily during regular garbage collection at both the file and chunk levels.</p>
-<h5 id="Mechanism"><a href="#Mechanism" class="headerlink" title="Mechanism"></a>Mechanism</h5><p>When a file is deleted, the operation is logged just liked others. However, the file is just renamed to a hidden name that includes the deletion timestamp. The file is actually removed during the master’s regular scan of the file system namespace after it exists for more than three days (configurable). When the hidden file is removed from the namespace, its in- memory metadata is erased.</p>
+<h4>Garbage Collection</h4>
+<p>When a file is deleted, GFS reclaim the physical storage azily during regular garbage collection at both the file and chunk levels.</p>
+<h5>Mechanism</h5>
+<p>When a file is deleted, the operation is logged just liked others. However, the file is just renamed to a hidden name that includes the deletion timestamp. The file is actually removed during the master’s regular scan of the file system namespace after it exists for more than three days (configurable). When the hidden file is removed from the namespace, its in- memory metadata is erased.</p>
 <p>This mechanism provide efficient way to undelete file.</p>
-<h4 id="Stale-Replica-Detection"><a href="#Stale-Replica-Detection" class="headerlink" title="Stale Replica Detection"></a>Stale Replica Detection</h4><p>For each chunk, the master maintains a chunk version number to distinguish between up-to-date and stale replicas. Whenever the master grants a new lease on a chunk, it increases the chunk version number and informs the up-to-date replicas.</p>
-<p>Whenever chunk version number conflicts, always assume that the largest is up-to-date, even when the master’s record is not the largest. </p>
-<h2 id="Fault-Tolerace-and-Diagnosis"><a href="#Fault-Tolerace-and-Diagnosis" class="headerlink" title="Fault Tolerace and Diagnosis"></a>Fault Tolerace and Diagnosis</h2><p>One of the greatest challenges in designing the system is dealing with frequent component failures.</p>
-<h4 id="High-Availability"><a href="#High-Availability" class="headerlink" title="High Availability"></a>High Availability</h4><p>Two simple yet effective strategies: fast recovery and replication.</p>
-<h5 id="Fast-Recovery"><a href="#Fast-Recovery" class="headerlink" title="Fast Recovery"></a>Fast Recovery</h5><p>GFS does not distinguish between normal and abnormal termination. Both the master and the chunkserver are designed to restore their state and start in seconds.</p>
-<h5 id="Replication"><a href="#Replication" class="headerlink" title="Replication"></a>Replication</h5><p>For chunks, each chunk is replicated on multiple chunkservers on different racks. </p>
+<h4>Stale Replica Detection</h4>
+<p>For each chunk, the master maintains a chunk version number to distinguish between up-to-date and stale replicas. Whenever the master grants a new lease on a chunk, it increases the chunk version number and informs the up-to-date replicas.</p>
+<p>Whenever chunk version number conflicts, always assume that the largest is up-to-date, even when the master's record is not the largest.</p>
+<h2>Fault Tolerace and Diagnosis</h2>
+<p>One of the greatest challenges in designing the system is dealing with frequent component failures.</p>
+<h4>High Availability</h4>
+<p>Two simple yet effective strategies: fast recovery and replication.</p>
+<h5>Fast Recovery</h5>
+<p>GFS does not distinguish between normal and abnormal termination. Both the master and the chunkserver are designed to restore their state and start in seconds.</p>
+<h5>Replication</h5>
+<p>For chunks, each chunk is replicated on multiple chunkservers on different racks.</p>
 <p>For master, its operation log and checkpoints are replicated on multiple machines. A mutation to the state is considered committed only after its log record has been flushed to disk locally and on all master replicas.</p>
-<h5 id="Shadow-Master"><a href="#Shadow-Master" class="headerlink" title="Shadow Master"></a>Shadow Master</h5><p>GFS also support “<em>shadow masters</em>“. They provide read-only access to the file system when the primary master is down. These shadows may lag the primary slightly, but they enhance read availability for files that are not being actively mutated or applications that do not mind getting slightly stale results.</p>
+<h5>Shadow Master</h5>
+<p>GFS also support &quot;<em>shadow masters</em>&quot;. They provide read-only access to the file system when the primary master is down. These shadows may lag the primary slightly, but they enhance read availability for files that are not being actively mutated or applications that do not mind getting slightly stale results.</p>
 <p>To keep informed, a shadow master reads a replica of the growing operation log and applies the same sequence of changes to its data structures exactly as the primary does. It depends on the primary master only for replica location updates resulting from the primary’s decisions to create and delete replicas.</p>
-<h4 id="Data-Integrity"><a href="#Data-Integrity" class="headerlink" title="Data Integrity"></a>Data Integrity</h4><p>Each chunkserver uses checksumming to detect corruption of stored data. As discussed in the first note, the semantics of GFS mutations, in particular atomic record append, does not guar- antee identical replicas. </p>
-<p>The paper does not discuss the <strong>checksum</strong> GFS uses. One typical and simple checksum algorithm is parity byte or parity word,  which breaks the data into “words” with a fixed number <em>n</em> of bits, and then computes the exclusive or (XOR) of all those words. The result is appended to the message as an extra word. To check the integrity of a message, the receiver computes the exclusive or of all its words, including the checksum; if the result is not a word with <em>n</em> zeros, the receiver knows a transmission error occurred. Detailed discussion of checksum can be found on <a href="https://en.wikipedia.org/wiki/Checksum" target="_blank" rel="noopener">Wikipedia</a>.</p>
-<h2 id="Measurements-amp-Related-Works"><a href="#Measurements-amp-Related-Works" class="headerlink" title="Measurements &amp; Related Works"></a>Measurements &amp; Related Works</h2><p>I will skip these parts as that’s pretty outdated (2003) and they are also not the thing I want to learn from this paper. </p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In GFS, they treat component failures as the norm rather than the exception, optimize for huge files that are mostly appended to (perhaps concurrently) and then read (usually sequentially), and both extend and relax the standard file system interface to improve the overall system.</p>
+<h4>Data Integrity</h4>
+<p>Each chunkserver uses checksumming to detect corruption of stored data. As discussed in the first note, the semantics of GFS mutations, in particular atomic record append, does not guar- antee identical replicas.</p>
+<p>The paper does not discuss the <strong>checksum</strong> GFS uses. One typical and simple checksum algorithm is parity byte or parity word,  which breaks the data into &quot;words&quot; with a fixed number <em>n</em> of bits, and then computes the exclusive or (XOR) of all those words. The result is appended to the message as an extra word. To check the integrity of a message, the receiver computes the exclusive or of all its words, including the checksum; if the result is not a word with <em>n</em> zeros, the receiver knows a transmission error occurred. Detailed discussion of checksum can be found on <a href="https://en.wikipedia.org/wiki/Checksum" target="_blank" rel="noopener">Wikipedia</a>.</p>
+<h2>Measurements &amp; Related Works</h2>
+<p>I will skip these parts as that's pretty outdated (2003) and they are also not the thing I want to learn from this paper.</p>
+<h2>Conclusion</h2>
+<p>In GFS, they treat component failures as the norm rather than the exception, optimize for huge files that are mostly appended to (perhaps concurrently) and then read (usually sequentially), and both extend and relax the standard file system interface to improve the overall system.</p>
 <p>The system provides fault tolerance by constant moni- toring, replicating crucial data, and fast and automatic recovery. Additionally, we use checksumming to detect data corruption at the disk or IDE subsystem level.</p>
 <p>GFS achieves high aggregate throughput by separating file system control, which passes through the master, from data transfer, which passes directly between chunkservers and clients. Master involve- ment in common operations is minimized by a large chunk size and by chunk leases.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li>Ghemwat, Sanjay, Howard Gobioff, and Shun-Tak Leung (Google). <em>“The Google</em><br><em>File System.”</em> Symposium on Operating Systems Principles (SOSP) ’03,<br>Association of Computing Machinery. Published 2003.</li>
+<h2>Reference</h2>
+<ol>
+<li>Ghemwat, Sanjay, Howard Gobioff, and Shun-Tak Leung (Google). <em>“The Google</em>
+<em>File System.”</em> Symposium on Operating Systems Principles (SOSP) ’03,
+Association of Computing Machinery. Published 2003.</li>
 </ol>
 
       
@@ -541,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Google-File-System-Note-2"><span class="nav-number">1.</span> <span class="nav-text">Google File System Note 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Master-Operations"><span class="nav-number">1.1.</span> <span class="nav-text">Master Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Namespace-Management-and-Locking"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Namespace Management and Locking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Replica-Placement"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Replica Placement</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Garbage-Collection"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Mechanism"><span class="nav-number">1.1.0.3.1.</span> <span class="nav-text">Mechanism</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stale-Replica-Detection"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">Stale Replica Detection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-Tolerace-and-Diagnosis"><span class="nav-number">1.2.</span> <span class="nav-text">Fault Tolerace and Diagnosis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#High-Availability"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">High Availability</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Fast-Recovery"><span class="nav-number">1.2.0.1.1.</span> <span class="nav-text">Fast Recovery</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Replication"><span class="nav-number">1.2.0.1.2.</span> <span class="nav-text">Replication</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Shadow-Master"><span class="nav-number">1.2.0.1.3.</span> <span class="nav-text">Shadow Master</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-Integrity"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Data Integrity</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Measurements-amp-Related-Works"><span class="nav-number">1.3.</span> <span class="nav-text">Measurements &amp; Related Works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Google File System Note 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Master Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Namespace Management and Locking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Replica Placement</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.3.1.</span> <span class="nav-text">Mechanism</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">Stale Replica Detection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Fault Tolerace and Diagnosis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">High Availability</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.1.1.</span> <span class="nav-text">Fast Recovery</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.1.2.</span> <span class="nav-text">Replication</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.1.3.</span> <span class="nav-text">Shadow Master</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Data Integrity</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Measurements &amp; Related Works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -630,6 +668,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -664,6 +705,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -748,6 +799,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

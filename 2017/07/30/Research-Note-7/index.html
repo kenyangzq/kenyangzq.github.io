@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 7This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Profe">
+<meta name="description" content="Research Note 7 This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Prof">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-7">
 <meta property="og:url" content="http://yoursite.com/2017/07/30/Research-Note-7/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 7This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Profe">
+<meta property="og:description" content="Research Note 7 This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Prof">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-07-31T02:50:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-7">
-<meta name="twitter:description" content="Research Note 7This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Profe">
+<meta name="twitter:description" content="Research Note 7 This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Prof">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -333,23 +353,29 @@
       
 
       
-        <h1 id="Research-Note-7"><a href="#Research-Note-7" class="headerlink" title="Research Note 7"></a>Research Note 7</h1><p>This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Professor Schumaker wrote. </p>
-<h2 id="Tadpat03d"><a href="#Tadpat03d" class="headerlink" title="Tadpat03d"></a>Tadpat03d</h2><p>The program is called Tadapt03d, where T for tensor product, adapt0 means adaptive fitting with C0 smoothness and 3d indicates that it’s on 3d cubes. </p>
-<p>Same as usual, the program begins with calling the list function reclist2 to get list of information of the partition. And a function handler is created, which is our target function to approximate. </p>
-<p>It then called the <em>interpdp03d</em> function to interpolate the given function f with C0 smoothness condition enforced. The <em>tsp0smooth3d</em> function, which return the smoothness condition matrix M, is called inside the <em>interpdp03d</em> function. Now that we obtain the coefficient vector $c$, we start to refine. </p>
-<p>The criterial is to calculate the error of approximation in each unit cube, and find the biggest 20% of all the cube to further refine. I wrote an error calculating function called <em>rerr13d</em>, which gives the errors in each cube. We then refine those cubes with large error. I would prefer to call them a single <em>batch</em>. After we refine all the cube in the batch, we call the <em>interpdp03d</em> function again to obtain the new coefficient vector $c$. Then we start another iteration. </p>
-<p>The number of <em>batches</em> or level of refinement is given by user input. </p>
-<p>We still haven’t found a good way to visualize 3d functions so now I can only use error to check my program. </p>
-<p>One thing to notice, at this point the <em>tsp0smooth3d</em> function is actually half-complete. As mention in last note, there are at least four cases in 3d C0 smoothness condition. I still haven’t figure out the right way to put in hanging edges and hanging vertices on multiple edges. So the function actually miss some of the condition. </p>
-<h2 id="Tetra-mesh"><a href="#Tetra-mesh" class="headerlink" title="Tetra-mesh"></a>Tetra-mesh</h2><h3 id="Plot-and-readfile"><a href="#Plot-and-readfile" class="headerlink" title="Plot and readfile"></a>Plot and readfile</h3><p>On the other hand, I have started the tetrahedron project. This one will be the final project of this summer, and I believe it will be more challenging than the previous two. </p>
-<p>As I did in the previous two projects, I started by looking for a way to visualize  tetrahedrons. The function <em>patch</em> is still a reasonable choice. As I learn from visualizing cubes, I did basically the same — wrote a function to plot all the tetrahedrons given a matrix of points and a matrix of vertices of each tetra. </p>
-<p>For tetrahedron, it’s more like the 2d triangle case. It’s hard to just initialize a bunch of tetras with few arguments. So I prefer to read in the files like Professor Schumaker did in his splinepak. I wrote a <em>readtetra</em> function to read in formatted tetrahedron data and get the basic information about the tetrahedron group. </p>
-<h3 id="List-function"><a href="#List-function" class="headerlink" title="List function"></a>List function</h3><p>Now that I’ve got a working plot function and a read file function, I move on to the first cornerstone — list function. </p>
-<p>Similar to both the cubelist and trilist case, I need to get all the needed information based on the very basic list I read from files. Specifically, I need a matrix E for tetra edge relation, a matrix F for tetra face relation, a matrix evertex for edge vertex relation, a matrix fvertex for face vertex relation and so on. </p>
-<p>One tricky thing that’s unique for tetrahedrons is their orientations. For rectangles and cubes, it’s pretty easy to figure out how to put the edges and vertices in order. But for tetrahedron, so far I haven’t get a nice and easy way to do the same. </p>
-<p>I’ve tried to orient the edges in such a way that three edges of one face go first in an order that obey the right hand rule, and then the other three edges go next with same order. But later in my refine function, things become more complicated and I decide to leave such idea behind now. </p>
-<p>It took me about two days or so to get a nice working list function. </p>
-<h3 id="Refine1"><a href="#Refine1" class="headerlink" title="Refine1"></a>Refine1</h3><p>A tetrahedron can be refined in several ways, one into two, three or four. I started with the easiest, find the longest edge and use a interior face to split the edge and the whole tetra into two small ones.</p>
+        <h1>Research Note 7</h1>
+<p>This week I first put the 3d function pieces together to make a adaptive refinement code penalizing with C0 smoothness condition. The whole program is based on the 2d version that Professor Schumaker wrote.</p>
+<h2>Tadpat03d</h2>
+<p>The program is called Tadapt03d, where T for tensor product, adapt0 means adaptive fitting with C0 smoothness and 3d indicates that it's on 3d cubes.</p>
+<p>Same as usual, the program begins with calling the list function reclist2 to get list of information of the partition. And a function handler is created, which is our target function to approximate.</p>
+<p>It then called the <em>interpdp03d</em> function to interpolate the given function f with C0 smoothness condition enforced. The <em>tsp0smooth3d</em> function, which return the smoothness condition matrix M, is called inside the <em>interpdp03d</em> function. Now that we obtain the coefficient vector $c$, we start to refine.</p>
+<p>The criterial is to calculate the error of approximation in each unit cube, and find the biggest 20% of all the cube to further refine. I wrote an error calculating function called <em>rerr13d</em>, which gives the errors in each cube. We then refine those cubes with large error. I would prefer to call them a single <em>batch</em>. After we refine all the cube in the batch, we call the <em>interpdp03d</em> function again to obtain the new coefficient vector $c$. Then we start another iteration.</p>
+<p>The number of <em>batches</em> or level of refinement is given by user input.</p>
+<p>We still haven't found a good way to visualize 3d functions so now I can only use error to check my program.</p>
+<p>One thing to notice, at this point the <em>tsp0smooth3d</em> function is actually half-complete. As mention in last note, there are at least four cases in 3d C0 smoothness condition. I still haven't figure out the right way to put in hanging edges and hanging vertices on multiple edges. So the function actually miss some of the condition.</p>
+<h2>Tetra-mesh</h2>
+<h3>Plot and readfile</h3>
+<p>On the other hand, I have started the tetrahedron project. This one will be the final project of this summer, and I believe it will be more challenging than the previous two.</p>
+<p>As I did in the previous two projects, I started by looking for a way to visualize  tetrahedrons. The function <em>patch</em> is still a reasonable choice. As I learn from visualizing cubes, I did basically the same — wrote a function to plot all the tetrahedrons given a matrix of points and a matrix of vertices of each tetra.</p>
+<p>For tetrahedron, it's more like the 2d triangle case. It's hard to just initialize a bunch of tetras with few arguments. So I prefer to read in the files like Professor Schumaker did in his splinepak. I wrote a <em>readtetra</em> function to read in formatted tetrahedron data and get the basic information about the tetrahedron group.</p>
+<h3>List function</h3>
+<p>Now that I've got a working plot function and a read file function, I move on to the first cornerstone — list function.</p>
+<p>Similar to both the cubelist and trilist case, I need to get all the needed information based on the very basic list I read from files. Specifically, I need a matrix E for tetra edge relation, a matrix F for tetra face relation, a matrix evertex for edge vertex relation, a matrix fvertex for face vertex relation and so on.</p>
+<p>One tricky thing that's unique for tetrahedrons is their orientations. For rectangles and cubes, it's pretty easy to figure out how to put the edges and vertices in order. But for tetrahedron, so far I haven't get a nice and easy way to do the same.</p>
+<p>I've tried to orient the edges in such a way that three edges of one face go first in an order that obey the right hand rule, and then the other three edges go next with same order. But later in my refine function, things become more complicated and I decide to leave such idea behind now.</p>
+<p>It took me about two days or so to get a nice working list function.</p>
+<h3>Refine1</h3>
+<p>A tetrahedron can be refined in several ways, one into two, three or four. I started with the easiest, find the longest edge and use a interior face to split the edge and the whole tetra into two small ones.</p>
 <p>I am still working on this function. There are some tricky place that needs to be handled. I believe by next week, I will have a nice working refine1 funcion ready.</p>
 
       
@@ -527,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-7"><span class="nav-number">1.</span> <span class="nav-text">Research Note 7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tadpat03d"><span class="nav-number">1.1.</span> <span class="nav-text">Tadpat03d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tetra-mesh"><span class="nav-number">1.2.</span> <span class="nav-text">Tetra-mesh</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Plot-and-readfile"><span class="nav-number">1.2.1.</span> <span class="nav-text">Plot and readfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-function"><span class="nav-number">1.2.2.</span> <span class="nav-text">List function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refine1"><span class="nav-number">1.2.3.</span> <span class="nav-text">Refine1</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Tadpat03d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Tetra-mesh</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.1.</span> <span class="nav-text">Plot and readfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.2.</span> <span class="nav-text">List function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.3.</span> <span class="nav-text">Refine1</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -616,6 +642,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -650,6 +679,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -734,6 +773,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

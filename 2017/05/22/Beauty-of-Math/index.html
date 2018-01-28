@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="数学之美 笔记1 　　Beauty of Math is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt">
+<meta name="description" content="数学之美 笔记1 &amp;lt;br&amp;gt; Beauty of Math is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese">
 <meta name="keywords" content="Math">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Beauty of Math 1">
 <meta property="og:url" content="http://yoursite.com/2017/05/22/Beauty-of-Math/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="数学之美 笔记1 　　Beauty of Math is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt">
+<meta property="og:description" content="数学之美 笔记1 &amp;lt;br&amp;gt; Beauty of Math is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-06-17T18:28:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Beauty of Math 1">
-<meta name="twitter:description" content="数学之美 笔记1 　　Beauty of Math is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt">
+<meta name="twitter:description" content="数学之美 笔记1 &amp;lt;br&amp;gt; Beauty of Math is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -333,23 +353,41 @@
       
 
       
-        <h1 id="数学之美-笔记1"><a href="#数学之美-笔记1" class="headerlink" title="数学之美 笔记1"></a>数学之美 笔记1</h1><p><br></p>
-<p>　　<em>Beauty of Math</em> is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt much more convenient to write my note in Chinese and please forgive that. </p>
-<p>　　前一周有幸拜读了吴军老师当下的畅销书 –《智能时代》，感悟良多。根据书中指引，遂购买了吴军老师前几年颇具影响力的另一著作 – 《数学之美》。作为数学专业的学生，阅读此书只觉得爱不释手，颇受启发，于是萌生记录阅读心得的想法。此篇写于去往南京的飞机上，于南京完成。</p>
-<h2 id="隐含马尔可夫模型"><a href="#隐含马尔可夫模型" class="headerlink" title="隐含马尔可夫模型"></a>隐含马尔可夫模型</h2><p>　　隐含马尔可夫模型（Hidden Markov Model）是书中的第五章，在前几张介绍了自然语言处理的基本思路后，自然而然的过渡到了这个简单高效的，解决自然语言处理难题的模型。</p>
-<h3 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h3><p>　　书中首先介绍了基本的通信模型。雅各布森（Roman Jakobson）提出的通信六要素：发送者（信息源），信道，接受者，信息，上下文和编码。这一模型同样可被应用到自然语言的处理中，几乎所有的自然语言处理问题都可以等价成通信的解码问题。</p>
-<p>　　给定观测信号$o_1, o_2, o_3…$，推测源信息$s_1, s_2, s_3…$可通过从所有信息中找到最可能产生观测信号的那一信息来完成。从概率角度说，就是求条件概率的最大值，即<br>$$<br>s_1,s_2,s_3… = Arg\,Max\;P(s_1,s_2,s_3…|o_1,o_2,o_3…)<br>$$<br>条件概率可通过贝叶斯公式变换为<br>$$<br>\frac<br>{P(o_1,o_2,o_3…|s_1,s_2,s_3…) \cdot P(s_1,s_2,s_3…)}{P(o_1,o_2,o_3…)}<br>$$</p>
-<p>其中，因为 $o_1, o_2, o_3…$ 已经产生了，其概率是一个可以忽略的常数，所以剩下的只是</p>
-<p>$$<br>P(o_1,o_2,o_3…|s_1,s_2,s_3…) \cdot P(s_1,s_2,s_3…)<br>$$</p>
+        <h1>数学之美 笔记1</h1>
+<p>&lt;br&gt;</p>
+<p><em>Beauty of Math</em> is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt much more convenient to write my note in Chinese and please forgive that.</p>
+<p>前一周有幸拜读了吴军老师当下的畅销书 --《智能时代》，感悟良多。根据书中指引，遂购买了吴军老师前几年颇具影响力的另一著作 -- 《数学之美》。作为数学专业的学生，阅读此书只觉得爱不释手，颇受启发，于是萌生记录阅读心得的想法。此篇写于去往南京的飞机上，于南京完成。</p>
+<h2>隐含马尔可夫模型</h2>
+<p>隐含马尔可夫模型（Hidden Markov Model）是书中的第五章，在前几张介绍了自然语言处理的基本思路后，自然而然的过渡到了这个简单高效的，解决自然语言处理难题的模型。</p>
+<h3>通信模型</h3>
+<p>书中首先介绍了基本的通信模型。雅各布森（Roman Jakobson）提出的通信六要素：发送者（信息源），信道，接受者，信息，上下文和编码。这一模型同样可被应用到自然语言的处理中，几乎所有的自然语言处理问题都可以等价成通信的解码问题。</p>
+<p>给定观测信号$o_1, o_2, o_3...$，推测源信息$s_1, s_2, s_3...$可通过从所有信息中找到最可能产生观测信号的那一信息来完成。从概率角度说，就是求条件概率的最大值，即
+$$
+s_1,s_2,s_3... = Arg,Max;P(s_1,s_2,s_3...|o_1,o_2,o_3...)
+$$
+条件概率可通过贝叶斯公式变换为
+$$
+\frac
+{P(o_1,o_2,o_3...|s_1,s_2,s_3...) \cdot P(s_1,s_2,s_3...)}{P(o_1,o_2,o_3...)}
+$$</p>
+<p>其中，因为 $o_1, o_2, o_3...$ 已经产生了，其概率是一个可以忽略的常数，所以剩下的只是</p>
+<p>$$
+P(o_1,o_2,o_3...|s_1,s_2,s_3...) \cdot P(s_1,s_2,s_3...)
+$$</p>
 <p>而这个公式完全可以用隐含马尔可夫模型来估计。</p>
-<h3 id="隐含马尔可夫模型-1"><a href="#隐含马尔可夫模型-1" class="headerlink" title="隐含马尔可夫模型"></a>隐含马尔可夫模型</h3><p>　　随机过程一般有两个维度的不确定性，一是对任意时间 $t$ ，其状态 $s$ 都是不确定的；二是一个状态 $s$ 受其他状态影响。而马尔可夫模型假设对任意状态 $s<em>t$ ，它只受前一个状态，即 $s</em>{t-1}$ 影响。这一假设被称为马尔可夫假设，而符合这一假设的随机过程被称为马尔可夫链。</p>
-<p>　　计算某一状态 $m_i$ 到另一状态 $m_j$ 的转移概率可以通过数出 $m_i$ 出现的次数以及 $m_i$ 出现后 $m_j$ 出现的次数，后者除以前者便是其转移概率的估值。</p>
-<p>　　隐含马尔可夫模型是上述的一个拓展：任一时刻 $t$ 的状态 $s_t$ 是不可见的，因此无法观测得到状态序列 $s_1,s_2,s_3…$ 来推测转移概率。但是，隐含马尔可夫模型在每一时刻 $t$ 都会输出一个符号 $o_t$ ，且 $o_t$ 只跟 $s_t$ 有关，所以我们可以就算出某个特定的状态序列 $s_1, s_2, s_3…$ 产生输出符号 $o_1, o_2, o_3…$ 的概率。</p>
-<p>$$<br>P(o_1,o_2,o_3…|s_1,s_2,s_3…) = \prod P(s<em>t|s</em>{t-1}) \cdot P(o_t|s_t)<br>$$</p>
+<h3>隐含马尔可夫模型</h3>
+<p>随机过程一般有两个维度的不确定性，一是对任意时间 $t$ ，其状态 $s$ 都是不确定的；二是一个状态 $s$ 受其他状态影响。而马尔可夫模型假设对任意状态 $s_t$ ，它只受前一个状态，即 $s_{t-1}$ 影响。这一假设被称为马尔可夫假设，而符合这一假设的随机过程被称为马尔可夫链。</p>
+<p>计算某一状态 $m_i$ 到另一状态 $m_j$ 的转移概率可以通过数出 $m_i$ 出现的次数以及 $m_i$ 出现后 $m_j$ 出现的次数，后者除以前者便是其转移概率的估值。</p>
+<p>隐含马尔可夫模型是上述的一个拓展：任一时刻 $t$ 的状态 $s_t$ 是不可见的，因此无法观测得到状态序列 $s_1,s_2,s_3...$ 来推测转移概率。但是，隐含马尔可夫模型在每一时刻 $t$ 都会输出一个符号 $o_t$ ，且 $o_t$ 只跟 $s_t$ 有关，所以我们可以就算出某个特定的状态序列 $s_1, s_2, s_3...$ 产生输出符号 $o_1, o_2, o_3...$ 的概率。</p>
+<p>$$
+P(o_1,o_2,o_3...|s_1,s_2,s_3...) = \prod P(s_t|s_{t-1}) \cdot P(o_t|s_t)
+$$</p>
 <p>至于如何找出上式的极值，可以利用维特比算法（Viterbi Algorithm)。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>　　隐含马尔可夫模型最初用于通信领域，是连接自然语言处理和通信的桥梁，同时也是机器学习的一大工具。</p>
+<h3>小结</h3>
+<p>隐含马尔可夫模型最初用于通信领域，是连接自然语言处理和通信的桥梁，同时也是机器学习的一大工具。</p>
 <hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>-《数学之美》第二版第五章 – 吴军</p>
+<h3>参考</h3>
+<p>-《数学之美》第二版第五章 -- 吴军</p>
 
       
     </div>
@@ -524,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数学之美-笔记1"><span class="nav-number">1.</span> <span class="nav-text">数学之美 笔记1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#隐含马尔可夫模型"><span class="nav-number">1.1.</span> <span class="nav-text">隐含马尔可夫模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通信模型"><span class="nav-number">1.1.1.</span> <span class="nav-text">通信模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐含马尔可夫模型-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">隐含马尔可夫模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.1.3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">数学之美 笔记1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">隐含马尔可夫模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.1.</span> <span class="nav-text">通信模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.2.</span> <span class="nav-text">隐含马尔可夫模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -613,6 +651,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -647,6 +688,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -731,6 +782,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 3This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations.  Interpolating FunctionsA">
+<meta name="description" content="Research Note 3 This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations. Interpolating Functions">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-3">
 <meta property="og:url" content="http://yoursite.com/2017/06/23/Research-Note-3/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 3This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations.  Interpolating FunctionsA">
+<meta property="og:description" content="Research Note 3 This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations. Interpolating Functions">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/interdp.jpg">
 <meta property="og:updated_time" content="2017-06-25T18:18:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-3">
-<meta name="twitter:description" content="Research Note 3This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations.  Interpolating FunctionsA">
-<meta name="twitter:image" content="http://yoursite.com/images/Research/Tmesh/interdp.jpg">
+<meta name="twitter:description" content="Research Note 3 This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations. Interpolating Functions">
 
 
 
@@ -189,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -335,17 +353,29 @@
       
 
       
-        <h1 id="Research-Note-3"><a href="#Research-Note-3" class="headerlink" title="Research Note 3"></a>Research Note 3</h1><p>This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations. </p>
-<h2 id="Interpolating-Functions"><a href="#Interpolating-Functions" class="headerlink" title="Interpolating Functions"></a>Interpolating Functions</h2><p>As I have discussed in the last Research Note, a spline on the rectangulation is stored as a long coefficient vector. That vector is separated into three chunks for vertices, edges and interior domain points respectively. But  where are these coefficients coming from? How are we going to interpolate functions on rectangulation?</p>
+        <h1>Research Note 3</h1>
+<p>This week, we finally get into the meat, spline. After I have got the basic geometric functions to work, we can move on to evaluate splines on rectangulations.</p>
+<h2>Interpolating Functions</h2>
+<p>As I have discussed in the last Research Note, a spline on the rectangulation is stored as a long coefficient vector. That vector is separated into three chunks for vertices, edges and interior domain points respectively. But  where are these coefficients coming from? How are we going to interpolate functions on rectangulation?</p>
 <p>Similar to what happens on triangulation in 2D space, we construct the coefficient vectors by looping over all the unit rectangles, calculate the coefficient, and put it in the right place in long vector $c$.</p>
-<p>We solve the interpolation problem same as we did in any other cases, except we are using Bernstein polynomial as basis functions. First I use a function to calculate all the value of Berstein polynomial on $d+1$ equally spaced point on $[0,1]$ to get a matrix $B$, where $d$ is the degree of the $x$-direction polynomial. Same operation for $y$ direction and I get another matrix $\widetilde{B}$ using $\widetilde{d}$, the dimension for $y$-direction polynomial. Then I calculate the value of the target function $f$ at the $(d+1)\times (\widetilde{d}+1)$ grid points to get a value matrix $V$. Finally I solve the linear system to get the coefficient matrix $C$.<br>$$<br>B\times C \times\widetilde{B} = V<br>$$<br>After I got the right coefficient, I use the function <em>getindex</em> to find the index of $c$ to put the coefficient in. And all that above is the first major function I worked on this week. It’s named <em>interdp</em> for interpolating domain points.  </p>
+<p>We solve the interpolation problem same as we did in any other cases, except we are using Bernstein polynomial as basis functions. First I use a function to calculate all the value of Berstein polynomial on $d+1$ equally spaced point on $[0,1]$ to get a matrix $B$, where $d$ is the degree of the $x$-direction polynomial. Same operation for $y$ direction and I get another matrix $\widetilde{B}$ using $\widetilde{d}$, the dimension for $y$-direction polynomial. Then I calculate the value of the target function $f$ at the $(d+1)\times (\widetilde{d}+1)$ grid points to get a value matrix $V$. Finally I solve the linear system to get the coefficient matrix $C$.
+$$
+B\times C \times\widetilde{B} = V
+$$
+After I got the right coefficient, I use the function <em>getindex</em> to find the index of $c$ to put the coefficient in. And all that above is the first major function I worked on this week. It's named <em>interdp</em> for interpolating domain points.</p>
 <p>Note, here our work can only handle functions on a rectangulation without a hanging vertex. For refinement of rectangulation, we need to construct smoothness conditions and solve for the corresponding coefficients. That will be the major part of my work next week.</p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>A quick small example. Suppose we are interpolating function $f$ with $d=3$ and $\widetilde{d}=4$ on unit square.<br>$$<br>f = x^2 + 2y^3<br>$$<br>The result plot on the 3 by 3 rectangulation is </p>
-<p><img src="/images/Research/Tmesh/interdp.jpg" width="500"></p>
+<h4>Example</h4>
+<p>A quick small example. Suppose we are interpolating function $f$ with $d=3$ and $\widetilde{d}=4$ on unit square.
+$$
+f = x^2 + 2y^3
+$$
+The result plot on the 3 by 3 rectangulation is</p>
+<p>&lt;img src = &quot;/images/Research/Tmesh/interdp.jpg&quot; width=&quot;500&quot;&gt;</p>
 <p>And the root mean square error of the resulting surface is $1.7\times 10^{-16}$.</p>
-<h2 id="Interpolation-of-Partial-Derivatives"><a href="#Interpolation-of-Partial-Derivatives" class="headerlink" title="Interpolation of Partial Derivatives"></a>Interpolation of Partial Derivatives</h2><p>After I tackle the problem of interpolate a general function on the rectangulation. I start to work on the partial derivatives of a general function. </p>
-<p>I start by experimenting on a tensor product Bezier patch, or just a rectanlge with Bernstein basis polynomial. Solving the interpolation problem for the partial derivative of a function is equivalent to taking the partial derivative of the Bernstein basis polynomial and adjust the coefficients. </p>
-<p>With basic linear algebra, one can easily find out that differentiating a matrix of basis function is same as multiplying a forward difference matrix. Since the interpolation solution is given by the product of three matrices, we can do the forward difference on any one that contains the variables. Professor Schumaker prefers to compute a lower degree Bernstein basis polynomial matrix and do the forward difference on the coefficient matrix $C$. </p>
+<h2>Interpolation of Partial Derivatives</h2>
+<p>After I tackle the problem of interpolate a general function on the rectangulation. I start to work on the partial derivatives of a general function.</p>
+<p>I start by experimenting on a tensor product Bezier patch, or just a rectanlge with Bernstein basis polynomial. Solving the interpolation problem for the partial derivative of a function is equivalent to taking the partial derivative of the Bernstein basis polynomial and adjust the coefficients.</p>
+<p>With basic linear algebra, one can easily find out that differentiating a matrix of basis function is same as multiplying a forward difference matrix. Since the interpolation solution is given by the product of three matrices, we can do the forward difference on any one that contains the variables. Professor Schumaker prefers to compute a lower degree Bernstein basis polynomial matrix and do the forward difference on the coefficient matrix $C$.</p>
 <p>Eventually, we want to have a function that can give the values of the partial derivatives of any degree of a function on a grid. That will be another task for me in next week.</p>
 
       
@@ -523,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-3"><span class="nav-number">1.</span> <span class="nav-text">Research Note 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interpolating-Functions"><span class="nav-number">1.1.</span> <span class="nav-text">Interpolating Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interpolation-of-Partial-Derivatives"><span class="nav-number">1.2.</span> <span class="nav-text">Interpolation of Partial Derivatives</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Interpolating Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Interpolation of Partial Derivatives</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -612,6 +642,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -646,6 +679,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -730,6 +773,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

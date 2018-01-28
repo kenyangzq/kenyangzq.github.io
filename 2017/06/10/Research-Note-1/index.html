@@ -79,24 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 1　　On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will cre">
+<meta name="description" content="Research Note 1 On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will crea">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research Note 1">
 <meta property="og:url" content="http://yoursite.com/2017/06/10/Research-Note-1/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 1　　On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will cre">
+<meta property="og:description" content="Research Note 1 On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will crea">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/hangver.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/recref1.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/recref2.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/recref3.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/recref4.jpg">
 <meta property="og:updated_time" content="2017-10-05T02:52:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research Note 1">
-<meta name="twitter:description" content="Research Note 1　　On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will cre">
-<meta name="twitter:image" content="http://yoursite.com/images/Research/Tmesh/hangver.jpg">
+<meta name="twitter:description" content="Research Note 1 On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will crea">
 
 
 
@@ -193,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -339,22 +353,23 @@
       
 
       
-        <h1 id="Research-Note-1"><a href="#Research-Note-1" class="headerlink" title="Research Note 1"></a>Research Note 1</h1><p>　　On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will create a long list containing information needed for the rectangle partition, or I personally called it <em>rectangulation</em>. </p>
-<p>　　We decided to combine these two functions into one and separate the labeling and plotting into a new function called plotr. With the help from Shiying, I improved the code by vectorizing all the loops. </p>
-<p>　　Now we finally move on to refinerec function. This function will take all the component of our reclist output, and a integer k, indicating which rectangle to refine. The refinement is pretty simple, we just cut the rectangle in half, into two equivalent smaller rectangles. We always cut the longer edge of the rectangle to avoid thin long ones. We also need to update the whole list to preserve the meaning of each components.</p>
-<p>　　The idea sounds pretty simple, but the actual code is far more tricky than I expected. First, in our convention, we no longer preserve the original rectangle in our long list. In fact, we do not keep any <em>superrectangles</em>, i.e. those that contain subrectangles. We acchieve it by updating the original rectangle and adding a new one in the list. For vertices, refining one rectangle may add a <em>hanging vertex</em>. A hanging vertex is a vertex on an edge that is not an intersection. For example, vertex 8 in the following rectangulation is a hanging vertex. </p>
-<p><img src="/images/Research/Tmesh/hangver.jpg"></p>
+        <h1>Research Note 1</h1>
+<p>On Friday morning, I met with Professor Schumaker to discuss further about the code I wrote. Till this point, I have finished the initrec and reclist function, which together will create a long list containing information needed for the rectangle partition, or I personally called it <em>rectangulation</em>.</p>
+<p>We decided to combine these two functions into one and separate the labeling and plotting into a new function called plotr. With the help from Shiying, I improved the code by vectorizing all the loops.</p>
+<p>Now we finally move on to refinerec function. This function will take all the component of our reclist output, and a integer k, indicating which rectangle to refine. The refinement is pretty simple, we just cut the rectangle in half, into two equivalent smaller rectangles. We always cut the longer edge of the rectangle to avoid thin long ones. We also need to update the whole list to preserve the meaning of each components.</p>
+<p>The idea sounds pretty simple, but the actual code is far more tricky than I expected. First, in our convention, we no longer preserve the original rectangle in our long list. In fact, we do not keep any <em>superrectangles</em>, i.e. those that contain subrectangles. We acchieve it by updating the original rectangle and adding a new one in the list. For vertices, refining one rectangle may add a <em>hanging vertex</em>. A hanging vertex is a vertex on an edge that is not an intersection. For example, vertex 8 in the following rectangulation is a hanging vertex.</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/hangver.jpg&quot;&gt;&lt;/img&gt;</p>
 <p>However,  refinement may also change a hanging vertex into a regular interior vertex. For instance, if we refine R2 in the above rectangulation, V8 will no longer be a hanging vertex.</p>
-<p>　　For edges, in our refinement, we need to add new short edges and check whether all of them are edges of at least one rectangle. In our convention, we only store edges that are sides of rectangles that don’t have subrectangle. For example, in above figure, edge that connects V3 and V4 is kept after refinement. But if we refine R2, then that edge should be removed. </p>
-<p>　　One refine example is demonstrated here. We start with 2 rectangles.</p>
-<p><img src="/images/Research/Tmesh/recref1.jpg" width="400"></p>
+<p>For edges, in our refinement, we need to add new short edges and check whether all of them are edges of at least one rectangle. In our convention, we only store edges that are sides of rectangles that don't have subrectangle. For example, in above figure, edge that connects V3 and V4 is kept after refinement. But if we refine R2, then that edge should be removed.</p>
+<p>One refine example is demonstrated here. We start with 2 rectangles.</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/recref1.jpg&quot; width=&quot;400&quot;&gt;&lt;/img&gt;</p>
 <p>Then we keep refining the first rectangle three times. The result is as followed:</p>
-<p><img src="/images/Research/Tmesh/recref2.jpg" width="400"></p>
-<p><img src="/images/Research/Tmesh/recref3.jpg" width="400"></p>
-<p><img src="/images/Research/Tmesh/recref4.jpg" width="400"></p>
-<p>　　The list cannot be shown due to confidentiality. So far the code is 500+ lines, and I have not yet finished.</p>
-<p>　　There are hundreds of other small details that I have to focus on while implementing the code, like the keep tracking of left and right rectangles for each edges, subset relation between edges and orders of edges. So far in the first week, we are still at geometry phase, not touching any spline yet. After the refinerec function is complete, we will start to store spline on domain points and get into the real meat. </p>
-<p>​    </p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/recref2.jpg&quot; width=&quot;400&quot;&gt;&lt;/img&gt;</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/recref3.jpg&quot; width=&quot;400&quot;&gt;&lt;/img&gt;</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/recref4.jpg&quot; width=&quot;400&quot;&gt;&lt;/img&gt;</p>
+<p>The list cannot be shown due to confidentiality. So far the code is 500+ lines, and I have not yet finished.</p>
+<p>There are hundreds of other small details that I have to focus on while implementing the code, like the keep tracking of left and right rectangles for each edges, subset relation between edges and orders of edges. So far in the first week, we are still at geometry phase, not touching any spline yet. After the refinerec function is complete, we will start to store spline on domain points and get into the real meat.</p>
+<p>​</p>
 
       
     </div>
@@ -531,7 +546,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-1"><span class="nav-number">1.</span> <span class="nav-text">Research Note 1</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 1</span></a></li></ol></div>
             
 
           </div>
@@ -620,6 +635,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -654,6 +672,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -738,6 +766,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

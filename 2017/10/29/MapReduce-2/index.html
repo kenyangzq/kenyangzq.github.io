@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Second Look at MapReduceEarly I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce:">
+<meta name="description" content="Second Look at MapReduce Early I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce">
 <meta name="keywords" content="Bigdata">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce-2">
 <meta property="og:url" content="http://yoursite.com/2017/10/29/MapReduce-2/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Second Look at MapReduceEarly I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce:">
+<meta property="og:description" content="Second Look at MapReduce Early I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-11-05T22:38:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce-2">
-<meta name="twitter:description" content="Second Look at MapReduceEarly I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce:">
+<meta name="twitter:description" content="Second Look at MapReduce Early I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce">
 
 
 
@@ -187,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -344,27 +364,38 @@
       
 
       
-        <h1 id="Second-Look-at-MapReduce"><a href="#Second-Look-at-MapReduce" class="headerlink" title="Second Look at MapReduce"></a>Second Look at MapReduce</h1><p>Early I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, <em>MapReduce: simplified data processing on large clusters</em> [1], and I want to add some note to this topic. I will not follow the order of the paper and only write down some of the things that stands out, including my own thought and other related topics. </p>
-<h2 id="Programming-Model"><a href="#Programming-Model" class="headerlink" title="Programming Model"></a>Programming Model</h2><p>The interface is pretty simple: typically MapReduce is a imported library, e.g. <a href="https://github.com/Yelp/mrjob" target="_blank" rel="noopener">mrjob</a>; user only needs to define the map and reduce function and pass them to the library to run. </p>
-<h4 id="Execution-Overview"><a href="#Execution-Overview" class="headerlink" title="Execution Overview"></a>Execution Overview</h4><p>As discussed in paper, input data is first partitioned into <em>M</em> splits for Map node; later on there will be <em>R</em> worker node for Reduce operation. Typically, number <em>M</em> and <em>R</em> are much larger than the number of machines. </p>
-<p>Each worker executes the map function user defined. And results are written to local disk periodically.  The master is responsible for a schedule plan to reduce transmission need. Typically, it will try to put reduce node near map node. In this way, most input data is read locally and consumes no nework bandwidth. </p>
+        <h1>Second Look at MapReduce</h1>
+<p>Early I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, <em>MapReduce: simplified data processing on large clusters</em> [1], and I want to add some note to this topic. I will not follow the order of the paper and only write down some of the things that stands out, including my own thought and other related topics.</p>
+<h2>Programming Model</h2>
+<p>The interface is pretty simple: typically MapReduce is a imported library, e.g. <a href="https://github.com/Yelp/mrjob" target="_blank" rel="noopener">mrjob</a>; user only needs to define the map and reduce function and pass them to the library to run.</p>
+<h4>Execution Overview</h4>
+<p>As discussed in paper, input data is first partitioned into <em>M</em> splits for Map node; later on there will be <em>R</em> worker node for Reduce operation. Typically, number <em>M</em> and <em>R</em> are much larger than the number of machines.</p>
+<p>Each worker executes the map function user defined. And results are written to local disk periodically.  The master is responsible for a schedule plan to reduce transmission need. Typically, it will try to put reduce node near map node. In this way, most input data is read locally and consumes no nework bandwidth.</p>
 <p><strong>Note</strong>:</p>
 <ol>
 <li>One reason that Spark is much faster is that intermediate results are written to local disk, and Reduce nodes have to read from disk while Spark stores all the RDDs in memory.</li>
-<li>Reduce nodes cannot start until all Map nodes finish. There is a Barrier between these two nodes. </li>
+<li>Reduce nodes cannot start until all Map nodes finish. There is a Barrier between these two nodes.</li>
 </ol>
-<h4 id="A-Confusion"><a href="#A-Confusion" class="headerlink" title="A Confusion"></a>A Confusion</h4><p>The paper indicates that after all the intermediate keys are received, they are sorted on the reduce node so that all occurance of the same key are grouped together. I don’t quite unerstand how they achieve this. To me, it will make more sense for master to handle this. After all the intermediate results are read, master sorts them, possibly use external sort as data volume is too large to fit in memory. Then the sorted result is fed to Reduce nodes. But in this way the network bandwidth will be a restriction. </p>
-<p><em>After discussion with a professor, I realized that the shuffle part between map and reduce is not covered in this paper. In fact, after mapper writes the data to local disk, it sorted the data. And the master shuffle the sorted results from each worker and then schedule the whole reduce task. This explains why there has to be a barrier between map and reduce.</em> </p>
-<h2 id="Fault-Tolerance"><a href="#Fault-Tolerance" class="headerlink" title="Fault Tolerance"></a>Fault Tolerance</h2><h4 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h4><p>The MapReduce library kind of supports a strong fault tolerance on worker node. But compared to Spark, it’s too inefficient. </p>
+<h4>A Confusion</h4>
+<p>The paper indicates that after all the intermediate keys are received, they are sorted on the reduce node so that all occurance of the same key are grouped together. I don't quite unerstand how they achieve this. To me, it will make more sense for master to handle this. After all the intermediate results are read, master sorts them, possibly use external sort as data volume is too large to fit in memory. Then the sorted result is fed to Reduce nodes. But in this way the network bandwidth will be a restriction.</p>
+<p><em>After discussion with a professor, I realized that the shuffle part between map and reduce is not covered in this paper. In fact, after mapper writes the data to local disk, it sorted the data. And the master shuffle the sorted results from each worker and then schedule the whole reduce task. This explains why there has to be a barrier between map and reduce.</em></p>
+<h2>Fault Tolerance</h2>
+<h4>Worker</h4>
+<p>The MapReduce library kind of supports a strong fault tolerance on worker node. But compared to Spark, it's too inefficient.</p>
 <p>On map task, if one fails, this task has to be re-executed in its entirety as the intermediate results are stored on local disks. But for reduce task, since the result is outputed to some global file system, (GFS with no doubt at that time, 2004), there is no need to re-start the whole reduce task.</p>
-<h4 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h4><p>In the paper, they mention that they can use checkpoint as in GFS to maintain the master status. However, due to the small chance of failure, they decided to just abort the task. </p>
-<p><em>I think they can also adopt the idea of shadow master from GFS. The primal master can record append the status and location of worker tasks to a chunk in GFS. When the master failed, the shadow master can continue from the chunk and handle the rest.</em> </p>
+<h4>Master</h4>
+<p>In the paper, they mention that they can use checkpoint as in GFS to maintain the master status. However, due to the small chance of failure, they decided to just abort the task.</p>
+<p><em>I think they can also adopt the idea of shadow master from GFS. The primal master can record append the status and location of worker tasks to a chunk in GFS. When the master failed, the shadow master can continue from the chunk and handle the rest.</em></p>
 <p>Just some naive thoughts.</p>
-<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p>The paper also mentioned how they take advantages of location information to better schedule the task, the task granularity. In addition, they handle straggler by scheduling multiple backup tasks. </p>
-<h4 id="Combiner"><a href="#Combiner" class="headerlink" title="Combiner"></a>Combiner</h4><p>In some cases when repetition in keys are frequent and reduce operation is <em>communative</em> and <em>associative</em>, MapReduce allows user to add a <em>Combiner</em> function to optimize. </p>
-<p>In my view, it’s the same as a pre-reduce on Map operation. </p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In short, MapReduce is a very powerful programming model which pave the way for modern big data processing techniques. </p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] Dean J, Ghemawat S. 2008. MapReduce: Simplified data processing on large clusters. Commun ACM 51: 107–113.</p>
+<h2>Others</h2>
+<p>The paper also mentioned how they take advantages of location information to better schedule the task, the task granularity. In addition, they handle straggler by scheduling multiple backup tasks.</p>
+<h4>Combiner</h4>
+<p>In some cases when repetition in keys are frequent and reduce operation is <em>communative</em> and <em>associative</em>, MapReduce allows user to add a <em>Combiner</em> function to optimize.</p>
+<p>In my view, it's the same as a pre-reduce on Map operation.</p>
+<h2>Conclusion</h2>
+<p>In short, MapReduce is a very powerful programming model which pave the way for modern big data processing techniques.</p>
+<h2>Reference</h2>
+<p>[1] Dean J, Ghemawat S. 2008. MapReduce: Simplified data processing on large clusters. Commun ACM 51: 107–113.</p>
 
       
     </div>
@@ -539,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Second-Look-at-MapReduce"><span class="nav-number">1.</span> <span class="nav-text">Second Look at MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Programming-Model"><span class="nav-number">1.1.</span> <span class="nav-text">Programming Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Execution-Overview"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Execution Overview</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Confusion"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">A Confusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-Tolerance"><span class="nav-number">1.2.</span> <span class="nav-text">Fault Tolerance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Worker"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Worker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Master"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Master</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Others"><span class="nav-number">1.3.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Combiner"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Combiner</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Second Look at MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Programming Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Execution Overview</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">A Confusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Fault Tolerance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Worker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Master</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Combiner</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -628,6 +659,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -662,6 +696,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -746,6 +790,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

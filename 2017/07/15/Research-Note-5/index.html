@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="Research Note 5I was seriously ill last week so I haven’t worked a lot and updated my Research Note.  This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist an">
+<meta name="description" content="Research Note 5 I was seriously ill last week so I haven&apos;t worked a lot and updated my Research Note. This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist an">
 <meta name="keywords" content="Math,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Research-Note-5">
 <meta property="og:url" content="http://yoursite.com/2017/07/15/Research-Note-5/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Research Note 5I was seriously ill last week so I haven’t worked a lot and updated my Research Note.  This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist an">
+<meta property="og:description" content="Research Note 5 I was seriously ill last week so I haven&apos;t worked a lot and updated my Research Note. This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist an">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/adapt1.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/adapt2.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Research/Tmesh/adapt3.jpg">
 <meta property="og:updated_time" content="2017-07-15T17:55:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Research-Note-5">
-<meta name="twitter:description" content="Research Note 5I was seriously ill last week so I haven’t worked a lot and updated my Research Note.  This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist an">
-<meta name="twitter:image" content="http://yoursite.com/images/Research/Tmesh/adapt1.jpg">
+<meta name="twitter:description" content="Research Note 5 I was seriously ill last week so I haven&apos;t worked a lot and updated my Research Note. This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist an">
 
 
 
@@ -191,6 +187,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -337,17 +353,22 @@
       
 
       
-        <h1 id="Research-Note-5"><a href="#Research-Note-5" class="headerlink" title="Research Note 5"></a>Research Note 5</h1><p>I was seriously ill last week so I haven’t worked a lot and updated my Research Note. </p>
-<p>This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist and refinecube function. These two function corresponds to those in 2D case, a.k.a. reclist and refinerec. In particular, refinecube is much more complicated than refinerec so I took a completely different approach on writing it. I wrote three helper functions to update information about vertices, edges and faces respectively. </p>
-<p>Other than the 3d functions, now that we have finish most part of 2d cases, we can finally create some sophisticated program on top of these Bernstein basis polynomial on rectangulation. </p>
-<p>For example, in this week, Professor Schumaker had come up with an adaptive fitting program using the functions we have written last month. </p>
-<p>The program fit a function on a rectangulation, calculate the error in each iteration and refine those rectangles that will decrease the error in greatest extent. </p>
-<p>An output case: </p>
-<p>​    For fitting function<br>$$<br>f(x,y) = \tanh(40y-80x^2)-\tanh(40x-80y^2)<br>$$<br>with a initial 5 by 5 rectangulation using Bernstein basis polynomial of degree 5 on both direction and with a 50 level adaptive fitting, we get the final rectangulation as</p>
-<p><img src="/images/Research/Tmesh/adapt1.jpg" width="500"></p>
+        <h1>Research Note 5</h1>
+<p>I was seriously ill last week so I haven't worked a lot and updated my Research Note.</p>
+<p>This two week I keep working on the T-mesh 3D functions. By today, I have finished the cubelist and refinecube function. These two function corresponds to those in 2D case, a.k.a. reclist and refinerec. In particular, refinecube is much more complicated than refinerec so I took a completely different approach on writing it. I wrote three helper functions to update information about vertices, edges and faces respectively.</p>
+<p>Other than the 3d functions, now that we have finish most part of 2d cases, we can finally create some sophisticated program on top of these Bernstein basis polynomial on rectangulation.</p>
+<p>For example, in this week, Professor Schumaker had come up with an adaptive fitting program using the functions we have written last month.</p>
+<p>The program fit a function on a rectangulation, calculate the error in each iteration and refine those rectangles that will decrease the error in greatest extent.</p>
+<p>An output case:</p>
+<p>​	For fitting function
+$$
+f(x,y) = \tanh(40y-80x^2)-\tanh(40x-80y^2)
+$$
+with a initial 5 by 5 rectangulation using Bernstein basis polynomial of degree 5 on both direction and with a 50 level adaptive fitting, we get the final rectangulation as</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/adapt1.jpg&quot; width=&quot;500&quot;&gt;</p>
 <p>The function plot and the error plot are</p>
-<p><img src="/images/Research/Tmesh/adapt2.jpg" width="500"></p>
-<p><img src="/images/Research/Tmesh/adapt3.jpg" width="500"></p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/adapt2.jpg&quot; width=&quot;500&quot;&gt;</p>
+<p>&lt;img src=&quot;/images/Research/Tmesh/adapt3.jpg&quot; width=&quot;500&quot;&gt;</p>
 
       
     </div>
@@ -524,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-5"><span class="nav-number">1.</span> <span class="nav-text">Research Note 5</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Research Note 5</span></a></li></ol></div>
             
 
           </div>
@@ -613,6 +634,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -647,6 +671,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -731,6 +765,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

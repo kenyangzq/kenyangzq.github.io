@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Math,Matlab," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Research Note 6This week we debug the 2d code and keep working on 3d functions.  In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
+<meta name="keywords" content="Math,Matlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Research-Note-6">
+<meta property="og:url" content="http://yoursite.com/2017/07/23/Research-Note-6/index.html">
+<meta property="og:site_name" content="Runner">
+<meta property="og:description" content="Research Note 6This week we debug the 2d code and keep working on 3d functions.  In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-07-23T21:31:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Research-Note-6">
+<meta name="twitter:description" content="Research Note 6This week we debug the 2d code and keep working on 3d functions.  In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This functio">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/23/Research-Note-6/"/>
+
+
+
+
+
+  <title>Research-Note-6 | Runner</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runner</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hacking to the gate</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/Research-Note-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Research-Note-6</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:06:47-05:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Research-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Research Note</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Research-Note/T-mesh3D/" itemprop="url" rel="index">
+                    <span itemprop="name">T-mesh3D</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Research-Note-6"><a href="#Research-Note-6" class="headerlink" title="Research Note 6"></a>Research Note 6</h1><p>This week we debug the 2d code and keep working on 3d functions. </p>
+<p>In 2d case, Professor Schumaker came up with a function to add C1 smoothness condition between rectangles. This function makes use of recl and rec, vectors denoting the rectangles on the left and right of each edge. Unfortunately, due to the way we develop refinerec, there is quite a few bugs in the function. So I spent rought two days on debugging the refinerec function and finally get a version that pass enormous test cases. </p>
+<h2 id="Interdp3d-and-Valtspgrid3d"><a href="#Interdp3d-and-Valtspgrid3d" class="headerlink" title="Interdp3d and Valtspgrid3d"></a>Interdp3d and Valtspgrid3d</h2><p>On the 3d side, I develop some functions as the extensions of their 2d correspondences. Two of them are interdp3d and valtspgrid3d. </p>
+<p>Interdp3d interpolate a given function on the whole rectangulation and return the coefficient as a 3d Matrix. Since Matlab does not support nested list structure, we look to <em>tensor toolbox</em> for help. A tensor is just a n dimension matrix. The toolbox include basic functionality such as addition, subtraction, scalar multiplication and scalar division. It also supports multiplication between tensor and matrix on a given direction. That’s what we mainly use. </p>
+<p>Back to my functions. Interdp3d returns a 3d tensor storing the coefficient of the 3d spline on the rectangulation. Then I use valtspgrid0 to obtain approximation of values of the given function at 3d grid points using the coefficient we get. To varify the result, I compute the norm of error terms. </p>
+<p>We haven’t found a good way to visualize the function. So far we have try to plot the isosurface. There is a nice package on MathWork forem named sliceomatic. It gives a live isosurface plot, but it still does not meet our expectation.</p>
+<h2 id="Other-functions"><a href="#Other-functions" class="headerlink" title="Other functions"></a>Other functions</h2><p>Since my refinecube function only returns lists of relation among cubes, faces, edges and vertices, I need to find a way to get the other indispensible information such as the hanging vertices, subedges, etc. </p>
+<p>So I wrote a bunch of small helper functions, like gethv for get hanging vertex, getse for get subedges, getsf for get subfaces and gethe for get hanging edges. Some of the cases are pretty tricky, for example in 3d a vertex can be hanging on multiplt edges. </p>
+<p>Now that I prefer not to update these other important list in the refinement function, that function will definitely be less error-prone. However, in the view of efficiency, separating them out will without doubt be slower. So far it has not been a problem. </p>
+<h2 id="tsp0smooth3d"><a href="#tsp0smooth3d" class="headerlink" title="tsp0smooth3d"></a>tsp0smooth3d</h2><p>Now I am currently working on the tsp0smooth3d function. It enforces the C0 smoothness condition on the 3d partition. Compared to the 2d tsp0smooth I implemented half month ago, this one is much more complicated. In 2d, only two cases are in consideration, hanging vertices and subedges. On the other side, in 3d, there are at least 4 cases, hanging vertices, hanging edges, subedges and subfaces. And each cases is much harder to implement, since we have higher degree of Bernstein basis polynomial. </p>
+<p>It’s not that easy to describe the problem I ran into while implementing this code. The vital issue is that I cannot just easily visualize the work. Most of the cases need pure imagination. When 3d is involved, things always get more complicated. </p>
+<p>I hope I can finish it in few days next week. </p>
+<h2 id="P-S"><a href="#P-S" class="headerlink" title="P.S."></a>P.S.</h2><p>One interesting and weird thing I noticed about Matlab is its meshgrid function. In 3d cases, one needs to do </p>
+<p>​                <code>[X,Y,Z] = meshgrid(ty,tx,tz)</code></p>
+<p>to get the correct mesh in 3d, where ty, tx, tz are generated using linspace on their corresponding direction. Notice the weird order of argument. I am still wondering why these people prefers to pass the argument in this way. Just because of this ordering, I spent 2 more hours debugging my code. </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/" rel="tag"># Math</a>
+          
+            <a href="/tags/Matlab/" rel="tag"># Matlab</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/15/Research-Note-5/" rel="next" title="Research-Note-5">
+                <i class="fa fa-chevron-left"></i> Research-Note-5
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/30/Research-Note-7/" rel="prev" title="Research-Note-7">
+                Research-Note-7 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ziqi Yang</p>
+              <p class="site-description motion-element" itemprop="description">Welcome to my hub</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Research-Note-6"><span class="nav-number">1.</span> <span class="nav-text">Research Note 6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interdp3d-and-Valtspgrid3d"><span class="nav-number">1.1.</span> <span class="nav-text">Interdp3d and Valtspgrid3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-functions"><span class="nav-number">1.2.</span> <span class="nav-text">Other functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tsp0smooth3d"><span class="nav-number">1.3.</span> <span class="nav-text">tsp0smooth3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P-S"><span class="nav-number">1.4.</span> <span class="nav-text">P.S.</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ziqi Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

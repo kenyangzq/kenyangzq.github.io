@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Math," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Probability Theory　　Recently, I study the reading of Pattern Recognition and Machine Learning, aka PRML. Here I record some of the key concept and idea in Chapter 1.2 Probability Theory. 　　In this not">
+<meta name="keywords" content="Math">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.2 Probability Theory">
+<meta property="og:url" content="http://yoursite.com/2017/06/01/1-2-Probability-Theory/index.html">
+<meta property="og:site_name" content="Runner">
+<meta property="og:description" content="Probability Theory　　Recently, I study the reading of Pattern Recognition and Machine Learning, aka PRML. Here I record some of the key concept and idea in Chapter 1.2 Probability Theory. 　　In this not">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-06-07T04:21:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.2 Probability Theory">
+<meta name="twitter:description" content="Probability Theory　　Recently, I study the reading of Pattern Recognition and Machine Learning, aka PRML. Here I record some of the key concept and idea in Chapter 1.2 Probability Theory. 　　In this not">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/01/1-2-Probability-Theory/"/>
+
+
+
+
+
+  <title>1.2 Probability Theory | Runner</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runner</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hacking to the gate</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/01/1-2-Probability-Theory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">1.2 Probability Theory</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-01T21:13:19-05:00">
+                2017-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Study Note</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/PRML/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Probability-Theory"><a href="#Probability-Theory" class="headerlink" title="Probability Theory"></a>Probability Theory</h1><p>　　Recently, I study the reading of <em>Pattern Recognition and Machine Learning</em>, aka PRML. Here I record some of the key concept and idea in Chapter 1.2 Probability Theory.</p>
+<p>　　In this note, I skip the part where the book introduces the basic idea of probability, the two fundamental rules — sum rule and product rule, and the basic idea of Bayes’ theorem. The only thing I need to point out is the concept of <em>prior probability</em> and <em>posterior probability</em>. The former is the probability distribution of some event to happen <em>before</em> gather any evidence. The latter is the one for <em>after</em> some evidence is obtained.</p>
+<h2 id="Expectations-and-Covariances"><a href="#Expectations-and-Covariances" class="headerlink" title="Expectations and Covariances"></a>Expectations and Covariances</h2><p>　　The expectation as we all learn in high school, is defined as </p>
+<p>$$<br>E[f] = \sum\limits<em>{x}p(x)\,f(x)<br>$$<br>for discrete distribution or<br>$$<br>E[f] = \int p(x)\,f(x)<br>$$<br>for continuous variable. It’s the average value of some function f(x) under probability distribution p(x). In either case, we can approximate it by finite number $N$ of points as<br>$$<br>E[f] \approx \frac{1}{N} \sum</em>{n=1}^{N} f(x_n)<br>$$<br>The approximation becomes exact as $N$ goes to infinity.</p>
+<p>　　A conditional expectation with respect to a conditional distribution is defined as<br>$$<br>E_x[f(|y)] = \sum<em>xp(x|y)\,f(x)<br>$$<br>　　The variance of f(x) is defined by<br>$$<br>\begin{split}<br>var[f] &amp;= E[(f(x) - E[f(x)])^2]  \\<br>    &amp;= E[f(x)^2] - E[f(x)]^2<br>\end{split}<br>$$<br>　　For two random variables x and y, the <em>covariance</em> is defined as<br>$$<br>cov[x,y] = E</em>{x,y}[{x-E[x]}{y-E[y]}]<br>$$<br>In the case of two vectors of random variables $\textbf{x}$ and $\textbf{y}$, the covariance is a matrix<br>$$<br>\begin{split}<br>cov[\textbf{x},\textbf{y}] &amp;= E<em>{\textbf{x},\textbf{y}}[{\textbf{x}-E[\textbf{x}]}{\textbf{y}-E[\textbf{y}]}] \\<br>&amp;= E</em>{\textbf{x},\textbf{y}}[\textbf{x}\textbf{y}^T]-E[\textbf{x}]E[\textbf{y}^T]<br>\end{split}<br>$$</p>
+<h2 id="Baysian-Probability"><a href="#Baysian-Probability" class="headerlink" title="Baysian Probability"></a>Baysian Probability</h2><p>　　In early education, it’s normal to treat probabilities in terms of the frequencies of random, repeatable events. This is called the <em>classical</em> or <em>frequentist</em> interpretation of probabilities. For some uncertain events, like whether the moon will crash toward the Earth, it’s impossible to measure the frequency. However, we can use Bayesian interpretation of probability to represent uncertainty. It has been proven that such measure of uncertainty follow different sets of properties and axioms. In each case, they behave precisely according to the rules of probabilities. Thus it’s natural to refer them as (Bayesian) probabilities.</p>
+<p>　　With the observed evidence, Bayes’ theorem allows as to convert a prior probability to a posterior probability. To quantify the uncertainty for the model parameter $\textbf{w}$ or even the model itself, we can use machinery of probability theory to measure. </p>
+<p>　　Before we observe the data, we can capture our assumptions about $\textbf{w}$ by prior probability $p(\textbf{w})$. After we have observed $\it{D} = {t_1,…,t_N}$, Bayes’ theorem, which takes the form of<br>$$<br>p(\textbf{w}|\mathit{D}) = \frac{p(\mathit{D}|\textbf{w})p(\textbf{w})}{p(\mathit{D})}<br>$$<br>allows to evaluate the uncertainty of $\textbf{w}$ in the form of posterior probability $p(\textbf{w}|\mathit{D})$.</p>
+<p>　　The quantity $p(\textbf{w}|\mathit{D})$ can be viewed as a function of the parameter vector $\textbf{w}$ and is called the <em>likelihood function</em>. It expresses how probable the observed data set is for different settings of the parameter vector $\textbf{w}$. With this definition, we can state Bayes’ theorem in another form<br>$$<br>posterior \propto likelihood \times prior<br>$$<br>where all of these quantities are viewed as function of $\textbf{w}$. </p>
+<p>​　　In both the Bayesian and frequentist paradigms, the likelihood function $p(\textbf{w}|\mathit{D})$ plays a central role but the manner is different. In a frequentist setting, $\textbf{w}$ is considered as a fixed parameter, whose value is determined by some ‘estimator’, and error bars of this estimate are obtained by the data set $D$. </p>
+<p>　　One widely used frequentist estimator is <em>maximum likelihood</em>, in which $\textbf{w}$ is chosen to maximize the likelihood function. In machine learning literature, the negative log of the likelihood function is called an <em>error function</em>. Since negative log is monotonically decreasing, maximizing the function is equivalent to minimizing the error.</p>
+<h2 id="The-Gaussian-distribution"><a href="#The-Gaussian-distribution" class="headerlink" title="The Gaussian distribution"></a>The Gaussian distribution</h2><p>　　The famus <em>normal</em> or <em>Gaussian distribution</em> for a single-valued variable x is defined by<br>$$<br>N(x|\mu,\sigma^2) = \frac{1}{(2\pi\sigma^2)^{1/2}}e^{-\frac{1}{2\sigma^2}(x-\mu)^2}<br>$$<br>which is govened by two parameters, <em>mean</em> $\mu$ and <em>variance</em> $\sigma^2$. The reciprocal of the variance, written as $\beta=1/\sigma^2$, is called the precision. It’s clear that Gaussian distribution is nonnegative and straightforward to show that the it’s normalized. Thus it satisfies the two requirements for a valid probability density. We can easily find expectations and variance of x, which are $\mu$ and $\sigma^2$ respectively. 　　</p>
+<p>　　For $D$-dimensional vector $\textbf{x}$ of continuous variables, the Gaussian distribution is given by<br>$$<br>N(\pmb{x}|\pmb{\mu},\pmb{\Sigma}) = \frac{1}{(2\pi)^2|\pmb{\Sigma}|^{1/2}}e^{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^T\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})}<br>$$<br>　　Suppose we have a data set of $N$ observations $(x_1,…,x<em>N)^T$ drawn independently from a Guassian distribution with mean $\mu$ and variance $\sigma^2$. We call such data set <em>independent and identically distributed</em> or <em>i.i.d</em>. We can write the probability of such data set in the form<br>$$<br>p(\mathbf{x}|\mu,\sigma^2) = \prod</em>{n=1}^\mathbf{N} N(x<em>n|\mu,\sigma^2)<br>$$<br>　　Now we can determine the unknown parameters $\mu$ and $\sigma^2$ by maximizing the likelihood function above. In practice, it’s more convenient to maximize the log of the function which is<br>$$<br>\ln p(\mathbf{x}|\mu,\sigma^2)=-\frac{1}{2\sigma^2}\sum</em>{n=1}^{N}(x<em>n -\mu)-\frac{N}{2}\ln \sigma^2 - \frac{N}{2}\ln (2\pi)<br>$$<br>Maximizing it with respect to $\mu$, we obtain the maximum likelihood solution given by<br>$$<br>\mu</em>{ML} = \frac{1}{N}\sum_{n=1}^Nx<em>n<br>$$<br>which is the <em>sample mean</em>. Similarly, maximizing it with respect to $\sigma^2​$, we obtain the maximum likelihood solution for the variance in the form<br>$$<br>\sigma</em>{ML}^2 = \frac{1}{N}\sum_{n=1}^{N}(x<em>n-\mu</em>{ML})^2<br>$$<br>which is the <em>sample variance</em> w.r.t the sampel mean. </p>
+<p>　　In fact, the maximum likelihood approach systematically underestimates the variance of the distribution. This is an example of a phenomenon called <em>bias</em> and is related to the problem of over-fitting. First note that the maximum likelihood solutions $\mu<em>{ML}$ and $\sigma^2</em>{ML}$ are functions of the data set values $x_1,…x<em>N$. The expectations of these quantities w.r.t to the data value can be shown to be<br>$$<br>\begin{split}<br>E[\mu</em>{ML}] &amp;=  \frac{1}{N}E[\sum_{n=1}^N x<em>n] =\mu \\<br>E[\sigma^2</em>{ML}] &amp;= \frac{1}{N} E[\sum_{n=1}^{N} (x<em>n-\mu</em>{ML})^2] \\<br>        &amp;= \frac{1}{N} E[\sum_{n=1}^Nx<em>n^2 -2N\mu\mu</em>{ML} + N\mu<em>{ML}^2]  \\<br>        &amp;= \frac{1}{N} E[\sum</em>{n=1}^Nx<em>n^2 - N\mu^2+ N(\mu-\mu</em>{ML})^2] \\<br>        &amp;= \frac{1}{N} {N(E[x^2] - E[x]^2) + N \frac{1}{N}\sigma^2 } \\<br>        &amp;= \frac{N-1}{N} \sigma^2<br>\end{split}<br>$$<br>So on average, the maximum likelihood estimate will obtain the correct mean but will underestimate the true variance by a factor of $(N-1)/N$. Therefore, we use<br>$$<br>\tilde{\sigma}^2 = \frac{N}{N-1} \sigma^2<em>{ML} = \frac{1}{N-1}\sum</em>{n=1}^{N}(x<em>n-\mu</em>{ML})^2<br>$$<br>to obtain an unbiased estimate of variance. Not that the bias of the maximum likelihood solution become less significant as the number N goes to infinity. </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/" rel="tag"># Math</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/26/PageRank/" rel="next" title="PageRank">
+                <i class="fa fa-chevron-left"></i> PageRank
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/06/Research-Start/" rel="prev" title="Research Start">
+                Research Start <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ziqi Yang</p>
+              <p class="site-description motion-element" itemprop="description">Welcome to my hub</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Probability-Theory"><span class="nav-number">1.</span> <span class="nav-text">Probability Theory</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Expectations-and-Covariances"><span class="nav-number">1.1.</span> <span class="nav-text">Expectations and Covariances</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Baysian-Probability"><span class="nav-number">1.2.</span> <span class="nav-text">Baysian Probability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Gaussian-distribution"><span class="nav-number">1.3.</span> <span class="nav-text">The Gaussian distribution</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ziqi Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

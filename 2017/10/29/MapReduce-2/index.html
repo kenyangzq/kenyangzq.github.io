@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Bigdata," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Second Look at MapReduceEarly I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce:">
+<meta name="keywords" content="Bigdata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce-2">
+<meta property="og:url" content="http://yoursite.com/2017/10/29/MapReduce-2/index.html">
+<meta property="og:site_name" content="Runner">
+<meta property="og:description" content="Second Look at MapReduceEarly I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce:">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-11-05T22:38:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MapReduce-2">
+<meta name="twitter:description" content="Second Look at MapReduceEarly I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, MapReduce:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/29/MapReduce-2/"/>
+
+
+
+
+
+  <title>MapReduce-2 | Runner</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runner</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hacking to the gate</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/29/MapReduce-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MapReduce-2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-29T12:38:34-05:00">
+                2017-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Study Note</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/Bigdata/" itemprop="url" rel="index">
+                    <span itemprop="name">Bigdata</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/Bigdata/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Second-Look-at-MapReduce"><a href="#Second-Look-at-MapReduce" class="headerlink" title="Second Look at MapReduce"></a>Second Look at MapReduce</h1><p>Early I have written a very simple post about the idea of MapReduce. It was in fact part of the my lecture note in the Big Data course. Recently I re-read the paper, <em>MapReduce: simplified data processing on large clusters</em> [1], and I want to add some note to this topic. I will not follow the order of the paper and only write down some of the things that stands out, including my own thought and other related topics. </p>
+<h2 id="Programming-Model"><a href="#Programming-Model" class="headerlink" title="Programming Model"></a>Programming Model</h2><p>The interface is pretty simple: typically MapReduce is a imported library, e.g. <a href="https://github.com/Yelp/mrjob" target="_blank" rel="noopener">mrjob</a>; user only needs to define the map and reduce function and pass them to the library to run. </p>
+<h4 id="Execution-Overview"><a href="#Execution-Overview" class="headerlink" title="Execution Overview"></a>Execution Overview</h4><p>As discussed in paper, input data is first partitioned into <em>M</em> splits for Map node; later on there will be <em>R</em> worker node for Reduce operation. Typically, number <em>M</em> and <em>R</em> are much larger than the number of machines. </p>
+<p>Each worker executes the map function user defined. And results are written to local disk periodically.  The master is responsible for a schedule plan to reduce transmission need. Typically, it will try to put reduce node near map node. In this way, most input data is read locally and consumes no nework bandwidth. </p>
+<p><strong>Note</strong>:</p>
+<ol>
+<li>One reason that Spark is much faster is that intermediate results are written to local disk, and Reduce nodes have to read from disk while Spark stores all the RDDs in memory.</li>
+<li>Reduce nodes cannot start until all Map nodes finish. There is a Barrier between these two nodes. </li>
+</ol>
+<h4 id="A-Confusion"><a href="#A-Confusion" class="headerlink" title="A Confusion"></a>A Confusion</h4><p>The paper indicates that after all the intermediate keys are received, they are sorted on the reduce node so that all occurance of the same key are grouped together. I don’t quite unerstand how they achieve this. To me, it will make more sense for master to handle this. After all the intermediate results are read, master sorts them, possibly use external sort as data volume is too large to fit in memory. Then the sorted result is fed to Reduce nodes. But in this way the network bandwidth will be a restriction. </p>
+<p><em>After discussion with a professor, I realized that the shuffle part between map and reduce is not covered in this paper. In fact, after mapper writes the data to local disk, it sorted the data. And the master shuffle the sorted results from each worker and then schedule the whole reduce task. This explains why there has to be a barrier between map and reduce.</em> </p>
+<h2 id="Fault-Tolerance"><a href="#Fault-Tolerance" class="headerlink" title="Fault Tolerance"></a>Fault Tolerance</h2><h4 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h4><p>The MapReduce library kind of supports a strong fault tolerance on worker node. But compared to Spark, it’s too inefficient. </p>
+<p>On map task, if one fails, this task has to be re-executed in its entirety as the intermediate results are stored on local disks. But for reduce task, since the result is outputed to some global file system, (GFS with no doubt at that time, 2004), there is no need to re-start the whole reduce task.</p>
+<h4 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h4><p>In the paper, they mention that they can use checkpoint as in GFS to maintain the master status. However, due to the small chance of failure, they decided to just abort the task. </p>
+<p><em>I think they can also adopt the idea of shadow master from GFS. The primal master can record append the status and location of worker tasks to a chunk in GFS. When the master failed, the shadow master can continue from the chunk and handle the rest.</em> </p>
+<p>Just some naive thoughts.</p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p>The paper also mentioned how they take advantages of location information to better schedule the task, the task granularity. In addition, they handle straggler by scheduling multiple backup tasks. </p>
+<h4 id="Combiner"><a href="#Combiner" class="headerlink" title="Combiner"></a>Combiner</h4><p>In some cases when repetition in keys are frequent and reduce operation is <em>communative</em> and <em>associative</em>, MapReduce allows user to add a <em>Combiner</em> function to optimize. </p>
+<p>In my view, it’s the same as a pre-reduce on Map operation. </p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In short, MapReduce is a very powerful programming model which pave the way for modern big data processing techniques. </p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] Dean J, Ghemawat S. 2008. MapReduce: Simplified data processing on large clusters. Commun ACM 51: 107–113.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Bigdata/" rel="tag"># Bigdata</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/28/Pyspark-in-Jupyter-Notebook-with-SSH-Forward-Porting-on-Local-VM/" rel="next" title="Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM">
+                <i class="fa fa-chevron-left"></i> Pyspark in Jupyter Notebook with SSH Forward Porting on Local VM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/29/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ziqi Yang</p>
+              <p class="site-description motion-element" itemprop="description">Welcome to my hub</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Second-Look-at-MapReduce"><span class="nav-number">1.</span> <span class="nav-text">Second Look at MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Programming-Model"><span class="nav-number">1.1.</span> <span class="nav-text">Programming Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Execution-Overview"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Execution Overview</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Confusion"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">A Confusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-Tolerance"><span class="nav-number">1.2.</span> <span class="nav-text">Fault Tolerance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Worker"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Worker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Master"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Master</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Others"><span class="nav-number">1.3.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Combiner"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Combiner</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ziqi Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

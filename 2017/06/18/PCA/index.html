@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Machine Learning," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Principal Component AnalysisPCA refers to the process by which principal components are computed and the subsequent use of these components. It’s a technique to summarize a large set of correlated var">
+<meta name="keywords" content="Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PCA">
+<meta property="og:url" content="http://yoursite.com/2017/06/18/PCA/index.html">
+<meta property="og:site_name" content="Runner">
+<meta property="og:description" content="Principal Component AnalysisPCA refers to the process by which principal components are computed and the subsequent use of these components. It’s a technique to summarize a large set of correlated var">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-06-19T04:45:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PCA">
+<meta name="twitter:description" content="Principal Component AnalysisPCA refers to the process by which principal components are computed and the subsequent use of these components. It’s a technique to summarize a large set of correlated var">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/18/PCA/"/>
+
+
+
+
+
+  <title>PCA | Runner</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runner</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hacking to the gate</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/PCA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PCA</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-18T23:45:11-05:00">
+                2017-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Study Note</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Principal-Component-Analysis"><a href="#Principal-Component-Analysis" class="headerlink" title="Principal Component Analysis"></a>Principal Component Analysis</h1><p>PCA refers to the process by which principal components are computed and the subsequent use of these components.</p>
+<p>It’s a technique to summarize a large set of correlated variables with a smaller number of representative variables.</p>
+<h2 id="Principal-components"><a href="#Principal-components" class="headerlink" title="Principal components"></a>Principal components</h2><p>Principal components are directions in p-dimension feature space that the observations that are as <em>interesting</em> as possible. The concept of interesting is meatured by the amount that the observations vary along each dimension. Each of the dimensions found by PCA is a linear combination of all the p features.</p>
+<p>The first principal component of a set of features $X_1,X_2,…,X_p$ is the normalized linear combination of the features<br>$$<br>Z<em>1 = \phi</em>{11}X<em>1 + \phi</em>{21}X<em>2 + … + \phi</em>{p1}X<em>p<br>$$<br>that has the largest variance. By <em>normalzed</em>, it means that $\sum</em>{j=1}^p\phi<em>{j1}^2=1$. The $\phi</em>{11},…,\phi_{p1}$ are called <em>loadings</em> of the first principal component and together they form the loading vector. </p>
+<p>Since we are only interested in variance, we can assume that each variables has been centered to have mean zero. Then finding the loading vector is essentially solving the optimization problem:<br>$$<br>\underset{\phi<em>{11},…,\phi</em>{p1}}{maximize}{\frac{1}{n}\sum<em>{i=1}^n (\sum</em>{j=1}^p\phi<em>{j1}x</em>{ij})^2 },\, s.t\; \sum<em>{j=1}^p \phi</em>{j1}^2=1<br>$$<br>Since $z<em>{i1} = \phi</em>{11}x<em>1 + \phi</em>{21}x<em>2 + … + \phi</em>{p1}x<em>p$ and $\frac{1}{n}\sum</em>{i=1}^nx<em>{ij}=0$, we have the average of $z</em>{11},…,z<em>{n1}$ is zero. So what we are optimizing is just the sample variance of the n values of $z</em>{i1}$. We call $z<em>{11},…,z</em>{n1}$ the <em>scores</em> of the first principal component. </p>
+<p>After the first principal component $Z<em>1$ is determined, we can find the second principal component $Z</em>{2}$. The second principal component is a linear combination of $X_1,…X_p$ that has maximal variance out of all linear combinations that are <em>uncorrelated</em> with $Z_1$. It turns out that constraining uncorrelated is equivalent to constraining the direction to be orthogonal. The other principal components can be computed the same way.</p>
+<p>Once we have computed all the principal components, we can plot them against each other in order to produce low-dimensional views of the data. </p>
+<h2 id="More-on-PCA"><a href="#More-on-PCA" class="headerlink" title="More on PCA"></a>More on PCA</h2><h3 id="Scaling-the-Variables"><a href="#Scaling-the-Variables" class="headerlink" title="Scaling the Variables"></a>Scaling the Variables</h3><p>Before the PCA is performed, the variable should be centered to have mean zero. Furthermore, the results obtained is dependent on whether the variables have been scaled individually. </p>
+<p>In addition, <strong>the standard deviation is usually scaled to one before PCA</strong> for measures that have different units. If variables have different std, the result can be misleading. However, in certain settings, the variabels may be measured in the same units. In this case we might not with to scale them to have std 1. </p>
+<h3 id="Uniqueness"><a href="#Uniqueness" class="headerlink" title="Uniqueness"></a>Uniqueness</h3><p>Each principal component loading vector is unique, up to a sign flip. So two different software package should give the same principal components, though the sign may be opposite.</p>
+<h3 id="The-Proportion-of-Variance-Explained"><a href="#The-Proportion-of-Variance-Explained" class="headerlink" title="The Proportion of Variance Explained"></a>The Proportion of Variance Explained</h3><p>We are interested in knowing the <em>proportion of variance explained</em> (PVE) by each principal component. The <em>total variance</em> in a data set (assuming mean zero for each variables) is defined as<br>$$<br>\sum_{j=1}^p\textrm{Var}(X<em>j) = \sum</em>{j=1}^p\frac{1}{n}\sum<em>{i=1}^nx</em>{ij}^2<br>$$<br>and the variance explained by the $m$th principal component is<br>$$<br>\frac{1}{n}\sum<em>{i=1}^nz</em>{im}^2 = \frac{1}{n}\sum<em>{i=1}^n(\sum</em>{j=1}^p\phi<em>{jm}x</em>{ij})^2<br>$$<br>Therefore the PVE of the $m$th component is given by<br>$$<br>\frac{\sum<em>{i=1}^n(\sum</em>{j=1}^p\phi<em>{jm}x</em>{ij})^2}{ \sum<em>{j=1}^p\sum</em>{i=1}^nx_{ij}^2}<br>$$<br>In total, there are min($n-1$, $p$) principal components and their PVEs sum to one.</p>
+<h3 id="Deciding-How-Many-PC-to-Use"><a href="#Deciding-How-Many-PC-to-Use" class="headerlink" title="Deciding How Many PC to Use"></a>Deciding How Many PC to Use</h3><p>We typically are not interested in all of PC; rather we would like to use just the first few of them. We usually decide by examing a <em>screen plot</em>. Using the elbow method, we find the principal component that the subsequent variance explained drops off. </p>
+<p>This type of visual analysis is inherently <em>ad hoc</em>. But unfortunately, there is not well-accepted objective way to decide how many PC are enough.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/18/SVM/" rel="next" title="SVM">
+                <i class="fa fa-chevron-left"></i> SVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/18/Clustering/" rel="prev" title="Clustering">
+                Clustering <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ziqi Yang</p>
+              <p class="site-description motion-element" itemprop="description">Welcome to my hub</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Principal-Component-Analysis"><span class="nav-number">1.</span> <span class="nav-text">Principal Component Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Principal-components"><span class="nav-number">1.1.</span> <span class="nav-text">Principal components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#More-on-PCA"><span class="nav-number">1.2.</span> <span class="nav-text">More on PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scaling-the-Variables"><span class="nav-number">1.2.1.</span> <span class="nav-text">Scaling the Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Uniqueness"><span class="nav-number">1.2.2.</span> <span class="nav-text">Uniqueness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Proportion-of-Variance-Explained"><span class="nav-number">1.2.3.</span> <span class="nav-text">The Proportion of Variance Explained</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deciding-How-Many-PC-to-Use"><span class="nav-number">1.2.4.</span> <span class="nav-text">Deciding How Many PC to Use</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ziqi Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

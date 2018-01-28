@@ -232,6 +232,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/RSA-Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/27/RSA-Algorithm/" itemprop="url">RSA Algorithm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-27T23:26:24-06:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Reading-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Reading Note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="RSA-Algorithm"><a href="#RSA-Algorithm" class="headerlink" title="RSA Algorithm"></a>RSA Algorithm</h1><p>RSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission.</p>
+<h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h2><p>Thanks to my number theory class, I can appreciate and understand how the algorithm works. </p>
+<h4 id="Before-start"><a href="#Before-start" class="headerlink" title="Before start"></a>Before start</h4><p>As a convention, use Alice and Bob as example to explain the algorithm. Suppose Alice and Bob want to pass some information between them. Before they start, they choose a large number N which is the product of two prime number. For a simple example, let’s use 61 and 53. Then N is 3233 in this case. </p>
+<p>Generally people make N pretty large. The length of N in binary notation is the length of the key, and in general, people choose it to be 1024 or 2048 bits. In our case, $3233<em>{10} = 110010100001</em>{2}$, which is 12 bits. </p>
+<p>Now all we have is $N = 3233$.</p>
+<h4 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h4><p>Apply the Euler function $\phi$ on N. By definition, $\phi(N)$ equals the number of positive integers less than N that are coprime with N. And there is a general formula for $\phi$<br>$$<br>\phi(N) = N\prod_{\text{p | N}}(1-\frac{1}{p})<br>$$<br>The proof is pretty simple and straightforward. Since N is just a product of two prime p and q, we have $\phi(N) = (p-1)(q-1)$. We denote $\phi(N)$ as $r$.</p>
+<p> Then Bob and Alice need to choose a number $e$ that’s coprime with $r$. The reason behind this is to ensure a <em>modular multiplicative inverse</em> of $e$  modulo $r$ can be found. </p>
+<p>By definition if b is a modular multiplicative inverse of a module r if<br>$$<br>a*b \equiv 1 \; mod(r)<br>$$<br>Mathematicians have developed systematic way to find multiplicative inverse and with computer, it only needs few lines of code. </p>
+<p>Let’s say we find the multiplicative inverse of $e$ modulo $r$ is $d$. Let’s take $e=17  $ and $d=2753$ in our case. Now they have finished their preparation and are ready to pass message. </p>
+<p>In addition, as a spoiler, $(N, e)$ will be the public key and $(N, d)$ will be the private key.</p>
+<h4 id="Encryption"><a href="#Encryption" class="headerlink" title="Encryption"></a>Encryption</h4><p>Suppose Bob has a message $M$ to pass. He first translate it into a large integer $m$ using some scheme he and alice agrees on. Then he encrypts the message by<br>$$<br>c \equiv m^e \; mod(N)<br>$$<br>And send $c$ to Alice. </p>
+<h4 id="Decryption"><a href="#Decryption" class="headerlink" title="Decryption"></a>Decryption</h4><p>After receive $c$, Alice recover the message by<br>$$<br>c^d \equiv (m^e)^d \equiv m \; mod(N)<br>$$<br>The proof is as follow:<br>$$<br>ed = k*r + 1<br>$$<br>for some integer k by the definition of modulo operation and the fact that $e$ and $d$ are multiplicative inverse of each other. </p>
+<p>Then<br>$$<br>m^{ed} \equiv m*(m^{r})^k \; mod(N)<br>$$<br>Note that $r = \phi(N)$. According to Euler’s Theorem:<br>$$<br>a^{\phi(N)} \equiv 1 \; mod(N)<br>$$<br>if $a$ and $N$ are coprime positive integer. This theorem is a generalization of Fermat’s  Little Theorem, which is again built upon Wilson’s Theorem. They can all be learned in a intro to number theory class. </p>
+<p>Thus we have<br>$$<br>c^d = m^{ed} \equiv m <em> (m^r)^k \equiv m</em>(1)^k \equiv m \; mod(N)<br>$$<br>based on the properties of modulo operation.</p>
+<p>Now Alice have the information Bob sent and all she need to do is to use the translation scheme to obtain the original message.</p>
+<h2 id="To-Break-RSA"><a href="#To-Break-RSA" class="headerlink" title="To Break RSA"></a>To Break RSA</h2><p>Since the public key $(N, e)$ as it named, is public. An attacker only need to decompose the large number $N$ and obtain $\phi(N)$ to break the whole algorithm. However, such problem is well-known in mathematics as a very hard one for centuries. At least for now, no known method can guarantee to break the algorithm using fixed amount of resource. </p>
+<h2 id="Last-Thought"><a href="#Last-Thought" class="headerlink" title="Last Thought"></a>Last Thought</h2><p>I dig in RSA algorithm or the public-key cryptosystems since I am reading a book about block chain. Public-key cryptosystems is one of the building block in bitcoin, and I think they use SECP256k1 in particular. Other algorithms used include various kind of hashing, e.g. SHA-256, and some encoding / decoding algorithm. </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/29/Klondike-Solitaire-Web-App/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1728,165 +1886,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/Research-Note-10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ziqi Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/10/Research-Note-10/" itemprop="url">Research-Note-10</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-10T22:25:22-05:00">
-                2017-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Research-Note/" itemprop="url" rel="index">
-                    <span itemprop="name">Research Note</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Research-Note/Tetra-mesh/" itemprop="url" rel="index">
-                    <span itemprop="name">Tetra-mesh</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Research-Note-10"><a href="#Research-Note-10" class="headerlink" title="Research Note 10"></a>Research Note 10</h1><p>Last week I was seriously illed so I did skip the note. Since my school starts, I can only use my leisure time on this research project, so without doubt, my progress is much slower compared to in summer. However, in last week, I have made some breakthrough and I thought it’s worth noting. </p>
-<h3 id="C1-Smoothness-Condition"><a href="#C1-Smoothness-Condition" class="headerlink" title="C1 Smoothness Condition"></a>C1 Smoothness Condition</h3><p>Right now our main goal is to solve scatter fitting problem using tetrahedron partition in 3D space. Professor Schumaker has a outline to attempt this problem. We first need to partition the space using tetrahedron, then we need to figure out how to enforce C1 smoothness condition between each unit tetrahedron. After that, we can use the idea of minimum energy by adding a penalizing terms of the smoothness condition. If we can reach this far, we can then choose the right parameter and solve the problem. </p>
-<p>Now the only missing key is to get the C1 smoothness condition. By C1 smoothness, it means that splines between different tetrahedron not only join on the sharing faces, but the directional partial derivative also agrees on the border. Since we are representing splines with coefficent at domain points, it can be proved that if the coefficient on the sharing faces agree, we will have C0 smoothness condition. And from that on, with one more layer, or I should say internal faces, of coefficient agree, we will one degree higher smoothness condition. </p>
-<p>Enforcing coefficient to agree on the sharing face is easy. Because of the way we store the spline, it automatically satisfy the C0 smoothness condition. C1, on the other hand, is far more tricky. It involves lots of geometric manipulation of the coefficient tetrahedrons. </p>
-<p>Long story short, Professor Larry came up with several functions to get the C1 smoothness condition with d = 3. The idea is to loop over all the interior face. For each face, get the left and right tetrahedrons’ coefficient. Perform some geometric manipulation on them and obtain the internal layer of coefficient by rotations. Then enforce them to agree by setting up a linear system of equation. </p>
-<p>After he show us the code, I spent a few days studying it. And in today’s afternoon I combined his functions with my getindextetra and other helpers. With some struggles, I believe I have extended the functions to give C1 smoothness condition for any value of d. So far these functions pass all the test cases I have. This means we have obtained the final missing piece to solve scatter data fitting problems. </p>
-<p>Probably in next week, we will put all the pieces together and finally obtain applicable solver. </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1937,7 +1936,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1959,7 +1958,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

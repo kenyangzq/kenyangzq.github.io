@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Machine Learning," />
+  <meta name="keywords" content="Algorithm,Blockchain," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Support Vector MachineChapter 9 of Statistical Learning. Starts form Maximal Margin Classifer, to Support Vector Classifier and finally to SVM.  Maximal Margin ClassifierIn a p-dimension, a hyperplane">
-<meta name="keywords" content="Machine Learning">
+<meta name="description" content="RSA AlgorithmRSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission. How it worksThanks to my number theory class, I can appreciate an">
+<meta name="keywords" content="Algorithm,Blockchain">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SVM">
-<meta property="og:url" content="http://yoursite.com/2017/06/18/SVM/index.html">
+<meta property="og:title" content="RSA Algorithm">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/RSA-Algorithm/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Support Vector MachineChapter 9 of Statistical Learning. Starts form Maximal Margin Classifer, to Support Vector Classifier and finally to SVM.  Maximal Margin ClassifierIn a p-dimension, a hyperplane">
+<meta property="og:description" content="RSA AlgorithmRSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission. How it worksThanks to my number theory class, I can appreciate an">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-06-19T04:45:10.000Z">
+<meta property="og:updated_time" content="2018-01-28T05:27:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SVM">
-<meta name="twitter:description" content="Support Vector MachineChapter 9 of Statistical Learning. Starts form Maximal Margin Classifer, to Support Vector Classifier and finally to SVM.  Maximal Margin ClassifierIn a p-dimension, a hyperplane">
+<meta name="twitter:title" content="RSA Algorithm">
+<meta name="twitter:description" content="RSA AlgorithmRSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission. How it worksThanks to my number theory class, I can appreciate an">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/18/SVM/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/27/RSA-Algorithm/"/>
 
 
 
 
 
-  <title>SVM | Runner</title>
+  <title>RSA Algorithm | Runner</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/SVM/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/RSA-Algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ziqi Yang">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SVM</h1>
+          <h1 class="post-title" itemprop="name headline">RSA Algorithm</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-18T23:41:42-05:00">
-                2017-06-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-27T23:26:24-06:00">
+                2018-01-27
               </time>
             
 
@@ -285,19 +285,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Study-Note/" itemprop="url" rel="index">
-                    <span itemprop="name">Study Note</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Study-Note/Machine-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning</span>
+                  <a href="/categories/Reading-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Reading Note</span>
                   </a>
                 </span>
 
@@ -333,31 +322,23 @@
       
 
       
-        <h1 id="Support-Vector-Machine"><a href="#Support-Vector-Machine" class="headerlink" title="Support Vector Machine"></a>Support Vector Machine</h1><p>Chapter 9 of Statistical Learning. Starts form Maximal Margin Classifer, to Support Vector Classifier and finally to SVM. </p>
-<h2 id="Maximal-Margin-Classifier"><a href="#Maximal-Margin-Classifier" class="headerlink" title="Maximal Margin Classifier"></a>Maximal Margin Classifier</h2><p>In a p-dimension, a <em>hyperplane</em> is a flat affine subspace of dimension p-1. For example, in two dimension, a hyperplane is a line. </p>
-<p>One intuitive way is to use hyperplane to classify data points. But there are inifinite way given it’s possible to find one hyperplane. So find the hyperplane with the greatest minimal vertical distance from data point, named <em>maximal margin classifier</em>. </p>
-<p>Note:</p>
-<ol>
-<li>The maximal margin hyperplane depends only on the few closest data points, which are called <em>support vector</em>. </li>
-<li>It may change a lot due to one data point. </li>
-</ol>
-<h3 id="Construction"><a href="#Construction" class="headerlink" title="Construction"></a>Construction</h3><p>Maximal margin hyperplane is the solution to the optimization problem:<br>$$<br>maximize\;M    \\<br>subject\; to \; \sum_{j=1}^p \beta_j^2 = 1 \\<br>y_i(\beta_0+\beta<em>1x</em>{i1}+…+\beta<em>px</em>{ip}) &gt;= M \; \forall\, i= 1,…,n<br>$$<br>The second equation ensure that the vertical distance from any data point to the hyperplane is given by<br>$$<br>y_i(\beta_0+\beta<em>1x</em>{i1}+…+\beta<em>px</em>{ip})<br>$$<br>So together, they ensure that each observation is on the correct side of the hyperplane and at least a distance M from the hyperplane.</p>
-<p>However, the data points may not be separable. Then generalize it to <em>support vector classifier</em>.</p>
-<h2 id="Support-Vector-Classifier"><a href="#Support-Vector-Classifier" class="headerlink" title="Support Vector Classifier"></a>Support Vector Classifier</h2><p>Consider a classifier based on hyperplane but not perfectly separate the two classes in the interest of </p>
-<ul>
-<li>Greater robustness to individual observations </li>
-<li>Better classification of most of the training observations.</li>
-</ul>
-<h3 id="Construction-1"><a href="#Construction-1" class="headerlink" title="Construction"></a>Construction</h3><p>In this case the optimization problem becomes:<br>$$<br>maximize\;M    \\<br>subject\; to \; \sum_{j=1}^p \beta_j^2 = 1 \\<br>y_i(\beta_0+\beta<em>1x</em>{i1}+…+\beta<em>px</em>{ip}) \geq M(1-\epsilon_i) \; \forall\, i= 1,…,n \\<br>\epsilon<em>i \geq 0, \; \sum</em>{i=1}^n\epsilon_i \leq C<br>$$<br>where C is a nonnegative tuning parameter, can be thought as a budget for the amount that the margin can be violated by the n observations. When C is 0, it becomes maximal margin hyperplane optimization problem. In practice, C is generatlly chosen by cross-validation. It controls the bias-variance trade-off. </p>
-<p>Similar to MMC, SVC has a nice property: only observations that lie on the margin or that violate the margin will affect the hyperplane. So if an observation lies strictly on the correct side of the margin, it does not affect the classifier. Observations that lie on the margin or wrong side of margin for their class are known as <em>support vectors</em>.</p>
-<h2 id="Support-Vector-Machine-1"><a href="#Support-Vector-Machine-1" class="headerlink" title="Support Vector Machine"></a>Support Vector Machine</h2><p>One way to convert a linear classifier into non-linear is by enlarging the feature space using quadratic, cubic or higher polynomial functions of the predictors. The resulting decision boundary is linear in the enlarged feature space, but not in the original one. However, sometimes we may end up with a huge number of features and increase computation. </p>
-<p>SVM is a way to enlarge the feature space but leads to efficient computation. It uses <em>kernels</em>. </p>
-<p>The solution to support vector classifier problem involves only the inner products of the observations but not observations themselves. It can be shown that the linear support vector classifier can be represented as<br>$$<br>f(x) = \beta<em>0 + \sum</em>{i=1}^n \alpha_i\langle x,x_i\rangle<br>$$<br>where there are n parameters $\alpha_i$, one per training observation.</p>
-<p>It turns out that only the $\alpha$ of support vectors will be nonzero, so if S is the collection of indices of support vectors, then the solution is<br>$$<br>f(x) = \beta<em>0 + \sum</em>{i\in S}\alpha_i \langle x,x_i\rangle<br>$$<br>Now if for every appearance of inner product, we replace it with a generalization of the inner product<br>$$<br>K(x<em>i,x</em>{i’})<br>$$<br>where K is some function that we call it <em>kernel</em>. It quantifies the similarity of two observations. We can choose it to be inner product, which gives SVC. This is known as a linear kernel. Another choice is<br>$$<br>K(x<em>i,x</em>{i’})= (1+\sum<em>{j=1}^p x</em>{ij}x_{i’j})^d<br>$$<br>This is known as a <em>polynomial kernel</em> of degree d, where d is a positive integer. It will give a much more flexible decision boundary. It essentially amounts to fitting a support vector classifier in a higher dimensional space involving polynomials of degree d. </p>
-<p>When the support vector classifier is combined with a non-linear kernel, the resulting classifier is known as a support vector machine. </p>
-<p>The advantage of using kernel is computation. It only needs to compute the kernel function for all pairs of observation. </p>
-<h2 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h2><p>The SVM can be extended to multiple classes case. One vs One or One vs All.</p>
-<p>SVM has a similar loss function as logistic regression, which often performs better, so SVM is not that widely used nowadays. The kernel trick, though it can also be applied to other classifier, is most used in the context of SVM.</p>
+        <h1 id="RSA-Algorithm"><a href="#RSA-Algorithm" class="headerlink" title="RSA Algorithm"></a>RSA Algorithm</h1><p>RSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission.</p>
+<h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h2><p>Thanks to my number theory class, I can appreciate and understand how the algorithm works. </p>
+<h4 id="Before-start"><a href="#Before-start" class="headerlink" title="Before start"></a>Before start</h4><p>As a convention, use Alice and Bob as example to explain the algorithm. Suppose Alice and Bob want to pass some information between them. Before they start, they choose a large number N which is the product of two prime number. For a simple example, let’s use 61 and 53. Then N is 3233 in this case. </p>
+<p>Generally people make N pretty large. The length of N in binary notation is the length of the key, and in general, people choose it to be 1024 or 2048 bits. In our case, $3233<em>{10} = 110010100001</em>{2}$, which is 12 bits. </p>
+<p>Now all we have is $N = 3233$.</p>
+<h4 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h4><p>Apply the Euler function $\phi$ on N. By definition, $\phi(N)$ equals the number of positive integers less than N that are coprime with N. And there is a general formula for $\phi$<br>$$<br>\phi(N) = N\prod_{\text{p | N}}(1-\frac{1}{p})<br>$$<br>The proof is pretty simple and straightforward. Since N is just a product of two prime p and q, we have $\phi(N) = (p-1)(q-1)$. We denote $\phi(N)$ as $r$.</p>
+<p> Then Bob and Alice need to choose a number $e$ that’s coprime with $r$. The reason behind this is to ensure a <em>modular multiplicative inverse</em> of $e$  modulo $r$ can be found. </p>
+<p>By definition if b is a modular multiplicative inverse of a module r if<br>$$<br>a*b \equiv 1 \; mod(r)<br>$$<br>Mathematicians have developed systematic way to find multiplicative inverse and with computer, it only needs few lines of code. </p>
+<p>Let’s say we find the multiplicative inverse of $e$ modulo $r$ is $d$. Let’s take $e=17  $ and $d=2753$ in our case. Now they have finished their preparation and are ready to pass message. </p>
+<p>In addition, as a spoiler, $(N, e)$ will be the public key and $(N, d)$ will be the private key.</p>
+<h4 id="Encryption"><a href="#Encryption" class="headerlink" title="Encryption"></a>Encryption</h4><p>Suppose Bob has a message $M$ to pass. He first translate it into a large integer $m$ using some scheme he and alice agrees on. Then he encrypts the message by<br>$$<br>c \equiv m^e \; mod(N)<br>$$<br>And send $c$ to Alice. </p>
+<h4 id="Decryption"><a href="#Decryption" class="headerlink" title="Decryption"></a>Decryption</h4><p>After receive $c$, Alice recover the message by<br>$$<br>c^d \equiv (m^e)^d \equiv m \; mod(N)<br>$$<br>The proof is as follow:<br>$$<br>ed = k*r + 1<br>$$<br>for some integer k by the definition of modulo operation and the fact that $e$ and $d$ are multiplicative inverse of each other. </p>
+<p>Then<br>$$<br>m^{ed} \equiv m*(m^{r})^k \; mod(N)<br>$$<br>Note that $r = \phi(N)$. According to Euler’s Theorem:<br>$$<br>a^{\phi(N)} \equiv 1 \; mod(N)<br>$$<br>if $a$ and $N$ are coprime positive integer. This theorem is a generalization of Fermat’s  Little Theorem, which is again built upon Wilson’s Theorem. They can all be learned in a intro to number theory class. </p>
+<p>Thus we have<br>$$<br>c^d = m^{ed} \equiv m <em> (m^r)^k \equiv m</em>(1)^k \equiv m \; mod(N)<br>$$<br>based on the properties of modulo operation.</p>
+<p>Now Alice have the information Bob sent and all she need to do is to use the translation scheme to obtain the original message.</p>
+<h2 id="To-Break-RSA"><a href="#To-Break-RSA" class="headerlink" title="To Break RSA"></a>To Break RSA</h2><p>Since the public key $(N, e)$ as it named, is public. An attacker only need to decompose the large number $N$ and obtain $\phi(N)$ to break the whole algorithm. However, such problem is well-known in mathematics as a very hard one for centuries. At least for now, no known method can guarantee to break the algorithm using fixed amount of resource. </p>
+<h2 id="Last-Thought"><a href="#Last-Thought" class="headerlink" title="Last Thought"></a>Last Thought</h2><p>I dig in RSA algorithm or the public-key cryptosystems since I am reading a book about block chain. Public-key cryptosystems is one of the building block in bitcoin, and I think they use SECP256k1 in particular. Other algorithms used include various kind of hashing, e.g. SHA-256, and some encoding / decoding algorithm. </p>
 
       
     </div>
@@ -375,7 +356,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
           
         </div>
       
@@ -388,8 +371,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/17/Research-Note-2/" rel="next" title="Research-Note-2">
-                <i class="fa fa-chevron-left"></i> Research-Note-2
+              <a href="/2017/11/29/Klondike-Solitaire-Web-App/" rel="next" title="Klondike Solitaire Web App">
+                <i class="fa fa-chevron-left"></i> Klondike Solitaire Web App
               </a>
             
           </div>
@@ -397,10 +380,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/18/PCA/" rel="prev" title="PCA">
-                PCA <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -532,7 +511,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Support-Vector-Machine"><span class="nav-number">1.</span> <span class="nav-text">Support Vector Machine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maximal-Margin-Classifier"><span class="nav-number">1.1.</span> <span class="nav-text">Maximal Margin Classifier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Construction"><span class="nav-number">1.1.1.</span> <span class="nav-text">Construction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Support-Vector-Classifier"><span class="nav-number">1.2.</span> <span class="nav-text">Support Vector Classifier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Construction-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">Construction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Support-Vector-Machine-1"><span class="nav-number">1.3.</span> <span class="nav-text">Support Vector Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extension"><span class="nav-number">1.4.</span> <span class="nav-text">Extension</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RSA-Algorithm"><span class="nav-number">1.</span> <span class="nav-text">RSA Algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-it-works"><span class="nav-number">1.1.</span> <span class="nav-text">How it works</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Before-start"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Before start</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Preparation"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Preparation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Encryption"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">Encryption</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Decryption"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">Decryption</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#To-Break-RSA"><span class="nav-number">1.2.</span> <span class="nav-text">To Break RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Last-Thought"><span class="nav-number">1.3.</span> <span class="nav-text">Last Thought</span></a></li></ol></li></ol></div>
             
 
           </div>

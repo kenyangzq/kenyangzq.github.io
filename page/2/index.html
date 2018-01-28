@@ -232,6 +232,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/Research-Note-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/10/Research-Note-10/" itemprop="url">Research-Note-10</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-10T22:25:22-05:00">
+                2017-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Research-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Research Note</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Research-Note/Tetra-mesh/" itemprop="url" rel="index">
+                    <span itemprop="name">Tetra-mesh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Research-Note-10"><a href="#Research-Note-10" class="headerlink" title="Research Note 10"></a>Research Note 10</h1><p>Last week I was seriously illed so I did skip the note. Since my school starts, I can only use my leisure time on this research project, so without doubt, my progress is much slower compared to in summer. However, in last week, I have made some breakthrough and I thought it’s worth noting. </p>
+<h3 id="C1-Smoothness-Condition"><a href="#C1-Smoothness-Condition" class="headerlink" title="C1 Smoothness Condition"></a>C1 Smoothness Condition</h3><p>Right now our main goal is to solve scatter fitting problem using tetrahedron partition in 3D space. Professor Schumaker has a outline to attempt this problem. We first need to partition the space using tetrahedron, then we need to figure out how to enforce C1 smoothness condition between each unit tetrahedron. After that, we can use the idea of minimum energy by adding a penalizing terms of the smoothness condition. If we can reach this far, we can then choose the right parameter and solve the problem. </p>
+<p>Now the only missing key is to get the C1 smoothness condition. By C1 smoothness, it means that splines between different tetrahedron not only join on the sharing faces, but the directional partial derivative also agrees on the border. Since we are representing splines with coefficent at domain points, it can be proved that if the coefficient on the sharing faces agree, we will have C0 smoothness condition. And from that on, with one more layer, or I should say internal faces, of coefficient agree, we will one degree higher smoothness condition. </p>
+<p>Enforcing coefficient to agree on the sharing face is easy. Because of the way we store the spline, it automatically satisfy the C0 smoothness condition. C1, on the other hand, is far more tricky. It involves lots of geometric manipulation of the coefficient tetrahedrons. </p>
+<p>Long story short, Professor Larry came up with several functions to get the C1 smoothness condition with d = 3. The idea is to loop over all the interior face. For each face, get the left and right tetrahedrons’ coefficient. Perform some geometric manipulation on them and obtain the internal layer of coefficient by rotations. Then enforce them to agree by setting up a linear system of equation. </p>
+<p>After he show us the code, I spent a few days studying it. And in today’s afternoon I combined his functions with my getindextetra and other helpers. With some struggles, I believe I have extended the functions to give C1 smoothness condition for any value of d. So far these functions pass all the test cases I have. This means we have obtained the final missing piece to solve scatter data fitting problems. </p>
+<p>Probably in next week, we will put all the pieces together and finally obtain applicable solver. </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/26/Research-New-Start/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1701,209 +1860,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/Clustering/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ziqi Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/18/Clustering/" itemprop="url">Clustering</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-18T23:45:57-05:00">
-                2017-06-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Study-Note/" itemprop="url" rel="index">
-                    <span itemprop="name">Study Note</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Study-Note/Machine-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h1><p>Clustering is a unsupervised learning technique to find subgroups or <em>clusters</em> in a data set. </p>
-<p>Comparing with PCA:</p>
-<ul>
-<li>PCA looks to find a low-dimensional representation of the observations that explain a good fraction of the variance.</li>
-<li>Clustering looks to find homogeneous subgroups among the observations.</li>
-</ul>
-<p>The two most famous clustering techniques are <em>K-means clustering</em> and <em>hierarchical clustering</em>. In K-means, we seek to partition the observations into predefined number of clusters. In hierarchical clustering, we do not know in advance how many clusters will there be; we end up with a tree-like visual representation of the observations, called <em>dendrogram</em>.</p>
-<h2 id="K-Means-Clustering"><a href="#K-Means-Clustering" class="headerlink" title="K-Means Clustering"></a>K-Means Clustering</h2><p>It partitions the observations into k non-overlapping clusters. Need to specify $K$ first. Let $C_1,C_2,…,C_k$ be sets containing the indices of data in each cluster. Then they are exhaustive and mutually exclusive. We want the <em>within-cluster variance</em> to be as small as possible, which is denoted by $W(C_i)$.</p>
-<p>Finding K-means clustering is the same as solving problem:<br>$$<br>minimize{\sum_{k=1}^K W(C_k) }<br>$$<br>By far the most common way to define $W(C_i)$ is using squared Euclidean distance, by</p>
-<p>$$<br>W(C_k) = \frac{1}{|C<em>k|}\sum</em>{i,i’\in C<em>k}\sum</em>{j=1}^p(x<em>{ij}-x</em>{i’j’} )^2<br>$$<br>where $p$ is the dimension of the feature space.</p>
-<p>Solving the above minimization problem is pretty hard. Fortunately, there is a simple algorithm that gives a pretty good solution:</p>
-<p>— Algorithm:</p>
-<ol>
-<li>Randomly assign a number from 1 to $K$ to each of the observations. These are the initial cluster assignments</li>
-<li>Iterate until the cluster assignments stop changing:<ol>
-<li>For each of the $K$ clusters, compute the cluster <em>centroid</em>. The kth cluster centroid is the vector of the $p$ feature means for the observations in that cluster.</li>
-<li>Assign each observations to the cluster whose centroid is closest in the context of Euclidean distance.</li>
-</ol>
-</li>
-</ol>
-<p>This algorithm guarantees to decrease the target sum at each step and it will finally reach a local optimum. Since the algorithm doesn’t ensure a global optimum, it’s important to run the algorithm with multiple times with different random initial configuration.</p>
-<p>In addition, selecting the number $K$ is also a difficult problem.</p>
-<h2 id="Hierarchical-Clustering"><a href="#Hierarchical-Clustering" class="headerlink" title="Hierarchical Clustering"></a>Hierarchical Clustering</h2><p>The most common type of hierarchical clustering is <em>bottom-up</em> or <em>agglomerative</em> clustering. It means to build the dendrogram from the leaves and combining clusters up to the trunk. </p>
-<p>To interpret the dendrogram, just remember observations that are similar muse at the bottom and those that are quite different muse much later. Location of leaves means nothing.</p>
-<p>To identify clusters in dendrogram, horizontally cut the tree and find the branches. Cut at different height may give different number of clusters. A dendrogram can be used to obtain any number of clusters.</p>
-<p>— Algorithm</p>
-<ol>
-<li>Begin with n observations and a measure (e.g. Euclidean distance) of all the n(n-1)/2 pairwise dissimilarities. Each of the n observations is treated as its own cluster.</li>
-<li>Fuse the two most similar till there is only one cluster left. The dissimilarity between the most similar two indicates the height at which the fusion should be taken.</li>
-</ol>
-<p>For this algorithm to work, need to extend dissimilarity to between groups of observations. Use the notion of <em>linkage</em>. </p>
-<p>4 types of linkage:</p>
-<ol>
-<li>Complete: maximal intercluster dissimilarity</li>
-<li>Single: minimal intercluster dissimilarity</li>
-<li>Average: mean intercluster dissimilarity</li>
-<li>Centroid; dissimilarity between the centroids</li>
-</ol>
-<h2 id="Issues-for-Clustering"><a href="#Issues-for-Clustering" class="headerlink" title="Issues for Clustering"></a>Issues for Clustering</h2><h4 id="Small-Decisions-with-Big-Impacts"><a href="#Small-Decisions-with-Big-Impacts" class="headerlink" title="Small Decisions with Big Impacts"></a>Small Decisions with Big Impacts</h4><ul>
-<li>For hierarchical clustering, <ul>
-<li>What dissimilarity measure to use?</li>
-<li>What type of linkage?</li>
-<li>Where should we cut the dendrogram to obtain the clusters?</li>
-</ul>
-</li>
-<li>For K-means clustering<ul>
-<li>What value of $K$?</li>
-</ul>
-</li>
-</ul>
-<h4 id="Validating-the-Clusters"><a href="#Validating-the-Clusters" class="headerlink" title="Validating the Clusters"></a>Validating the Clusters</h4><p>Need to validate such that our clustering is not a clustering of the noise.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1954,7 +1910,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1976,7 +1932,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

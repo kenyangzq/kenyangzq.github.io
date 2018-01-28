@@ -232,6 +232,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/Clustering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ziqi Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/18/Clustering/" itemprop="url">Clustering</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-18T23:45:57-05:00">
+                2017-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Study Note</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study-Note/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h1><p>Clustering is a unsupervised learning technique to find subgroups or <em>clusters</em> in a data set. </p>
+<p>Comparing with PCA:</p>
+<ul>
+<li>PCA looks to find a low-dimensional representation of the observations that explain a good fraction of the variance.</li>
+<li>Clustering looks to find homogeneous subgroups among the observations.</li>
+</ul>
+<p>The two most famous clustering techniques are <em>K-means clustering</em> and <em>hierarchical clustering</em>. In K-means, we seek to partition the observations into predefined number of clusters. In hierarchical clustering, we do not know in advance how many clusters will there be; we end up with a tree-like visual representation of the observations, called <em>dendrogram</em>.</p>
+<h2 id="K-Means-Clustering"><a href="#K-Means-Clustering" class="headerlink" title="K-Means Clustering"></a>K-Means Clustering</h2><p>It partitions the observations into k non-overlapping clusters. Need to specify $K$ first. Let $C_1,C_2,…,C_k$ be sets containing the indices of data in each cluster. Then they are exhaustive and mutually exclusive. We want the <em>within-cluster variance</em> to be as small as possible, which is denoted by $W(C_i)$.</p>
+<p>Finding K-means clustering is the same as solving problem:<br>$$<br>minimize{\sum_{k=1}^K W(C_k) }<br>$$<br>By far the most common way to define $W(C_i)$ is using squared Euclidean distance, by</p>
+<p>$$<br>W(C_k) = \frac{1}{|C<em>k|}\sum</em>{i,i’\in C<em>k}\sum</em>{j=1}^p(x<em>{ij}-x</em>{i’j’} )^2<br>$$<br>where $p$ is the dimension of the feature space.</p>
+<p>Solving the above minimization problem is pretty hard. Fortunately, there is a simple algorithm that gives a pretty good solution:</p>
+<p>— Algorithm:</p>
+<ol>
+<li>Randomly assign a number from 1 to $K$ to each of the observations. These are the initial cluster assignments</li>
+<li>Iterate until the cluster assignments stop changing:<ol>
+<li>For each of the $K$ clusters, compute the cluster <em>centroid</em>. The kth cluster centroid is the vector of the $p$ feature means for the observations in that cluster.</li>
+<li>Assign each observations to the cluster whose centroid is closest in the context of Euclidean distance.</li>
+</ol>
+</li>
+</ol>
+<p>This algorithm guarantees to decrease the target sum at each step and it will finally reach a local optimum. Since the algorithm doesn’t ensure a global optimum, it’s important to run the algorithm with multiple times with different random initial configuration.</p>
+<p>In addition, selecting the number $K$ is also a difficult problem.</p>
+<h2 id="Hierarchical-Clustering"><a href="#Hierarchical-Clustering" class="headerlink" title="Hierarchical Clustering"></a>Hierarchical Clustering</h2><p>The most common type of hierarchical clustering is <em>bottom-up</em> or <em>agglomerative</em> clustering. It means to build the dendrogram from the leaves and combining clusters up to the trunk. </p>
+<p>To interpret the dendrogram, just remember observations that are similar muse at the bottom and those that are quite different muse much later. Location of leaves means nothing.</p>
+<p>To identify clusters in dendrogram, horizontally cut the tree and find the branches. Cut at different height may give different number of clusters. A dendrogram can be used to obtain any number of clusters.</p>
+<p>— Algorithm</p>
+<ol>
+<li>Begin with n observations and a measure (e.g. Euclidean distance) of all the n(n-1)/2 pairwise dissimilarities. Each of the n observations is treated as its own cluster.</li>
+<li>Fuse the two most similar till there is only one cluster left. The dissimilarity between the most similar two indicates the height at which the fusion should be taken.</li>
+</ol>
+<p>For this algorithm to work, need to extend dissimilarity to between groups of observations. Use the notion of <em>linkage</em>. </p>
+<p>4 types of linkage:</p>
+<ol>
+<li>Complete: maximal intercluster dissimilarity</li>
+<li>Single: minimal intercluster dissimilarity</li>
+<li>Average: mean intercluster dissimilarity</li>
+<li>Centroid; dissimilarity between the centroids</li>
+</ol>
+<h2 id="Issues-for-Clustering"><a href="#Issues-for-Clustering" class="headerlink" title="Issues for Clustering"></a>Issues for Clustering</h2><h4 id="Small-Decisions-with-Big-Impacts"><a href="#Small-Decisions-with-Big-Impacts" class="headerlink" title="Small Decisions with Big Impacts"></a>Small Decisions with Big Impacts</h4><ul>
+<li>For hierarchical clustering, <ul>
+<li>What dissimilarity measure to use?</li>
+<li>What type of linkage?</li>
+<li>Where should we cut the dendrogram to obtain the clusters?</li>
+</ul>
+</li>
+<li>For K-means clustering<ul>
+<li>What value of $K$?</li>
+</ul>
+</li>
+</ul>
+<h4 id="Validating-the-Clusters"><a href="#Validating-the-Clusters" class="headerlink" title="Validating the Clusters"></a>Validating the Clusters</h4><p>Need to validate such that our clustering is not a clustering of the noise.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/PCA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1789,175 +1992,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/22/Beauty-of-Math/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ziqi Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runner">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/22/Beauty-of-Math/" itemprop="url">Beauty of Math 1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-22T13:31:46-05:00">
-                2017-05-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Reading-Note/" itemprop="url" rel="index">
-                    <span itemprop="name">Reading Note</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Reading-Note/Beauty-of-Math/" itemprop="url" rel="index">
-                    <span itemprop="name">Beauty of Math</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="数学之美-笔记1"><a href="#数学之美-笔记1" class="headerlink" title="数学之美 笔记1"></a>数学之美 笔记1</h1><p><br></p>
-<p>　　<em>Beauty of Math</em> is a book by Jun Wu, the former vice CEO of Tencent. It gives me a lot of inspiration so I chose to write down some of the reading note. Since the book is in Chinese, I felt much more convenient to write my note in Chinese and please forgive that. </p>
-<p>　　前一周有幸拜读了吴军老师当下的畅销书 –《智能时代》，感悟良多。根据书中指引，遂购买了吴军老师前几年颇具影响力的另一著作 – 《数学之美》。作为数学专业的学生，阅读此书只觉得爱不释手，颇受启发，于是萌生记录阅读心得的想法。此篇写于去往南京的飞机上，于南京完成。</p>
-<h2 id="隐含马尔可夫模型"><a href="#隐含马尔可夫模型" class="headerlink" title="隐含马尔可夫模型"></a>隐含马尔可夫模型</h2><p>　　隐含马尔可夫模型（Hidden Markov Model）是书中的第五章，在前几张介绍了自然语言处理的基本思路后，自然而然的过渡到了这个简单高效的，解决自然语言处理难题的模型。</p>
-<h3 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h3><p>　　书中首先介绍了基本的通信模型。雅各布森（Roman Jakobson）提出的通信六要素：发送者（信息源），信道，接受者，信息，上下文和编码。这一模型同样可被应用到自然语言的处理中，几乎所有的自然语言处理问题都可以等价成通信的解码问题。</p>
-<p>　　给定观测信号$o_1, o_2, o_3…$，推测源信息$s_1, s_2, s_3…$可通过从所有信息中找到最可能产生观测信号的那一信息来完成。从概率角度说，就是求条件概率的最大值，即<br>$$<br>s_1,s_2,s_3… = Arg\,Max\;P(s_1,s_2,s_3…|o_1,o_2,o_3…)<br>$$<br>条件概率可通过贝叶斯公式变换为<br>$$<br>\frac<br>{P(o_1,o_2,o_3…|s_1,s_2,s_3…) \cdot P(s_1,s_2,s_3…)}{P(o_1,o_2,o_3…)}<br>$$</p>
-<p>其中，因为 $o_1, o_2, o_3…$ 已经产生了，其概率是一个可以忽略的常数，所以剩下的只是</p>
-<p>$$<br>P(o_1,o_2,o_3…|s_1,s_2,s_3…) \cdot P(s_1,s_2,s_3…)<br>$$</p>
-<p>而这个公式完全可以用隐含马尔可夫模型来估计。</p>
-<h3 id="隐含马尔可夫模型-1"><a href="#隐含马尔可夫模型-1" class="headerlink" title="隐含马尔可夫模型"></a>隐含马尔可夫模型</h3><p>　　随机过程一般有两个维度的不确定性，一是对任意时间 $t$ ，其状态 $s$ 都是不确定的；二是一个状态 $s$ 受其他状态影响。而马尔可夫模型假设对任意状态 $s<em>t$ ，它只受前一个状态，即 $s</em>{t-1}$ 影响。这一假设被称为马尔可夫假设，而符合这一假设的随机过程被称为马尔可夫链。</p>
-<p>　　计算某一状态 $m_i$ 到另一状态 $m_j$ 的转移概率可以通过数出 $m_i$ 出现的次数以及 $m_i$ 出现后 $m_j$ 出现的次数，后者除以前者便是其转移概率的估值。</p>
-<p>　　隐含马尔可夫模型是上述的一个拓展：任一时刻 $t$ 的状态 $s_t$ 是不可见的，因此无法观测得到状态序列 $s_1,s_2,s_3…$ 来推测转移概率。但是，隐含马尔可夫模型在每一时刻 $t$ 都会输出一个符号 $o_t$ ，且 $o_t$ 只跟 $s_t$ 有关，所以我们可以就算出某个特定的状态序列 $s_1, s_2, s_3…$ 产生输出符号 $o_1, o_2, o_3…$ 的概率。</p>
-<p>$$<br>P(o_1,o_2,o_3…|s_1,s_2,s_3…) = \prod P(s<em>t|s</em>{t-1}) \cdot P(o_t|s_t)<br>$$</p>
-<p>至于如何找出上式的极值，可以利用维特比算法（Viterbi Algorithm)。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>　　隐含马尔可夫模型最初用于通信领域，是连接自然语言处理和通信的桥梁，同时也是机器学习的一大工具。</p>
-<hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>-《数学之美》第二版第五章 – 吴军</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2008,7 +2042,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2030,7 +2064,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

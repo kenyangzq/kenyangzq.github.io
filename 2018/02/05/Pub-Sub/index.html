@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Bigdata," />
+  <meta name="keywords" content="Distributed System," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Hadoop Study Note 1 &amp;lt;br&amp;gt;  The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming mo">
-<meta name="keywords" content="Bigdata">
+<meta name="description" content="Many Faces of Publish/Subscribe Study note for the paper The Many Faces of Publish/Subscribe 3 Dimensional Decoupling by Pub/Sub Publish / Subscribe pattern enables a 3-dimensional decoupling:   Time:">
+<meta name="keywords" content="Distributed System">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop Basic">
-<meta property="og:url" content="http://yoursite.com/2017/05/21/Hadoop-Basic/index.html">
+<meta property="og:title" content="Many Faces of Publish&#x2F;Subscribe">
+<meta property="og:url" content="http://yoursite.com/2018/02/05/Pub-Sub/index.html">
 <meta property="og:site_name" content="Runner">
-<meta property="og:description" content="Hadoop Study Note 1 &amp;lt;br&amp;gt;  The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming mo">
+<meta property="og:description" content="Many Faces of Publish/Subscribe Study note for the paper The Many Faces of Publish/Subscribe 3 Dimensional Decoupling by Pub/Sub Publish / Subscribe pattern enables a 3-dimensional decoupling:   Time:">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-12T22:27:47.000Z">
+<meta property="og:updated_time" content="2018-02-05T22:02:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop Basic">
-<meta name="twitter:description" content="Hadoop Study Note 1 &amp;lt;br&amp;gt;  The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming mo">
+<meta name="twitter:title" content="Many Faces of Publish&#x2F;Subscribe">
+<meta name="twitter:description" content="Many Faces of Publish/Subscribe Study note for the paper The Many Faces of Publish/Subscribe 3 Dimensional Decoupling by Pub/Sub Publish / Subscribe pattern enables a 3-dimensional decoupling:   Time:">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/21/Hadoop-Basic/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/05/Pub-Sub/"/>
 
 
 
 
 
-  <title>Hadoop Basic | Runner</title>
+  <title>Many Faces of Publish/Subscribe | Runner</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/Hadoop-Basic/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/Pub-Sub/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ziqi Yang">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hadoop Basic</h1>
+          <h1 class="post-title" itemprop="name headline">Many Faces of Publish/Subscribe</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T18:27:16-05:00">
-                2017-05-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T16:01:28-06:00">
+                2018-02-05
               </time>
             
 
@@ -316,19 +316,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Study-Note/Bigdata/" itemprop="url" rel="index">
-                    <span itemprop="name">Bigdata</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Study-Note/Bigdata/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
+                  <a href="/categories/Study-Note/Distributed-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Distributed System</span>
                   </a>
                 </span>
 
@@ -364,48 +353,96 @@
       
 
       
-        <h1>Hadoop Study Note 1</h1>
-<p>&lt;br&gt;</p>
-<blockquote>
-<p>The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models.</p>
-</blockquote>
-<p>Hadoop is built by Doug Cutting, the pioneer in the area of Bigdata. One fun fact, the name Hadoop is borrowed from Cutting's three-year-old son, and it is originally for his toy, a yellow elephant, which also becomes the well-known logo of Hadoop.</p>
-<p>&lt;img src=&quot;http://tse4.mm.bing.net/th?id=OIP.te5YCTFCrqh4N2S65P8cVgEpEs&amp;pid=15.1&quot; alt=&quot;Hadoop logo&quot; width=100px, align=center&gt;&lt;/img&gt;</p>
-<p>Nowadays, Hadoop mainly refers to the enormous products in its ecosystem.</p>
-<h2>Main Components</h2>
-<h3>MapReduce</h3>
-<p>MapReduce is the core component of Hadoop.</p>
-<blockquote>
-<p>MapReduce is a programming model and an associ- ated implementation for processing and generating large data sets.</p>
-</blockquote>
-<p>MapReduce consists of two main parts: Map function and Reduce function. It's first brought up by engineers from Google and inspired from functional programming languages.</p>
-<h3>HDFS</h3>
-<p>Hadoop Distributed File System (HDFS) is a open-source implementation of Google File System (GFS). It's specifically made for big data with high-throughput access to application data and is highly fault tolerant. In addition, HDFS can be deployed on relatively cheap machine.</p>
-<h3>Hive</h3>
-<blockquote>
-<p>A data warehouse infrastructure that provides data summarization and ad hoc querying.</p>
-</blockquote>
-<p>Hive provides complete functionality for SQL query. It transforms SQL into MapReduce task. Hive is specifically designed for statistical analysis.</p>
-<h3>HBase</h3>
-<p>HBase is a distributed, column-store database. It can be seen as a open-source implementation of Google's Bigtable. Unlike relational database, it supports storage for non-structured data.</p>
-<h3>Pig</h3>
-<p>Pig is a high-level programming language that, as its inventor puts, fits in the sweet spot between the declarative style of SQL, and the low-level, procedural style of MapReduce.</p>
-<p>As my Bigdata course lecturer says, when something doesn't work out very well, programmers just put an extra layer of abstraction on top of it. Pig is the one on top of MapReduce. It highly simplifies the code and free engineers from heavy work for simple analysis.</p>
-<h3>ZooKeeper</h3>
-<p>ZooKeeper is the open-source implementation of Google's Chubby. It provides a high-performance coordination service for distributed applications.</p>
-<h2>Application of Hadoop</h2>
-<p>Hadoop is suitable for all of the following situations:</p>
+        <h1>Many Faces of Publish/Subscribe</h1>
+<p>Study note for the paper <a href="http://homepages.gsd.inesc-id.pt/~ler/docencia/tm0405/papers/PublishSubscribe-Eugster.pdf" target="_blank" rel="noopener"><em>The Many Faces of Publish/Subscribe</em></a></p>
+<h3>3 Dimensional Decoupling by Pub/Sub</h3>
+<p>Publish / Subscribe pattern enables a 3-dimensional decoupling:</p>
 <ol>
-<li>Huge volume of data.</li>
-<li>Offline data processing. It's well-known that Hadoop perform poorly in streaming data processing or real time analysis.</li>
-<li>Parallel computing. MapReduce works pretty well for parallel task, for example, web search for information.</li>
-<li>Large files. Base on the design choice of HDFS, Hadoop is suitable for processing bigger files.</li>
+<li>
+<p>Time:</p>
+<p>Pub and sub do not have to be up all the time. They can come and go like P2P.</p>
+</li>
+<li>
+<p>Space:</p>
+<p>They do not need to be aware of each other. Don't share their locations (references).</p>
+</li>
+<li>
+<p>Synchronization:</p>
+<p>Nobody blocks the other.</p>
+</li>
 </ol>
-<hr>
-<h2>Reference</h2>
-<p>[1]. <em>MapReduce: Simplified Data Processing on Large Clusters</em>, Jeffrey Dean and Sanjay Ghemawat</p>
-<p>[2]. http://hadoop.apache.org/</p>
-<p>[3]. <em>Pig Latin: A Not-So-Foreign Language for Data Processing</em>, Christopher Olston, Benjamin Reed and Utkarsh Srivastava</p>
+<p>The decoupling in these dimensions increases scalability, improves resilience and reduce coordination.</p>
+<h3>Some Other Communication models</h3>
+<ul>
+<li>Message passing
+<ul>
+<li>Low level approach to send/receive messages</li>
+</ul>
+</li>
+<li>Remote Procedure Call (RPC)
+<ul>
+<li>Builds over message passing</li>
+<li>Appears as though a normal procedure call is made but it is a remote invocation</li>
+<li>JAVA RMI, CORBA request-response, SUN RPC, DCOM</li>
+</ul>
+</li>
+<li>Tuple spaces (distributed shared memory)
+<ul>
+<li>Supports the anonymous, decoupled messaging across time and space BUT not the synchronization decoupling that pub/sub provides</li>
+</ul>
+</li>
+<li>Message queuing
+<ul>
+<li>More of an implementation detail of the message passing protocol</li>
+</ul>
+</li>
+<li>Notification
+<ul>
+<li>Provide synchronization decoupling but not on time and space.</li>
+</ul>
+</li>
+</ul>
+<h3>Types of Pub/Sub Models</h3>
+<h5>Topic-based</h5>
+<p>Publishing/subscription is based on events that are named or have an ID.</p>
+<p>Every topic will have a unique name. The interfaces for both pub and sub are simple. Supports hierarchical addressing, which means topics can form hierarchy through containment.</p>
+<p>Note, the subscriber will receive everything from the topic it subscribes and the filtering of the event is the responsibility of the subscribers.</p>
+<h5>Content-based</h5>
+<p>Publishing/subscription is based on the contents of the event, which provides finer granularity. But the implementation is more complicated and cause more overhead.</p>
+<p>Now the filtering is the responsibility of the whole mechanism but not subscribers.</p>
+<h5>Type-based</h5>
+<p>Like topic-based but provides a programming language-level type instead of some name. Events become type-safe, i.e. compile time error checking.</p>
+<p>Filtering is still subscriber's work as in topic based.</p>
+<h5>Data-centric</h5>
+<p>Another model that uses typed topics and also deals with content.</p>
+<p>It's a hybrid of the previous 3 models.</p>
+<h3>Implementation Concerns</h3>
+<h5>Event</h5>
+<p>Can have message-based and invocation-based.</p>
+<h5>Media</h5>
+<ul>
+<li>The architecture:
+<ul>
+<li>Central</li>
+<li>Distributed</li>
+</ul>
+</li>
+<li>Dissemination:
+<ul>
+<li>Point to point</li>
+<li>Multicast</li>
+</ul>
+</li>
+</ul>
+<p>Centralized approaches generally use point 2 point and provide strong guarantee rather than high throughput and scalability.</p>
+<p>Distributed systems often use reliable protocols to propagates events to all or a subset of the brokers.</p>
+<h5>Quality of Service</h5>
+<ul>
+<li>Persistance of the events</li>
+<li>Priorities between events</li>
+<li>Transactional semantics for group of events</li>
+<li>Reliability</li>
+</ul>
 
       
     </div>
@@ -423,7 +460,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Bigdata/" rel="tag"># Bigdata</a>
+            <a href="/tags/Distributed-System/" rel="tag"># Distributed System</a>
           
         </div>
       
@@ -436,8 +473,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/20/Test/" rel="next" title="Hacking Hexo">
-                <i class="fa fa-chevron-left"></i> Hacking Hexo
+              <a href="/2018/01/27/RSA-Algorithm/" rel="next" title="RSA Algorithm">
+                <i class="fa fa-chevron-left"></i> RSA Algorithm
               </a>
             
           </div>
@@ -445,10 +482,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/22/Beauty-of-Math/" rel="prev" title="Beauty of Math 1">
-                Beauty of Math 1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -580,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Hadoop Study Note 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">Main Components</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.1.</span> <span class="nav-text">MapReduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.2.</span> <span class="nav-text">HDFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.3.</span> <span class="nav-text">Hive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.4.</span> <span class="nav-text">HBase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.5.</span> <span class="nav-text">Pig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.6.</span> <span class="nav-text">ZooKeeper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">Application of Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Many Faces of Publish/Subscribe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.1.</span> <span class="nav-text">3 Dimensional Decoupling by Pub/Sub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.2.</span> <span class="nav-text">Some Other Communication models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.</span> <span class="nav-text">Types of Pub/Sub Models</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">Topic-based</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.0.2.</span> <span class="nav-text">Content-based</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.0.3.</span> <span class="nav-text">Type-based</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.0.4.</span> <span class="nav-text">Data-centric</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.4.</span> <span class="nav-text">Implementation Concerns</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.4.0.1.</span> <span class="nav-text">Event</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.4.0.2.</span> <span class="nav-text">Media</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.4.0.3.</span> <span class="nav-text">Quality of Service</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
